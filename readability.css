@@ -1,0 +1,34 @@
+p {
+  color: #514a43 !important;
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+}
+
+small,
+.style-desc,
+.collection-notes,
+.location-note,
+.map-caption {
+  color: #514a43 !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  line-height: 1.6 !important;
+}
+
+.hero p,
+.story-copy p,
+.category-content p,
+.cta-inner p,
+.footer-about p,
+.footer-links a,
+.footer-contact a,
+.footer-contact span,
+.footer-bottom,
+.lightbox-caption {
+  color: #f0e9df !important;
+}
+
+#design-description {
+  color: #514a43 !important;
+}

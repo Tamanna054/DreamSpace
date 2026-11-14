@@ -1,0 +1,666 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Explore beautiful DreamSpace interior designs, discover inspiration, and find ideas for every room and budget.">
+  <title>Explore Designs | DreamSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25221f;
+      --brown: #4b3b30;
+      --muted: #817a72;
+      --cream: #f6f3ed;
+      --sand: #eae3d8;
+      --white: #fffefa;
+      --gold: #b28a5a;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; background: rgba(246,243,237,.96); border-bottom: 1px solid rgba(75,59,48,.09); backdrop-filter: blur(14px); }
+    .navbar { min-height: 78px; display: flex; align-items: center; gap: 30px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-icon { width: 32px; height: 36px; color: var(--brown); }
+    .brand-icon svg { width: 100%; height: 100%; }
+    .brand-name { font-family: var(--serif); font-size: 22px; letter-spacing: -.7px; }
+    .brand-name span { color: var(--gold); }
+    .board-link { width: 36px; height: 36px; display: grid; place-items: center; flex-shrink: 0; color: var(--brown); }
+    .board-link svg { width: 19px; height: 19px; }
+    .nav-links { display: flex; align-items: center; gap: 32px; margin-left: auto; }
+    .nav-links a { position: relative; padding: 30px 0 27px; color: #625a52; font-size: 11px; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+    .nav-links a.active::after { position: absolute; right: 0; bottom: 20px; left: 0; height: 1px; background: var(--gold); content: ""; }
+    .button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px; padding: 0 19px; border: 1px solid var(--brown); border-radius: 2px; background: var(--brown); color: white; font-size: 10px; font-weight: 600; letter-spacing: .35px; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); background: #624e3f; }
+    .button svg { width: 15px; height: 15px; }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--sand); background: transparent; color: var(--brown); cursor: pointer; }
+
+    .explore-hero { position: relative; min-height: 425px; display: grid; align-items: center; overflow: hidden; background: #40382f; color: white; }
+    .explore-hero::before { position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(28,24,20,.75), rgba(28,24,20,.42) 60%, rgba(28,24,20,.13)); content: ""; }
+    .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 54%; }
+    .hero-content { position: relative; z-index: 2; width: min(700px, 85%); padding: 72px 0 78px 7%; animation: rise-in .7s ease both; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: #e4d1b4; font-size: 9px; font-weight: 700; letter-spacing: 2.2px; text-transform: uppercase; }
+    .eyebrow::before { width: 24px; height: 1px; background: currentColor; content: ""; }
+    .hero-content h1 { margin: 17px 0 12px; font-family: var(--serif); font-size: clamp(47px, 6vw, 72px); font-weight: 400; letter-spacing: -2px; line-height: 1.08; }
+    .hero-content p { max-width: 540px; margin: 0; color: rgba(255,255,255,.82); font-size: 12px; line-height: 1.85; }
+    .search-form { display: flex; width: min(570px, 100%); gap: 7px; margin-top: 25px; padding: 6px; background: var(--white); box-shadow: 0 12px 30px #16120e30; }
+    .search-form input { width: 100%; min-width: 0; height: 43px; padding: 0 13px; border: 0; outline: 0; background: transparent; color: var(--ink); font-size: 11px; }
+    .search-form input::placeholder { color: #918a80; }
+    .search-form .button { min-height: 43px; flex-shrink: 0; }
+
+    .categories-section { padding: 73px 0 77px; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 26px; }
+    .section-label { display: inline-flex; align-items: center; gap: 9px; color: var(--gold); font-size: 9px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; }
+    .section-label::before { width: 23px; height: 1px; background: currentColor; content: ""; }
+    .section-heading h2, .inspiration-copy h2 { margin: 12px 0 0; font-family: var(--serif); font-size: clamp(34px, 4vw, 46px); font-weight: 400; letter-spacing: -1.2px; }
+    .section-heading p { max-width: 340px; margin: 0 0 2px; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .category-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 13px; }
+    .category-card { position: relative; min-height: 220px; overflow: hidden; background: #776b5e; color: white; }
+    .category-card::after { position: absolute; inset: 35% 0 0; z-index: 1; background: linear-gradient(transparent, rgba(21,18,15,.8)); content: ""; pointer-events: none; }
+    .category-image-button { position: absolute; inset: 0; z-index: 0; width: 100%; height: 100%; padding: 0; overflow: hidden; border: 0; background: transparent; cursor: zoom-in; }
+    .category-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s ease; }
+    .category-card:hover img, .category-image-button:focus-visible img { transform: scale(1.06); }
+    .category-image-button:focus-visible { outline: 2px solid var(--white); outline-offset: -4px; }
+    .category-content { position: absolute; right: 14px; bottom: 14px; left: 14px; z-index: 2; }
+    .category-content h3 { margin: 0 0 5px; font-family: var(--serif); font-size: 18px; font-weight: 400; }
+    .category-content p { min-height: 29px; margin: 0; color: rgba(255,255,255,.8); font-size: 9px; line-height: 1.5; }
+    .category-explore { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 8px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+    .category-explore svg { width: 12px; height: 12px; transition: transform .2s ease; }
+    .category-card:hover .category-explore svg { transform: translateX(4px); }
+
+    .featured-section { padding: 78px 0 86px; background: #eee9e0; }
+    .featured-top { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+    .featured-top h2 { margin: 12px 0 0; font-family: var(--serif); font-size: clamp(35px, 4vw, 48px); font-weight: 400; letter-spacing: -1.2px; }
+    .featured-top p { max-width: 330px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.8; }
+    .filters-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 23px; }
+    .filter-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+    .filter-chip { min-height: 33px; padding: 0 14px; border: 1px solid #d8d0c4; background: transparent; color: #665e56; font-size: 9px; cursor: pointer; transition: border-color .2s ease, background .2s ease, color .2s ease; }
+    .filter-chip:hover, .filter-chip.is-active { border-color: var(--brown); background: var(--brown); color: white; }
+    .budget-select { min-width: 175px; height: 35px; padding: 0 10px; border: 1px solid #d8d0c4; border-radius: 0; background: var(--white); color: #5f574e; font-size: 9px; }
+    .results-count { margin: 0 0 13px; color: var(--muted); font-size: 9px; }
+    .design-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+    .design-card { overflow: hidden; background: var(--white); box-shadow: 0 7px 22px rgba(53,42,31,.055); transition: transform .25s ease, box-shadow .25s ease; }
+    .design-card:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(53,42,31,.12); }
+    .design-card[hidden] { display: none; }
+    .design-photo { position: relative; height: 218px; overflow: hidden; background: #d3c8b9; }
+    .design-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+    .design-card:hover .design-photo img { transform: scale(1.045); }
+    .design-badge { position: absolute; top: 12px; left: 12px; padding: 6px 9px; background: rgba(255,254,250,.94); color: var(--brown); font-size: 8px; font-weight: 700; letter-spacing: .7px; text-transform: uppercase; }
+    .wishlist { position: absolute; top: 10px; right: 10px; width: 33px; height: 33px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(255,254,250,.96); color: var(--brown); cursor: pointer; transition: color .2s ease, transform .2s ease; }
+    .wishlist:hover { transform: scale(1.08); }
+    .wishlist[aria-pressed="true"] { color: #a94d47; }
+    .wishlist svg { width: 16px; height: 16px; }
+    .design-info { padding: 15px 15px 16px; }
+    .design-type { color: var(--gold); font-size: 8px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .design-info h3 { margin: 6px 0 10px; font-family: var(--serif); font-size: 19px; font-weight: 400; }
+    .design-card-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-top: 10px; border-top: 1px solid #eee9e0; }
+    .budget { color: #625a52; font-size: 9px; }
+    .details-button { display: inline-flex; align-items: center; gap: 5px; padding: 0; border: 0; background: transparent; color: var(--brown); font-size: 8px; font-weight: 700; cursor: pointer; }
+    .details-button svg { width: 12px; height: 12px; }
+    .compare-design-button { padding: 5px 7px; border: 1px solid var(--sand); background: transparent; color: var(--brown); font-size: 7px; font-weight: 700; white-space: nowrap; cursor: pointer; }
+    .compare-design-button:hover { border-color: var(--gold); background: #f5f0e7; }
+    .empty-state { grid-column: 1 / -1; padding: 45px 20px; background: var(--white); color: var(--muted); text-align: center; font-size: 12px; }
+    .image-lightbox { width: min(1120px, calc(100% - 32px)); max-width: none; max-height: 92vh; padding: 0; border: 0; overflow: hidden; background: #1d1915; color: white; }
+    .image-lightbox::backdrop { background: rgba(20,17,14,.86); backdrop-filter: blur(4px); }
+    .lightbox-layout { position: relative; display: grid; grid-template-columns: 52px minmax(0,1fr) 52px; align-items: center; gap: 12px; padding: 22px 18px 12px; }
+    .lightbox-image { width: 100%; height: min(75vh, 760px); object-fit: contain; }
+    .lightbox-control { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid #ffffff50; border-radius: 50%; background: #ffffff12; color: white; cursor: pointer; transition: background .2s ease, transform .2s ease; }
+    .lightbox-control:hover { transform: scale(1.06); background: #ffffff28; }
+    .lightbox-control svg { width: 18px; height: 18px; }
+    .lightbox-close { position: absolute; top: 14px; right: 14px; z-index: 1; }
+    .lightbox-caption { margin: 0; padding: 0 65px 19px; color: #e8dfd1; font-size: 10px; text-align: center; }
+
+    .inspiration { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 65px; padding-block: 97px; }
+    .inspiration-image { height: 360px; overflow: hidden; }
+    .inspiration-image img { width: 100%; height: 100%; object-fit: cover; }
+    .inspiration-copy h2 { max-width: 500px; line-height: 1.2; }
+    .inspiration-copy > p { max-width: 480px; margin: 16px 0 0; color: var(--muted); font-size: 11px; line-height: 1.9; }
+    .inspiration-points { display: grid; grid-template-columns: 1fr 1fr; gap: 15px 12px; margin-top: 22px; }
+    .inspiration-point { display: flex; align-items: center; gap: 9px; color: #5e564e; font-size: 9px; }
+    .point-mark { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 50%; background: #e9e0d2; color: var(--gold); }
+    .point-mark svg { width: 12px; height: 12px; }
+
+    .cta-band { position: relative; overflow: hidden; padding: 60px 0; background: var(--brown); color: white; }
+    .cta-band::after { position: absolute; top: -150px; right: 12%; width: 380px; height: 380px; border: 1px solid #ffffff20; border-radius: 50%; content: ""; }
+    .cta-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 26px; }
+    .cta-inner .section-label { color: #dfc7a6; }
+    .cta-inner h2 { margin: 12px 0 8px; font-family: var(--serif); font-size: clamp(32px, 4vw, 45px); font-weight: 400; letter-spacing: -.8px; }
+    .cta-inner p { margin: 0; color: #d3c7b9; font-size: 10px; line-height: 1.7; }
+    .cta-inner .button { flex-shrink: 0; border-color: #e6d5bd; background: #e6d5bd; color: var(--ink); }
+    .cta-inner .button:hover { background: white; }
+
+    .footer { padding: 55px 0 0; background: #28231f; color: #f7f3ec; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr 1fr 1fr; gap: 40px; padding-bottom: 40px; }
+    .footer .brand-icon { color: #e0c49f; }
+    .footer .brand-name { color: white; }
+    .footer-about p { max-width: 260px; margin: 15px 0 0; color: #c1b9af; font-size: 10px; line-height: 1.9; }
+    .footer h3 { margin: 4px 0 16px; color: #e6d5bd; font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .footer-links, .footer-contact { display: grid; gap: 10px; }
+    .footer-links a, .footer-contact a, .footer-contact span { color: #c1b9af; font-size: 9px; line-height: 1.6; transition: color .2s ease; }
+    .footer-links a:hover, .footer-contact a:hover { color: white; }
+    .social-links { display: flex; gap: 8px; margin-top: 17px; }
+    .social-links a { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid #655b50; border-radius: 50%; color: #e6d5bd; transition: color .2s ease, background .2s ease; }
+    .social-links a:hover { background: #e6d5bd; color: var(--ink); }
+    .social-links svg { width: 12px; height: 12px; }
+    .footer-bottom { min-height: 53px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border-top: 1px solid #ffffff20; color: #aaa198; font-size: 8px; }
+
+    dialog { width: min(480px, calc(100% - 32px)); padding: 0; border: 0; background: var(--white); color: var(--ink); box-shadow: 0 20px 70px #0005; }
+    dialog::backdrop { background: rgba(25,21,17,.67); backdrop-filter: blur(3px); }
+    .toast { position: fixed; right: 20px; bottom: 20px; z-index: 30; padding: 12px 16px; background: var(--brown); color: white; box-shadow: 0 8px 25px #0002; font-size: 10px; opacity: 0; transform: translateY(8px); pointer-events: none; transition: opacity .2s ease, transform .2s ease; }
+    .toast.is-visible { opacity: 1; transform: translateY(0); }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 980px) {
+      .container { width: min(100% - 48px, 850px); }
+      .nav-links { gap: 20px; }
+      .category-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .category-card { min-height: 230px; }
+      .design-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .design-photo { height: 245px; }
+      .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; gap: 30px; }
+      .footer-about { grid-row: span 2; }
+    }
+    @media (max-width: 650px) {
+      html { scroll-padding-top: 76px; }
+      .container { width: calc(100% - 36px); }
+      .navbar { min-height: 68px; gap: 5px; }
+      .brand { gap: 6px; }
+      .brand-icon { width: 26px; height: 30px; }
+      .brand-name { font-size: 18px; }
+      .nav-links { position: absolute; top: 68px; right: 0; left: 0; display: none; align-items: stretch; gap: 0; padding: 7px 18px 15px; border-top: 1px solid var(--sand); background: var(--cream); }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 12px 0; }
+      .nav-links a.active::after { right: auto; bottom: 6px; width: 74px; }
+      .menu-toggle { width: 38px; height: 38px; display: grid; place-items: center; }
+      .menu-toggle svg { width: 18px; height: 18px; }
+      .header-cta { min-height: 36px; margin-left: 0; padding: 0 8px; font-size: 8px; }
+      .explore-hero { min-height: 440px; }
+      .explore-hero::before { background: linear-gradient(0deg, rgba(28,24,20,.79), rgba(28,24,20,.3) 80%); }
+      .hero-image { object-position: 58% center; }
+      .hero-content { width: 100%; padding: 72px 19px; }
+      .hero-content h1 { font-size: clamp(43px, 12vw, 58px); letter-spacing: -1.5px; }
+      .hero-content p { font-size: 11px; }
+      .search-form { gap: 4px; padding: 5px; }
+      .search-form input { padding: 0 9px; font-size: 10px; }
+      .search-form .button { padding: 0 11px; font-size: 9px; }
+      .categories-section { padding: 57px 0 62px; }
+      .section-heading, .featured-top { align-items: flex-start; flex-direction: column; gap: 10px; }
+      .section-heading h2, .featured-top h2 { font-size: 37px; }
+      .category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .category-card { min-height: 210px; }
+      .category-content { right: 10px; bottom: 11px; left: 10px; }
+      .category-content h3 { font-size: 16px; }
+      .category-content p { font-size: 8px; }
+      .lightbox-layout { grid-template-columns: 36px minmax(0,1fr) 36px; gap: 5px; padding: 58px 8px 10px; }
+      .lightbox-image { height: min(67vh, 620px); }
+      .lightbox-control { width: 34px; height: 34px; }
+      .lightbox-close { top: 12px; right: 12px; }
+      .lightbox-caption { padding: 0 12px 15px; }
+      .featured-section { padding: 60px 0 65px; }
+      .filters-row { align-items: stretch; flex-direction: column; }
+      .filter-chips { gap: 6px; }
+      .filter-chip { padding: 0 10px; font-size: 8px; }
+      .budget-select { width: 100%; }
+      .design-grid { gap: 10px; }
+      .design-photo { height: clamp(150px, 48vw, 220px); }
+      .design-info { padding: 12px 10px 13px; }
+      .design-info h3 { min-height: 43px; margin-bottom: 7px; font-size: 17px; }
+      .design-card-bottom { align-items: flex-start; flex-direction: column; gap: 9px; }
+      .details-button { font-size: 8px; }
+      .inspiration { grid-template-columns: 1fr; gap: 27px; padding-block: 67px; }
+      .inspiration-image { height: 270px; }
+      .inspiration-copy h2 { font-size: 37px; }
+      .inspiration-points { gap: 13px 8px; }
+      .inspiration-point { font-size: 8px; }
+      .cta-band { padding: 48px 0; }
+      .cta-inner { align-items: flex-start; flex-direction: column; gap: 22px; }
+      .footer { padding-top: 43px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px 18px; padding-bottom: 32px; }
+      .footer-about { grid-column: 1 / -1; grid-row: auto; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; justify-content: center; gap: 7px; padding: 13px 0; line-height: 1.6; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media (max-width: 1100px) {
+      .navbar { position: relative; gap: 8px; }
+      .nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; align-items: stretch; gap: 0; margin: 0; padding: 8px 18px 14px; border-top: 1px solid var(--sand); background: var(--cream); box-shadow: 0 12px 24px #352a1f12; }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 11px 0; font-size: 10px; }
+      .nav-links a.active::after { right: auto; bottom: 5px; width: 150px; }
+      .menu-toggle { display: grid; place-items: center; flex-shrink: 0; }
+      .navbar > .board-link { margin-left: auto; }
+      .navbar > .header-cta, .navbar > .get-started, .navbar > .wishlist-link, .navbar > .wishlist-nav { margin-left: 0; }
+    }
+    @media (max-width: 650px) { .navbar { gap: 5px; } .board-link { width: 32px; } }
+  </style>
+  <link rel="stylesheet" href="readability.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="DreamSpace home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">Dream<span>Space</span></span>
+      </a>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a class="active" href="#top" aria-current="page">Explore Designs</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="budget-calculator.html">Budget Calculator</a>
+        <a href="transformations.html">Before &amp; After Gallery</a>
+        <a href="compare-designs.html">Compare Designs</a>
+      </nav>
+      <a class="board-link" href="my-dream-board.html" aria-label="My Dream Board"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.5a4.4 4.4 0 0 1 8.8 2.3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="button header-cta" href="contact.html#contact-form">Get Started <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="container explore-hero">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=2200&amp;q=88" alt="Beautiful luxury living room in warm neutral tones" fetchpriority="high">
+      <div class="hero-content">
+        <span class="eyebrow">A world of thoughtful interiors</span>
+        <h1>Explore Beautiful Spaces</h1>
+        <p>Find inspiration, discover creative ideas, and explore stunning interior designs for every corner of your home.</p>
+        <form class="search-form" id="hero-search">
+          <label class="sr-only" for="design-search">Search your dream design</label>
+          <input id="design-search" type="search" placeholder="Search your dream design..." autocomplete="off">
+          <button class="button" type="submit">Explore Now <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m14 14 4 4m-2-9a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+        </form>
+      </div>
+    </section>
+
+    <section class="container categories-section" aria-labelledby="categories-title">
+      <div class="section-heading">
+        <div><span class="section-label">Find your starting point</span><h2 id="categories-title">Design for every room</h2></div>
+        <p>From slow mornings to lively gatherings, find an idea for every moment at home.</p>
+      </div>
+      <div class="category-grid">
+        <article class="category-card" data-category="Living Room">
+          <button class="category-image-button" type="button" aria-label="Zoom image: Warm modern living room"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Warm modern living room" loading="lazy"></button>
+          <div class="category-content"><h3>Living Room</h3><p>Gather, unwind, and feel at home.</p><a class="category-explore" href="#featured">Explore <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article>
+        <article class="category-card" data-category="Bedroom">
+          <button class="category-image-button" type="button" aria-label="Zoom image: Relaxing bedroom with soft neutral bedding"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Relaxing bedroom with soft neutral bedding" loading="lazy"></button>
+          <div class="category-content"><h3>Bedroom</h3><p>Your own little pause from the world.</p><a class="category-explore" href="#featured">Explore <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article>
+        <article class="category-card" data-category="Kitchen">
+          <button class="category-image-button" type="button" aria-label="Zoom image: Thoughtfully designed modern kitchen"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Thoughtfully designed modern kitchen" loading="lazy"></button>
+          <div class="category-content"><h3>Modular Kitchen</h3><p>Made for good food and good company.</p><a class="category-explore" href="#featured">Explore <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article>
+        <article class="category-card" data-category="Bathroom">
+          <button class="category-image-button" type="button" aria-label="Zoom image: Serene modern bathroom in natural stone"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Serene modern bathroom in natural stone" loading="lazy"></button>
+          <div class="category-content"><h3>Bathroom</h3><p>A little everyday space to reset.</p><a class="category-explore" href="#featured">Explore <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article>
+        <article class="category-card" data-category="Dining Room">
+          <button class="category-image-button" type="button" aria-label="Zoom image: Elegant dining room with natural light"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Elegant dining room with natural light" loading="lazy"></button>
+          <div class="category-content"><h3>Dining Room</h3><p>Set the scene for being together.</p><a class="category-explore" href="#featured">Explore <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article>
+        <article class="category-card" data-category="Home Office">
+          <button class="category-image-button" type="button" aria-label="Zoom image: Light-filled modern home office"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&amp;fit=crop&amp;w=600&amp;h=800&amp;q=80" alt="Light-filled modern home office" loading="lazy"></button>
+          <div class="category-content"><h3>Home Office</h3><p>A thoughtful corner for ideas to grow.</p><a class="category-explore" href="#featured">Explore <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="featured-section" id="featured">
+      <div class="container">
+        <div class="featured-top">
+          <div><span class="section-label">Handpicked for your home</span><h2>Featured Interior Designs</h2></div>
+          <p>Explore thoughtfully curated spaces that make beautiful living feel personal.</p>
+        </div>
+        <div class="filters-row">
+          <div class="filter-chips" role="group" aria-label="Filter designs by style">
+            <button class="filter-chip is-active" type="button" data-style="All Designs" aria-pressed="true">All Designs</button>
+            <button class="filter-chip" type="button" data-style="Modern" aria-pressed="false">Modern</button>
+            <button class="filter-chip" type="button" data-style="Luxury" aria-pressed="false">Luxury</button>
+            <button class="filter-chip" type="button" data-style="Minimalist" aria-pressed="false">Minimalist</button>
+            <button class="filter-chip" type="button" data-style="Traditional" aria-pressed="false">Traditional</button>
+          </div>
+          <label class="sr-only" for="budget-filter">Filter by budget</label>
+          <select class="budget-select" id="budget-filter">
+            <option value="all">All budgets</option>
+            <option value="under-50000">Under ₹50,000</option>
+            <option value="50000-100000">₹50,000 – ₹1,00,000</option>
+            <option value="100000-300000">₹1,00,000 – ₹3,00,000</option>
+            <option value="above-300000">Above ₹3,00,000</option>
+          </select>
+        </div>
+        <p class="results-count" id="results-count" aria-live="polite"></p>
+        <div class="design-grid" id="design-grid">
+          <article class="design-card" data-name="The Sunday Edit" data-category="Living Room" data-style="Modern" data-budget="42000" data-image="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A relaxed modern living room with warm woods, sculptural seating, and a quiet, sunlit palette.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Modern living room with warm wood and sculptural seating" loading="lazy"><span class="design-badge">Modern</span><button class="wishlist" type="button" aria-label="Add The Sunday Edit to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Living Room · Modern</span><h3>The Sunday Edit</h3><div class="design-card-bottom"><span class="budget">Est. ₹42,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="The Quiet Suite" data-category="Bedroom" data-style="Luxury" data-budget="185000" data-image="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A serene bedroom retreat layered with tactile linen, gentle lighting, and tailored details.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Luxury bedroom retreat with layered linen" loading="lazy"><span class="design-badge">Luxury</span><button class="wishlist" type="button" aria-label="Add The Quiet Suite to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Bedroom · Luxury</span><h3>The Quiet Suite</h3><div class="design-card-bottom"><span class="budget">Est. ₹1,85,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="Sunday Kitchen" data-category="Kitchen" data-style="Minimalist" data-budget="78000" data-image="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A streamlined kitchen with clever storage, honest materials, and space to make everyday rituals special.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Minimalist kitchen with clean cabinetry and natural materials" loading="lazy"><span class="design-badge">Minimalist</span><button class="wishlist" type="button" aria-label="Add Sunday Kitchen to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Kitchen · Minimalist</span><h3>Sunday Kitchen</h3><div class="design-card-bottom"><span class="budget">Est. ₹78,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="Stone & Steam" data-category="Bathroom" data-style="Luxury" data-budget="340000" data-image="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A spa-like bath with natural stone, graceful hardware, and a soft balance of light and texture.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Spa-inspired bathroom with natural stone" loading="lazy"><span class="design-badge">Luxury</span><button class="wishlist" type="button" aria-label="Add Stone and Steam to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Bathroom · Luxury</span><h3>Stone &amp; Steam</h3><div class="design-card-bottom"><span class="budget">Est. ₹3,40,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="Sunday Table" data-category="Dining Room" data-style="Traditional" data-budget="92000" data-image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A welcoming dining room that pairs timeless craftsmanship with a relaxed, contemporary spirit.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Elegant dining room with timeless furniture" loading="lazy"><span class="design-badge">Traditional</span><button class="wishlist" type="button" aria-label="Add Sunday Table to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Dining Room · Traditional</span><h3>Sunday Table</h3><div class="design-card-bottom"><span class="budget">Est. ₹92,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="Work in Light" data-category="Home Office" data-style="Minimalist" data-budget="48000" data-image="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A calm, light-filled home office that helps you find focus without sacrificing comfort.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Minimalist home office with natural light" loading="lazy"><span class="design-badge">Minimalist</span><button class="wishlist" type="button" aria-label="Add Work in Light to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Home Office · Minimalist</span><h3>Work in Light</h3><div class="design-card-bottom"><span class="budget">Est. ₹48,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="The Heritage Living Room" data-category="Living Room" data-style="Traditional" data-budget="265000" data-image="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="A character-rich living room grounded in heritage forms, rich timber, and beautifully collected pieces.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Traditional living space with rich natural textures" loading="lazy"><span class="design-badge">Traditional</span><button class="wishlist" type="button" aria-label="Add The Heritage Living Room to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Living Room · Traditional</span><h3>The Heritage Living Room</h3><div class="design-card-bottom"><span class="budget">Est. ₹2,65,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+          <article class="design-card" data-name="The Curated Kitchen" data-category="Kitchen" data-style="Modern" data-budget="115000" data-image="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" data-description="An efficient, expressive kitchen that balances modern lines with welcoming natural finishes.">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=800&amp;h=700&amp;q=82" alt="Modern kitchen with warm finishes and clean lines" loading="lazy"><span class="design-badge">Modern</span><button class="wishlist" type="button" aria-label="Add The Curated Kitchen to wishlist" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></button></div>
+            <div class="design-info"><span class="design-type">Kitchen · Modern</span><h3>The Curated Kitchen</h3><div class="design-card-bottom"><span class="budget">Est. ₹1,15,000</span><button class="details-button" type="button">View Details <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></div></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="container inspiration" id="inspiration">
+      <div class="inspiration-image"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1200&amp;q=85" alt="Thoughtfully layered interior with calm colors and modern furniture" loading="lazy"></div>
+      <div class="inspiration-copy">
+        <span class="section-label">Good ideas live here</span>
+        <h2>Get Inspired, Create Beautiful Spaces</h2>
+        <p>Start with a feeling, a favorite shade, or the piece you can’t stop thinking about. Mix natural textures, considered color, and furniture that makes everyday life a little more beautiful.</p>
+        <div class="inspiration-points">
+          <div class="inspiration-point"><span class="point-mark"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Personal color palettes</div>
+          <div class="inspiration-point"><span class="point-mark"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Natural material pairings</div>
+          <div class="inspiration-point"><span class="point-mark"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Furniture with purpose</div>
+          <div class="inspiration-point"><span class="point-mark"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Ideas for every room</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band">
+      <div class="container cta-inner">
+        <div><span class="section-label">A beautiful home, your way</span><h2>Ready to Transform Your Space?</h2><p>Let your imagination create something beautiful. Start exploring your dream interiors today.</p></div>
+        <a class="button" href="#featured">Start Exploring <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="contact">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html" aria-label="DreamSpace home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Dream<span>Space</span></span></a>
+          <p>Thoughtful interiors, timeless inspiration, and beautiful ideas for the home you’ve always imagined.</p>
+          <div class="social-links" aria-label="Social media">
+            <a href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="3.2" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="5.6" r=".9" fill="currentColor"/></svg></a>
+            <a href="https://www.pinterest.com/" aria-label="Pinterest"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17a7 7 0 1 0-3.1-.73l1-3.43m-1.08-3.3c0-3.43 5.4-4.12 5.4-.94 0 2.25-1.62 5.67-3.52 4.12-.75-.6-.67-1.5-.43-2.44l.75-2.86" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M11.5 17v-6.2h2.1l.32-2.42H11.5V6.83c0-.7.2-1.18 1.2-1.18h1.3V3.48c-.23-.03-1.02-.1-1.94-.1-1.92 0-3.23 1.12-3.23 3.3v1.7H6.65v2.42h2.18V17h2.67Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div><h3>Quick Links</h3><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="#top">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="budget-calculator.html">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a><a href="my-dream-board.html">My Dream Board</a></nav></div>
+        <div><h3>Contact</h3><div class="footer-contact"><a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span>Phone number to be confirmed</span><span>Jaipur, Rajasthan, India (sample location)</span></div></div>
+        <div><h3>Our philosophy</h3><div class="footer-contact"><span>Personal, never precious.</span><span>Timeless, never ordinary.</span><span>Always a little more you.</span></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 DreamSpace. All Rights Reserved.</span><a href="#top">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <dialog class="image-lightbox" id="category-lightbox" aria-label="Room design image viewer">
+    <button class="lightbox-control lightbox-close" id="lightbox-close" type="button" aria-label="Close image viewer"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="lightbox-layout">
+      <button class="lightbox-control" id="lightbox-prev" type="button" aria-label="Previous room image"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m5 5-5-5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <img class="lightbox-image" id="lightbox-image" src="" alt="">
+      <button class="lightbox-control" id="lightbox-next" type="button" aria-label="Next room image"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#site-nav");
+    const searchInput = document.querySelector("#design-search");
+    const budgetFilter = document.querySelector("#budget-filter");
+    const filterButtons = [...document.querySelectorAll(".filter-chip")];
+    const designCards = [...document.querySelectorAll(".design-card")];
+    const resultsCount = document.querySelector("#results-count");
+    const toast = document.querySelector("#toast");
+    const wishlistKey = "dreamspace-wishlist";
+    let activeStyle = "All Designs";
+    let toastTimer;
+
+    function readWishlist() {
+      return JSON.parse(localStorage.getItem(wishlistKey) || "[]");
+    }
+
+    function saveWishlist(items) {
+      localStorage.setItem(wishlistKey, JSON.stringify(items));
+    }
+
+    function designSlug(name) {
+      return name.toLocaleLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("is-visible");
+      window.clearTimeout(toastTimer);
+      toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
+    }
+
+    function matchesBudget(amount, range) {
+      if (range === "under-50000") return amount < 50000;
+      if (range === "50000-100000") return amount >= 50000 && amount <= 100000;
+      if (range === "100000-300000") return amount > 100000 && amount <= 300000;
+      if (range === "above-300000") return amount > 300000;
+      return true;
+    }
+
+    function applyFilters() {
+      const query = searchInput.value.trim().toLocaleLowerCase();
+      const budget = budgetFilter.value;
+      let visibleCount = 0;
+
+      designCards.forEach((card) => {
+        const searchableText = `${card.dataset.name} ${card.dataset.category} ${card.dataset.style}`.toLocaleLowerCase();
+        const matchesQuery = !query || searchableText.includes(query);
+        const matchesStyle = activeStyle === "All Designs" || card.dataset.style === activeStyle;
+        const matchesBudgetFilter = matchesBudget(Number(card.dataset.budget), budget);
+        const isVisible = matchesQuery && matchesStyle && matchesBudgetFilter;
+        card.hidden = !isVisible;
+        if (isVisible) visibleCount += 1;
+      });
+
+      resultsCount.textContent = `Showing ${visibleCount} ${visibleCount === 1 ? "design" : "designs"}`;
+      let emptyMessage = document.querySelector(".empty-state");
+      if (!visibleCount && !emptyMessage) {
+        emptyMessage = document.createElement("p");
+        emptyMessage.className = "empty-state";
+        emptyMessage.textContent = "No designs match those filters. Try another style, budget, or search.";
+        document.querySelector("#design-grid").append(emptyMessage);
+      } else if (visibleCount && emptyMessage) {
+        emptyMessage.remove();
+      }
+    }
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+      navigation.classList.toggle("is-open", !isOpen);
+    });
+
+    navigation.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        navigation.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+      }
+    });
+
+    document.querySelector("#hero-search").addEventListener("submit", (event) => {
+      event.preventDefault();
+      document.querySelector("#featured").scrollIntoView({ behavior: "smooth" });
+      applyFilters();
+    });
+    searchInput.addEventListener("input", applyFilters);
+    budgetFilter.addEventListener("change", applyFilters);
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeStyle = button.dataset.style;
+        filterButtons.forEach((filterButton) => {
+          const isActive = filterButton === button;
+          filterButton.classList.toggle("is-active", isActive);
+          filterButton.setAttribute("aria-pressed", String(isActive));
+        });
+        applyFilters();
+      });
+    });
+
+    document.querySelectorAll(".category-explore").forEach((categoryLink) => {
+      categoryLink.addEventListener("click", () => {
+        searchInput.value = categoryLink.closest(".category-card").dataset.category;
+        applyFilters();
+      });
+    });
+
+    const categoryCards = [...document.querySelectorAll(".category-card")];
+    const lightbox = document.querySelector("#category-lightbox");
+    const lightboxImage = document.querySelector("#lightbox-image");
+    const lightboxCaption = document.querySelector("#lightbox-caption");
+    let activeCategoryImage = 0;
+    let lastImageTrigger;
+
+    function showCategoryImage(index) {
+      activeCategoryImage = (index + categoryCards.length) % categoryCards.length;
+      const card = categoryCards[activeCategoryImage];
+      const thumbnail = card.querySelector("img");
+      const imageUrl = new URL(thumbnail.currentSrc || thumbnail.src);
+      imageUrl.searchParams.set("w", "1800");
+      imageUrl.searchParams.set("h", "1400");
+      imageUrl.searchParams.set("q", "88");
+      lightboxImage.src = imageUrl.href;
+      lightboxImage.alt = thumbnail.alt;
+      lightboxCaption.textContent = `${card.querySelector("h3").textContent} · ${activeCategoryImage + 1} of ${categoryCards.length}`;
+    }
+
+    document.querySelectorAll(".category-image-button").forEach((button, index) => {
+      button.addEventListener("click", () => {
+        lastImageTrigger = button;
+        showCategoryImage(index);
+        lightbox.showModal();
+        document.querySelector("#lightbox-close").focus();
+      });
+    });
+
+    document.querySelector("#lightbox-close").addEventListener("click", () => lightbox.close());
+    document.querySelector("#lightbox-prev").addEventListener("click", () => showCategoryImage(activeCategoryImage - 1));
+    document.querySelector("#lightbox-next").addEventListener("click", () => showCategoryImage(activeCategoryImage + 1));
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) lightbox.close();
+    });
+    lightbox.addEventListener("close", () => {
+      if (lastImageTrigger) lastImageTrigger.focus();
+    });
+    lightbox.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") lightbox.close();
+      if (event.key === "ArrowLeft") showCategoryImage(activeCategoryImage - 1);
+      if (event.key === "ArrowRight") showCategoryImage(activeCategoryImage + 1);
+    });
+
+    const savedDesigns = readWishlist();
+    document.querySelectorAll(".wishlist").forEach((button) => {
+      const card = button.closest(".design-card");
+      const slug = designSlug(card.dataset.name);
+      const isSaved = savedDesigns.includes(slug);
+      button.setAttribute("aria-pressed", String(isSaved));
+      button.setAttribute("aria-label", `${isSaved ? "Remove" : "Add"} ${card.dataset.name} ${isSaved ? "from" : "to"} wishlist`);
+      button.addEventListener("click", () => {
+        const currentlySaved = button.getAttribute("aria-pressed") === "true";
+        const wishlist = readWishlist();
+        const updatedWishlist = currentlySaved
+          ? wishlist.filter((item) => item !== slug)
+          : [...new Set([...wishlist, slug])];
+        saveWishlist(updatedWishlist);
+        button.setAttribute("aria-pressed", String(!currentlySaved));
+        button.setAttribute("aria-label", `${currentlySaved ? "Add" : "Remove"} ${card.dataset.name} ${currentlySaved ? "to" : "from"} wishlist`);
+        showToast(currentlySaved ? `${card.dataset.name} removed from your wishlist` : `${card.dataset.name} saved to your wishlist`);
+      });
+    });
+
+    document.querySelectorAll(".details-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        const card = button.closest(".design-card");
+        const url = new URL("design-details.html", window.location.href);
+        url.searchParams.set("name", card.dataset.name);
+        url.searchParams.set("category", card.dataset.category);
+        url.searchParams.set("style", card.dataset.style);
+        url.searchParams.set("budget", card.dataset.budget);
+        url.searchParams.set("image", card.dataset.image);
+        url.searchParams.set("description", card.dataset.description);
+        window.location.href = url.href;
+      });
+    });
+
+    const compareKey = "dreamspace-design-compare";
+    document.querySelectorAll(".design-card").forEach((card) => {
+      const compareButton = document.createElement("button");
+      compareButton.className = "compare-design-button";
+      compareButton.type = "button";
+      compareButton.textContent = "Compare";
+      compareButton.setAttribute("aria-label", `Add ${card.dataset.name} to design comparison`);
+      card.querySelector(".design-card-bottom").append(compareButton);
+      compareButton.addEventListener("click", () => {
+        let selected = [];
+        try {
+          const stored = JSON.parse(localStorage.getItem(compareKey) || "[]");
+          selected = Array.isArray(stored) ? stored.filter((item) => typeof item === "string") : [];
+        } catch (error) {
+          console.error("Could not read the saved design comparison.", error);
+          showToast("The comparison could not be loaded in this browser.");
+          return;
+        }
+        const selectedSlug = designSlug(card.dataset.name);
+        if (selected.includes(selectedSlug)) {
+          showToast(`${card.dataset.name} is already in your comparison`);
+          return;
+        }
+        if (selected.length >= 2) {
+          showToast("Both comparison slots are filled. Replace a design on the Compare Designs page.");
+          return;
+        }
+        try {
+          localStorage.setItem(compareKey, JSON.stringify([...selected, selectedSlug]));
+        } catch (error) {
+          console.error("Could not save your design comparison.", error);
+          showToast("This design could not be added to your comparison.");
+          return;
+        }
+        showToast(`${card.dataset.name} added to comparison`);
+      });
+    });
+
+    applyFilters();
+  </script>
+</body>
+</html>

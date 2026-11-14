@@ -1,0 +1,729 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Explore every detail of this DreamSpace interior, from its materials and palette to its estimated budget.">
+  <title>Design Details | DreamSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25221f;
+      --brown: #4b3b30;
+      --muted: #817a72;
+      --cream: #f6f3ed;
+      --sand: #eae3d8;
+      --white: #fffefa;
+      --gold: #b28a5a;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(75,59,48,.09); background: rgba(246,243,237,.96); backdrop-filter: blur(14px); }
+    .navbar { min-height: 78px; display: flex; align-items: center; gap: 25px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-icon { width: 32px; height: 36px; color: var(--brown); }
+    .brand-icon svg { width: 100%; height: 100%; }
+    .brand-name { font-family: var(--serif); font-size: 22px; letter-spacing: -.7px; }
+    .brand-name span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 29px; margin-left: auto; }
+    .nav-links a { position: relative; padding: 30px 0 27px; color: #625a52; font-size: 10px; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+    .nav-links a.active::after { position: absolute; right: 0; bottom: 20px; left: 0; height: 1px; background: var(--gold); content: ""; }
+    .button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px; padding: 0 18px; border: 1px solid var(--brown); border-radius: 2px; background: var(--brown); color: white; font-size: 10px; font-weight: 600; letter-spacing: .3px; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); background: #624e3f; }
+    .button svg { width: 15px; height: 15px; }
+    .wishlist-nav { display: inline-flex; min-width: 37px; height: 37px; align-items: center; justify-content: center; gap: 5px; border: 1px solid var(--sand); background: transparent; color: var(--brown); font-size: 9px; }
+    .wishlist-nav svg { width: 16px; height: 16px; }
+    .wishlist-nav:hover { border-color: var(--gold); color: var(--gold); }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--sand); background: transparent; color: var(--brown); cursor: pointer; }
+
+    .breadcrumb { display: flex; flex-wrap: wrap; gap: 9px; padding: 19px 0 16px; color: var(--muted); font-size: 9px; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb span[aria-current="page"] { color: var(--brown); }
+    .hero { display: grid; grid-template-columns: 1.08fr .92fr; min-height: 440px; background: var(--white); box-shadow: 0 12px 40px rgba(53,42,31,.06); }
+    .hero-photo { position: relative; min-height: 440px; overflow: hidden; background: #d3c8b9; }
+    .hero-photo img { width: 100%; height: 100%; position: absolute; inset: 0; object-fit: cover; }
+    .hero-photo::after { position: absolute; inset: 65% 0 0; background: linear-gradient(transparent, rgba(20,17,14,.34)); content: ""; pointer-events: none; }
+    .hero-photo-label { position: absolute; bottom: 17px; left: 20px; z-index: 1; color: white; font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .hero-copy { display: flex; flex-direction: column; justify-content: center; padding: 46px clamp(28px, 5vw, 65px); }
+    .eyebrow, .section-label { display: inline-flex; align-items: center; gap: 9px; color: var(--gold); font-size: 8px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; }
+    .eyebrow::before, .section-label::before { width: 22px; height: 1px; background: currentColor; content: ""; }
+    .hero-copy h1 { margin: 15px 0 12px; font-family: var(--serif); font-size: clamp(36px, 4vw, 52px); font-weight: 400; letter-spacing: -1.5px; line-height: 1.13; }
+    .hero-copy > p { max-width: 460px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.9; }
+    .design-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 19px; }
+    .design-tags span { padding: 7px 9px; border: 1px solid var(--sand); color: #665e56; font-size: 8px; }
+    .hero-budget { display: flex; align-items: end; justify-content: space-between; gap: 15px; margin-top: 20px; padding-top: 17px; border-top: 1px solid #eee9e0; }
+    .hero-budget small { display: block; margin-bottom: 5px; color: var(--muted); font-size: 8px; letter-spacing: .8px; text-transform: uppercase; }
+    .hero-budget strong { font-family: var(--serif); font-size: 24px; font-weight: 400; }
+    .hero-budget em { color: var(--muted); font-size: 8px; font-style: normal; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 19px; }
+    .button-outline { border-color: #d4c9ba; background: transparent; color: var(--brown); }
+    .button-outline:hover { background: var(--sand); color: var(--brown); }
+    .hero-wishlist[aria-pressed="true"] { border-color: #a94d47; color: #a94d47; }
+
+    .gallery-section { padding: 68px 0 74px; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 22px; }
+    .section-heading h2, .content-heading { margin: 11px 0 0; font-family: var(--serif); font-size: clamp(32px, 4vw, 43px); font-weight: 400; letter-spacing: -1.2px; }
+    .section-heading p { max-width: 330px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .gallery-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; grid-template-rows: 173px 173px; gap: 11px; }
+    .gallery-item { position: relative; overflow: hidden; padding: 0; border: 0; background: #d4c8b9; cursor: zoom-in; }
+    .gallery-item:first-child { grid-row: span 2; }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease; }
+    .gallery-item:hover img { transform: scale(1.045); }
+    .gallery-item::after { position: absolute; inset: auto 0 0; height: 48px; background: linear-gradient(transparent, #14110e55); content: ""; pointer-events: none; }
+    .gallery-item span { position: absolute; right: 12px; bottom: 10px; left: 12px; z-index: 1; color: white; font-size: 8px; text-align: left; }
+    .gallery-controls { display: flex; gap: 7px; }
+    .icon-button { width: 36px; height: 36px; display: grid; place-items: center; border: 1px solid #d8d0c4; background: transparent; color: var(--brown); cursor: pointer; transition: background .2s ease, color .2s ease; }
+    .icon-button:hover { background: var(--brown); color: white; }
+    .icon-button svg { width: 15px; height: 15px; }
+
+    .overview-section { padding: 74px 0; background: #eee9e0; }
+    .overview-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 70px; }
+    .overview-copy > p { max-width: 690px; margin: 16px 0 0; color: #716961; font-size: 11px; line-height: 2; }
+    .feature-list { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 20px; margin-top: 23px; }
+    .feature-item { display: flex; align-items: flex-start; gap: 9px; color: #554e46; font-size: 9px; line-height: 1.6; }
+    .feature-mark { width: 21px; height: 21px; flex-shrink: 0; display: grid; place-items: center; background: #e3d8c8; color: var(--gold); }
+    .feature-mark svg { width: 12px; height: 12px; }
+    .spec-card { align-self: start; padding: 22px 24px; background: var(--white); box-shadow: 0 8px 26px rgba(53,42,31,.055); }
+    .spec-card h3 { margin: 0 0 15px; font-family: var(--serif); font-size: 21px; font-weight: 400; }
+    .spec-row { display: flex; justify-content: space-between; gap: 16px; padding: 10px 0; border-top: 1px solid #eee9e0; font-size: 9px; }
+    .spec-row span:first-child { color: var(--muted); }
+    .spec-row span:last-child { color: var(--brown); font-weight: 600; text-align: right; }
+
+    .materials-section { padding: 78px 0 83px; }
+    .materials-grid { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; margin-top: 24px; }
+    .material-card { overflow: hidden; background: var(--white); box-shadow: 0 6px 20px rgba(53,42,31,.05); }
+    .material-card img { width: 100%; height: 120px; object-fit: cover; }
+    .material-card div { padding: 12px; }
+    .material-card h3 { margin: 0 0 5px; font-family: var(--serif); font-size: 14px; font-weight: 400; }
+    .material-card p { margin: 0; color: var(--muted); font-size: 8px; line-height: 1.65; }
+
+    .palette-budget { padding: 72px 0 78px; background: #eee9e0; }
+    .palette-budget-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 70px; }
+    .palette-list { display: grid; gap: 9px; margin-top: 21px; }
+    .palette-swatch { display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 11px; padding: 8px 10px; background: var(--white); }
+    .swatch-color { width: 34px; height: 34px; border: 1px solid #0000000c; }
+    .palette-swatch strong { display: block; font-size: 9px; font-weight: 600; }
+    .palette-swatch small { display: block; margin-top: 3px; color: var(--muted); font-size: 8px; }
+    .palette-swatch code { color: #776d63; font-family: var(--sans); font-size: 8px; }
+    .budget-table-wrap { margin-top: 18px; background: var(--white); }
+    .budget-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .budget-table th, .budget-table td { padding: 12px 15px; border-bottom: 1px solid #eee9e0; font-size: 9px; }
+    .budget-table th { color: var(--muted); font-size: 8px; font-weight: 600; letter-spacing: .7px; text-transform: uppercase; }
+    .budget-table td:last-child, .budget-table th:last-child { text-align: right; }
+    .budget-table tr:last-child td { border-bottom: 0; }
+    .budget-total td { color: var(--brown); font-size: 11px; font-weight: 700; }
+    .budget-note { margin: 11px 0 0; color: var(--muted); font-size: 8px; line-height: 1.7; }
+
+    .similar-section { padding: 78px 0 82px; }
+    .similar-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin-top: 24px; }
+    .similar-card { overflow: hidden; background: var(--white); box-shadow: 0 7px 22px rgba(53,42,31,.055); transition: transform .25s ease; }
+    .similar-card:hover { transform: translateY(-4px); }
+    .similar-card img { width: 100%; height: 185px; object-fit: cover; }
+    .similar-copy { padding: 13px 14px 15px; }
+    .similar-copy span { color: var(--gold); font-size: 7px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; }
+    .similar-copy h3 { margin: 6px 0 11px; font-family: var(--serif); font-size: 18px; font-weight: 400; }
+    .similar-bottom { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+    .similar-bottom strong { color: var(--brown); font-size: 9px; }
+    .similar-bottom a { color: var(--brown); font-size: 8px; font-weight: 700; }
+
+    .consult-section { padding: 78px 0; background: var(--brown); color: white; }
+    .consult-grid { display: grid; grid-template-columns: .8fr 1.2fr; align-items: start; gap: 65px; }
+    .consult-copy { position: sticky; top: 115px; }
+    .consult-copy .section-label { color: #ddc4a0; }
+    .consult-copy h2 { margin: 14px 0 12px; font-family: var(--serif); font-size: clamp(34px, 4vw, 48px); font-weight: 400; letter-spacing: -1.1px; line-height: 1.18; }
+    .consult-copy p { margin: 0; color: #d2c7ba; font-size: 10px; line-height: 1.9; }
+    .consult-contact { display: grid; gap: 9px; margin-top: 25px; color: #e7d9c6; font-size: 9px; }
+    .consult-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; padding: 25px; background: var(--white); color: var(--ink); }
+    .form-field { display: grid; gap: 7px; }
+    .form-field.full { grid-column: 1 / -1; }
+    .form-field label { color: #5e564e; font-size: 8px; font-weight: 700; letter-spacing: .45px; }
+    .form-field input, .form-field select, .form-field textarea { width: 100%; min-height: 41px; padding: 10px 11px; border: 1px solid #e3ddd3; border-radius: 0; outline: 0; background: #fffefa; color: var(--ink); font-size: 9px; }
+    .form-field textarea { min-height: 95px; resize: vertical; }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 2px #b28a5a20; }
+    .form-submit { grid-column: 1 / -1; justify-self: start; }
+    .form-success { grid-column: 1 / -1; margin: 0; padding: 12px; border-left: 2px solid var(--gold); background: #f5f0e7; color: #5f4b35; font-size: 10px; line-height: 1.6; }
+    .form-success[hidden] { display: none; }
+
+    .footer { padding: 52px 0 0; background: #28231f; color: #f7f3ec; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr 1fr 1fr; gap: 38px; padding-bottom: 39px; }
+    .footer .brand-icon { color: #e0c49f; }
+    .footer .brand-name { color: white; }
+    .footer-about p { max-width: 260px; margin: 15px 0 0; color: #c1b9af; font-size: 9px; line-height: 1.9; }
+    .footer h3 { margin: 4px 0 15px; color: #e6d5bd; font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .footer-links, .footer-contact { display: grid; gap: 10px; }
+    .footer-links a, .footer-contact a, .footer-contact span { color: #c1b9af; font-size: 9px; line-height: 1.6; }
+    .footer-links a:hover, .footer-contact a:hover { color: white; }
+    .social-links { display: flex; gap: 8px; margin-top: 16px; }
+    .social-links a { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid #655b50; border-radius: 50%; color: #e6d5bd; transition: color .2s ease, background .2s ease; }
+    .social-links a:hover { background: #e6d5bd; color: var(--ink); }
+    .social-links svg { width: 12px; height: 12px; }
+    .footer-bottom { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid #ffffff20; color: #aaa198; font-size: 8px; }
+    .lightbox { width: min(1000px, calc(100% - 32px)); max-width: none; max-height: 90vh; padding: 0; border: 0; overflow: visible; background: #1d1915; color: white; }
+    .lightbox::backdrop { background: rgba(20,17,14,.88); backdrop-filter: blur(3px); }
+    .lightbox-content { position: relative; display: grid; grid-template-columns: 52px 1fr 52px; align-items: center; gap: 10px; padding: 14px; }
+    .lightbox img { width: 100%; max-height: 78vh; object-fit: contain; }
+    .lightbox button { color: white; border-color: #ffffff55; }
+    .lightbox-close { position: absolute; top: 24px; right: 24px; z-index: 1; background: #1d1915aa; }
+    .lightbox-caption { margin: 0; padding: 0 14px 15px; color: #e6d5bd; font-size: 9px; text-align: center; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .reveal { opacity: 0; transform: translateY(15px); transition: opacity .55s ease, transform .55s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @keyframes arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 1000px) {
+      .container { width: min(100% - 48px, 850px); }
+      .nav-links { gap: 17px; }
+      .hero-copy { padding-inline: 32px; }
+      .overview-grid, .palette-budget-grid { gap: 36px; }
+      .materials-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .material-card img { height: 145px; }
+      .similar-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .similar-card img { height: 220px; }
+      .consult-grid { gap: 35px; }
+      .footer-grid { grid-template-columns: 1.2fr 1fr 1fr; gap: 28px; }
+      .footer-about { grid-row: span 2; }
+    }
+    @media (max-width: 680px) {
+      html { scroll-padding-top: 72px; }
+      .container { width: calc(100% - 36px); }
+      .navbar { min-height: 68px; gap: 9px; }
+      .brand-icon { width: 28px; height: 32px; }
+      .brand-name { font-size: 20px; }
+      .nav-links { position: absolute; top: 68px; right: 0; left: 0; display: none; align-items: stretch; gap: 0; padding: 7px 18px 15px; border-top: 1px solid var(--sand); background: var(--cream); }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 12px 0; }
+      .nav-links a.active::after { right: auto; bottom: 6px; width: 95px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .menu-toggle svg { width: 18px; height: 18px; }
+      .wishlist-nav { min-width: 33px; height: 35px; }
+      .get-started { min-height: 37px; margin-left: auto; padding: 0 11px; font-size: 8px; }
+      .breadcrumb { padding: 15px 0 12px; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-photo { min-height: 310px; }
+      .hero-copy { padding: 28px 23px 27px; }
+      .hero-copy h1 { font-size: 41px; }
+      .hero-copy > p { font-size: 10px; }
+      .gallery-section, .materials-section, .similar-section { padding-block: 57px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 10px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 230px 135px 135px; gap: 8px; }
+      .gallery-item:first-child { grid-column: 1 / -1; grid-row: auto; }
+      .overview-section { padding: 57px 0; }
+      .overview-grid, .palette-budget-grid, .consult-grid { grid-template-columns: 1fr; gap: 33px; }
+      .feature-list { gap: 11px; }
+      .spec-card { padding: 19px; }
+      .materials-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .material-card img { height: 130px; }
+      .palette-budget { padding: 57px 0; }
+      .similar-grid { gap: 10px; }
+      .similar-card img { height: 150px; }
+      .similar-copy { padding: 11px; }
+      .similar-copy h3 { font-size: 16px; }
+      .similar-bottom { align-items: flex-start; flex-direction: column; gap: 7px; }
+      .consult-section { padding: 57px 0; }
+      .consult-copy { position: static; }
+      .consult-form { padding: 17px; gap: 12px; }
+      .form-field input, .form-field select { min-height: 40px; }
+      .footer { padding-top: 42px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 26px 18px; padding-bottom: 30px; }
+      .footer-about { grid-column: 1 / -1; grid-row: auto; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; justify-content: center; gap: 7px; padding: 12px 0; line-height: 1.6; }
+      .lightbox-content { grid-template-columns: 38px 1fr 38px; gap: 5px; padding: 48px 7px 10px; }
+      .lightbox img { max-height: 70vh; }
+      .lightbox-close { top: 8px; right: 8px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+    @media (max-width: 1100px) {
+      .navbar { position: relative; }
+      .nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; align-items: stretch; gap: 0; margin: 0; padding: 8px 18px 14px; border-top: 1px solid var(--sand); background: var(--cream); box-shadow: 0 12px 24px #352a1f12; }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 11px 0; font-size: 10px; }
+      .nav-links a.active::after { right: auto; bottom: 5px; width: 150px; }
+      .menu-toggle { display: grid; place-items: center; flex-shrink: 0; }
+      .navbar > .header-cta, .navbar > .get-started, .navbar > .wishlist-link, .navbar > .wishlist-nav { margin-left: auto; }
+    }
+    @media (max-width: 360px) {
+      .navbar { gap: 6px; }
+      .brand { gap: 5px; }
+      .brand-icon { width: 24px; height: 28px; }
+      .brand-name { font-size: 17px; }
+      .get-started { padding-inline: 6px; font-size: 7px; }
+      .menu-toggle { width: 36px; height: 36px; }
+    }
+  </style>
+  <link rel="stylesheet" href="readability.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="DreamSpace home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">Dream<span>Space</span></span>
+      </a>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a class="active" href="explore-designs.html" aria-current="page">Explore Designs</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="budget-calculator.html">Budget Calculator</a>
+        <a href="transformations.html">Before &amp; After Gallery</a>
+        <a href="compare-designs.html">Compare Designs</a>
+      </nav>
+      <a class="wishlist-nav" href="my-dream-board.html" aria-label="My Dream Board, 0 saved designs">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+        <span id="wishlist-count">0</span>
+      </a>
+      <a class="button get-started" href="#consultation">Get Started <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+    </div>
+  </header>
+
+  <main>
+    <div class="container breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Home</a><span aria-hidden="true">/</span><a href="explore-designs.html">Explore Designs</a><span aria-hidden="true">/</span><span aria-current="page" id="breadcrumb-title">Design Details</span>
+    </div>
+
+    <section class="container hero" aria-labelledby="design-title">
+      <div class="hero-photo">
+        <img id="hero-image" src="" alt="">
+        <span class="hero-photo-label">A DreamSpace original</span>
+      </div>
+      <div class="hero-copy">
+        <span class="eyebrow">Considered living, beautifully made</span>
+        <h1 id="design-title">The Sunday Edit</h1>
+        <p id="design-description"></p>
+        <div class="design-tags"><span id="design-category"></span><span id="design-style"></span><span>Made for real life</span></div>
+        <div class="hero-budget"><div><small>Estimated project budget</small><strong id="design-budget"></strong></div><em>Indicative · INR</em></div>
+        <div class="hero-actions">
+          <button class="button hero-wishlist" id="hero-wishlist" type="button" aria-pressed="false"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M17 7.3c0 4.1-7 8.7-7 8.7S3 11.4 3 7.3A3.8 3.8 0 0 1 10 5.2a3.8 3.8 0 0 1 7 2.1Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg><span>Add to Wishlist</span></button>
+          <a class="button button-outline" href="contact.html#consultation-form-panel">Book a Consultation <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="container gallery-section" aria-labelledby="gallery-title">
+      <div class="section-heading">
+        <div><span class="section-label">A closer look</span><h2 id="gallery-title">The details make the room</h2></div>
+        <div class="gallery-controls">
+          <button class="icon-button" id="gallery-prev" type="button" aria-label="Previous gallery image"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m5 5-5-5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="icon-button" id="gallery-next" type="button" aria-label="Next gallery image"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+    </section>
+
+    <section class="overview-section">
+      <div class="container overview-grid">
+        <div class="overview-copy">
+          <span class="section-label">The thinking behind it</span>
+          <h2 class="content-heading">About This Design</h2>
+          <p id="overview-description"></p>
+          <div class="feature-list" id="feature-list"></div>
+        </div>
+        <aside class="spec-card" aria-label="Design specifications">
+          <h3>Design Specifications</h3>
+          <div class="spec-row"><span>Room size</span><span id="spec-size"></span></div>
+          <div class="spec-row"><span>Interior style</span><span id="spec-style"></span></div>
+          <div class="spec-row"><span>Color theme</span><span>Warm neutrals</span></div>
+          <div class="spec-row"><span>Lighting</span><span>Layered ambient</span></div>
+          <div class="spec-row"><span>Furniture</span><span>Made-to-measure mix</span></div>
+          <div class="spec-row"><span>Estimated completion</span><span id="spec-time"></span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="container materials-section">
+      <div class="section-heading">
+        <div><span class="section-label">Selected with intention</span><h2>Materials &amp; Furniture</h2></div>
+        <p>Natural finishes and considered pieces bring depth, warmth, and a sense of ease.</p>
+      </div>
+      <div class="materials-grid" id="materials-grid"></div>
+    </section>
+
+    <section class="palette-budget">
+      <div class="container palette-budget-grid">
+        <div>
+          <span class="section-label">A harmonious balance</span>
+          <h2 class="content-heading">Colors Used in This Design</h2>
+          <div class="palette-list">
+            <div class="palette-swatch"><span class="swatch-color" style="background:#e8dfd1"></span><span><strong>Soft Sand</strong><small>Walls &amp; larger surfaces</small></span><code>#E8DFD1</code></div>
+            <div class="palette-swatch"><span class="swatch-color" style="background:#b18a63"></span><span><strong>Warm Oak</strong><small>Furniture &amp; accents</small></span><code>#B18A63</code></div>
+            <div class="palette-swatch"><span class="swatch-color" style="background:#f8f5ef"></span><span><strong>Ivory Linen</strong><small>Upholstery &amp; curtains</small></span><code>#F8F5EF</code></div>
+            <div class="palette-swatch"><span class="swatch-color" style="background:#62574a"></span><span><strong>Earthy Umber</strong><small>Contrast &amp; detail</small></span><code>#62574A</code></div>
+            <div class="palette-swatch"><span class="swatch-color" style="background:#899080"></span><span><strong>Sage Leaf</strong><small>Soft natural accents</small></span><code>#899080</code></div>
+          </div>
+        </div>
+        <div>
+          <span class="section-label">A thoughtful estimate</span>
+          <h2 class="content-heading">Estimated Budget Breakdown</h2>
+          <div class="budget-table-wrap">
+            <table class="budget-table">
+              <thead><tr><th scope="col">Investment</th><th scope="col">Estimated cost</th></tr></thead>
+              <tbody>
+                <tr><td>Furniture &amp; upholstery</td><td data-budget-part="furniture"></td></tr>
+                <tr><td>Lighting &amp; electrical</td><td data-budget-part="lighting"></td></tr>
+                <tr><td>Wall decoration &amp; finishes</td><td data-budget-part="walls"></td></tr>
+                <tr><td>Flooring &amp; rugs</td><td data-budget-part="flooring"></td></tr>
+                <tr><td>Accessories &amp; styling</td><td data-budget-part="accessories"></td></tr>
+                <tr class="budget-total"><td>Total estimated budget</td><td id="budget-total"></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="budget-note">This is an indicative estimate for planning purposes. Final costs may vary based on room dimensions, material selection, availability, and location.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container similar-section">
+      <div class="section-heading">
+        <div><span class="section-label">A few more to fall for</span><h2>You May Also Like</h2></div>
+        <a class="button button-outline" href="explore-designs.html">Explore all designs</a>
+      </div>
+      <div class="similar-grid" id="similar-grid"></div>
+    </section>
+
+    <section class="consult-section" id="consultation">
+      <div class="container consult-grid">
+        <div class="consult-copy">
+          <span class="section-label">Let’s make it yours</span>
+          <h2>Let’s Create Your Dream Space</h2>
+          <p>Love this design? Connect with us and take the first step toward transforming your space.</p>
+          <div class="consult-contact"><a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span>Phone number to be confirmed</span></div>
+        </div>
+        <form class="consult-form" id="consult-form">
+          <div class="form-field"><label for="full-name">Full Name *</label><input id="full-name" name="name" type="text" autocomplete="name" placeholder="Your name" minlength="2" maxlength="80" required></div>
+          <div class="form-field"><label for="email">Email Address *</label><input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" maxlength="120" required></div>
+          <div class="form-field"><label for="phone">Phone Number *</label><input id="phone" name="phone" type="tel" autocomplete="tel" placeholder="+91 98765 43210" minlength="7" maxlength="20" required></div>
+          <div class="form-field"><label for="design-type">Design Type *</label><select id="design-type" name="designType" required><option value="">Choose a room</option><option>Living Room</option><option>Bedroom</option><option>Kitchen</option><option>Bathroom</option><option>Dining Room</option><option>Home Office</option></select></div>
+          <div class="form-field full"><label for="message">Your Message *</label><textarea id="message" name="message" placeholder="Tell us a little about your space and what you have in mind..." minlength="10" maxlength="1200" required></textarea></div>
+          <p class="form-success" id="form-success" role="status" aria-live="polite" hidden></p>
+          <button class="button form-submit" type="submit">Submit Request <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="index.html" aria-label="DreamSpace home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Dream<span>Space</span></span></a>
+          <p>Thoughtful interiors, timeless inspiration, and beautiful ideas for the home you’ve always imagined.</p>
+          <div class="social-links" aria-label="Social media">
+            <a href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="3.2" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="5.6" r=".9" fill="currentColor"/></svg></a>
+            <a href="https://www.pinterest.com/" aria-label="Pinterest"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17a7 7 0 1 0-3.1-.73l1-3.43m-1.08-3.3c0-3.43 5.4-4.12 5.4-.94 0 2.25-1.62 5.67-3.52 4.12-.75-.6-.67-1.5-.43-2.44l.75-2.86" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M11.5 17v-6.2h2.1l.32-2.42H11.5V6.83c0-.7.2-1.18 1.2-1.18h1.3V3.48c-.23-.03-1.02-.1-1.94-.1-1.92 0-3.23 1.12-3.23 3.3v1.7H6.65v2.42h2.18V17h2.67Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div><h3>Quick Links</h3><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="budget-calculator.html">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a><a href="my-dream-board.html">My Dream Board</a></nav></div>
+        <div><h3>Contact</h3><div class="footer-contact"><a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span>Phone number to be confirmed</span><span>Jaipur, Rajasthan, India (sample location)</span></div></div>
+        <div><h3>Our philosophy</h3><div class="footer-contact"><span>Personal, never precious.</span><span>Timeless, never ordinary.</span><span>Always a little more you.</span></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 DreamSpace. All Rights Reserved.</span><a href="#">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Interior design photo gallery">
+    <button class="icon-button lightbox-close" id="lightbox-close" type="button" aria-label="Close image viewer"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m5 5 10 10M15 5 5 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
+    <div class="lightbox-content">
+      <button class="icon-button" id="lightbox-prev" type="button" aria-label="Previous image"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M16 10H4m5 5-5-5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <img id="lightbox-image" src="" alt="">
+      <button class="icon-button" id="lightbox-next" type="button" aria-label="Next image"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </dialog>
+
+  <script>
+    const imageSet = {
+      living: [
+        ["https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=88", "A warm, modern living room"],
+        ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85", "An airy living room, viewed from the dining area"],
+        ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85", "Natural wood finishes and considered furniture"],
+        ["https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=85", "A quiet corner with tactile, natural materials"]
+      ],
+      bedroom: [
+        ["https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&fit=crop&w=1400&q=88", "A restful bedroom with layered natural linens"],
+        ["https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&fit=crop&w=1000&q=85", "Soft tones and carefully layered bedroom textures"],
+        ["https://images.unsplash.com/photo-1615874694520-474822394e73?auto=format&fit=crop&w=1000&q=85", "Warm bedroom lighting and tailored details"],
+        ["https://images.unsplash.com/photo-1616486029423-aaa4789e8c9a?auto=format&fit=crop&w=1000&q=85", "A close look at thoughtful bedroom styling"]
+      ],
+      kitchen: [
+        ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1400&q=88", "A bright kitchen with natural finishes"],
+        ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85", "An open kitchen and dining perspective"],
+        ["https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=85", "A warm palette of timber and stone"],
+        ["https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1000&q=85", "Carefully selected finishes and details"]
+      ],
+      bathroom: [
+        ["https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=88", "A serene bathroom in natural stone"],
+        ["https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85", "A calm, light-filled interior detail"],
+        ["https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=85", "Natural wood tones and elegant fittings"],
+        ["https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1000&q=85", "Warm textures bring a spa-like feeling"]
+      ]
+    };
+
+    const galleryLabels = ["The full room", "An alternate perspective", "Materials & furniture", "Finishing details"];
+    const materialItems = [
+      { title: "Sofa & furniture", copy: "Tailored silhouettes in tactile, durable upholstery.", image: "photo-1555041469-a586c61ea9bc" },
+      { title: "Wall decoration", copy: "Artful accents and calm, considered wall finishes.", image: "photo-1579783902614-a3fb3927b6a5" },
+      { title: "Lighting", copy: "A layered glow from ambient to softly focused light.", image: "photo-1507473885765-e6ed057f782c" },
+      { title: "Flooring", copy: "Natural oak tones ground the space with warmth.", image: "photo-1600607687920-4e2a09cf159d" },
+      { title: "Curtains", copy: "Airy woven fabric softens the light and the room.", image: "photo-1616486338812-3dadae4b4ace" },
+      { title: "Accessories", copy: "A personal mix of ceramics, books, and greenery.", image: "photo-1600210492486-724fe5c67fb0" }
+    ];
+    const similarDesigns = [
+      { name: "The Sunday Edit", category: "Living Room", style: "Modern", budget: 42000, image: "photo-1600210492486-724fe5c67fb0", description: "Relaxed modern living with warm wood and sculptural seating." },
+      { name: "The Quiet Suite", category: "Bedroom", style: "Luxury", budget: 185000, image: "photo-1616594039964-ae9021a400a0", description: "A soft, restorative retreat with beautifully layered details." },
+      { name: "Sunday Kitchen", category: "Kitchen", style: "Minimalist", budget: 78000, image: "photo-1600607687920-4e2a09cf159d", description: "A streamlined kitchen with clever storage and natural finishes." },
+      { name: "Stone & Steam", category: "Bathroom", style: "Luxury", budget: 340000, image: "photo-1600566753086-00f18fb6b3ea", description: "Spa-inspired stone, graceful hardware, and a softer pace." }
+    ];
+
+    const money = (amount) => `₹${Number(amount).toLocaleString("en-IN")}`;
+    const params = new URLSearchParams(window.location.search);
+    const categoryMap = {
+      "Living Room": "living",
+      "Bedroom": "bedroom",
+      "Kitchen": "kitchen",
+      "Bathroom": "bathroom",
+      "Dining Room": "living",
+      "Home Office": "living"
+    };
+    const validStyles = ["Modern", "Luxury", "Minimalist", "Traditional"];
+    const category = categoryMap[params.get("category")] ? params.get("category") : "Living Room";
+    const style = validStyles.includes(params.get("style")) ? params.get("style") : "Modern";
+    const parsedBudget = Number(params.get("budget"));
+    const budget = Number.isFinite(parsedBudget) && parsedBudget > 0 ? Math.round(parsedBudget) : 42000;
+    const fallbackImage = "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1400&q=88";
+    let selectedImage = params.get("image") || fallbackImage;
+    try {
+      const selectedImageUrl = new URL(selectedImage);
+      if (selectedImageUrl.protocol !== "https:" || selectedImageUrl.hostname !== "images.unsplash.com") selectedImage = fallbackImage;
+    } catch (error) {
+      selectedImage = fallbackImage;
+    }
+    const name = (params.get("name") || "The Sunday Edit").slice(0, 100);
+    const description = (params.get("description") || "A relaxed modern living space with warm natural finishes, thoughtful proportions, and an easy sense of comfort.").slice(0, 500);
+    const currentSlug = name.toLocaleLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+    const galleryImages = [...imageSet[categoryMap[category]]];
+    galleryImages[0] = [selectedImage, `${name}, the complete interior`];
+
+    document.title = `${name} | DreamSpace Design Details`;
+    document.querySelector('meta[name="description"]').content = `Explore ${name}: ${description}`;
+    document.querySelector("#design-title").textContent = name;
+    document.querySelector("#breadcrumb-title").textContent = name;
+    document.querySelector("#design-description").textContent = description;
+    document.querySelector("#design-category").textContent = category;
+    document.querySelector("#design-style").textContent = `${style} style`;
+    document.querySelector("#design-budget").textContent = money(budget);
+    document.querySelector("#overview-description").textContent = `${description} This ${style.toLowerCase()} ${category.toLowerCase()} concept brings comfortable proportions, layered lighting, and carefully chosen materials together in a space that feels personal and enduring.`;
+    document.querySelector("#hero-image").src = selectedImage;
+    document.querySelector("#hero-image").alt = `${name}, ${category.toLowerCase()} interior`;
+    document.querySelector("#spec-size").textContent = category === "Bedroom" ? "180–240 sq. ft." : category === "Kitchen" ? "120–200 sq. ft." : "250–380 sq. ft.";
+    document.querySelector("#spec-style").textContent = style;
+    document.querySelector("#spec-time").textContent = budget > 300000 ? "8–12 weeks" : budget > 100000 ? "6–9 weeks" : "4–6 weeks";
+    document.querySelector("#design-type").value = ["Living Room", "Bedroom", "Kitchen", "Bathroom", "Dining Room", "Home Office"].includes(category) ? category : "";
+
+    const featureCopy = [
+      ["Interior theme", `${style} with a natural, welcoming point of view`],
+      ["Room type", category],
+      ["Space requirements", document.querySelector("#spec-size").textContent],
+      ["Special features", "Layered light, custom storage, tactile finishes"]
+    ];
+    document.querySelector("#feature-list").innerHTML = featureCopy.map(([label, value]) => `<div class="feature-item"><span class="feature-mark" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none"><path d="m4 10 4 4 8-8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span><strong>${label}:</strong> ${value}</span></div>`).join("");
+
+    const galleryGrid = document.querySelector("#gallery-grid");
+    galleryImages.forEach(([src, alt], index) => {
+      const button = document.createElement("button");
+      button.className = "gallery-item";
+      button.type = "button";
+      button.setAttribute("aria-label", `Open image ${index + 1}: ${alt}`);
+      const image = document.createElement("img");
+      image.src = src;
+      image.alt = alt;
+      image.loading = "lazy";
+      const label = document.createElement("span");
+      label.textContent = galleryLabels[index];
+      button.append(image, label);
+      galleryGrid.append(button);
+    });
+
+    const materialGrid = document.querySelector("#materials-grid");
+    materialItems.forEach((item) => {
+      const article = document.createElement("article");
+      article.className = "material-card";
+      const image = document.createElement("img");
+      image.src = `https://images.unsplash.com/${item.image}?auto=format&fit=crop&w=500&h=400&q=78`;
+      image.alt = item.title;
+      image.loading = "lazy";
+      const content = document.createElement("div");
+      const heading = document.createElement("h3");
+      heading.textContent = item.title;
+      const copy = document.createElement("p");
+      copy.textContent = item.copy;
+      content.append(heading, copy);
+      article.append(image, content);
+      materialGrid.append(article);
+    });
+
+    const budgetParts = [
+      ["furniture", 42],
+      ["lighting", 14],
+      ["walls", 16],
+      ["flooring", 18],
+      ["accessories", 10]
+    ];
+    let allocatedBudget = 0;
+    budgetParts.forEach(([part, percentage], index) => {
+      const partAmount = index === budgetParts.length - 1
+        ? budget - allocatedBudget
+        : Math.round((budget * percentage) / 10000) * 100;
+      allocatedBudget += partAmount;
+      document.querySelector(`[data-budget-part="${part}"]`).textContent = money(partAmount);
+    });
+    document.querySelector("#budget-total").textContent = money(budget);
+
+    const similarGrid = document.querySelector("#similar-grid");
+    similarDesigns.filter((design) => design.name !== name).slice(0, 4).forEach((design) => {
+      const article = document.createElement("article");
+      article.className = "similar-card";
+      const image = document.createElement("img");
+      image.src = `https://images.unsplash.com/${design.image}?auto=format&fit=crop&w=700&h=500&q=80`;
+      image.alt = `${design.name}, ${design.category.toLowerCase()} design`;
+      image.loading = "lazy";
+      const content = document.createElement("div");
+      content.className = "similar-copy";
+      const type = document.createElement("span");
+      type.textContent = `${design.category} · ${design.style}`;
+      const heading = document.createElement("h3");
+      heading.textContent = design.name;
+      const bottom = document.createElement("div");
+      bottom.className = "similar-bottom";
+      const price = document.createElement("strong");
+      price.textContent = `Est. ${money(design.budget)}`;
+      const link = document.createElement("a");
+      const detailUrl = new URL("design-details.html", window.location.href);
+      Object.entries({ name: design.name, category: design.category, style: design.style, budget: design.budget, image: `https://images.unsplash.com/${design.image}?auto=format&fit=crop&w=1400&q=85`, description: design.description }).forEach(([key, value]) => detailUrl.searchParams.set(key, value));
+      link.href = detailUrl.href;
+      link.textContent = "View Details →";
+      bottom.append(price, link);
+      content.append(type, heading, bottom);
+      article.append(image, content);
+      similarGrid.append(article);
+    });
+
+    const wishlistKey = "dreamspace-wishlist";
+    function getWishlist() {
+      return JSON.parse(localStorage.getItem(wishlistKey) || "[]");
+    }
+    function setWishlist(items) {
+      localStorage.setItem(wishlistKey, JSON.stringify(items));
+      document.querySelector("#wishlist-count").textContent = items.length;
+      document.querySelector(".wishlist-nav").setAttribute("aria-label", `My Dream Board, ${items.length} saved ${items.length === 1 ? "design" : "designs"}`);
+    }
+    const initialWishlist = getWishlist();
+    const wishlistButton = document.querySelector("#hero-wishlist");
+    function updateWishlistButton(isSaved) {
+      wishlistButton.setAttribute("aria-pressed", String(isSaved));
+      wishlistButton.querySelector("span").textContent = isSaved ? "Saved to Wishlist" : "Add to Wishlist";
+      wishlistButton.setAttribute("aria-label", isSaved ? `Remove ${name} from wishlist` : `Add ${name} to wishlist`);
+    }
+    setWishlist(initialWishlist);
+    updateWishlistButton(initialWishlist.includes(currentSlug));
+
+    wishlistButton.addEventListener("click", () => {
+      const wishlist = getWishlist();
+      const isSaved = wishlist.includes(currentSlug);
+      const updatedWishlist = isSaved ? wishlist.filter((slug) => slug !== currentSlug) : [...new Set([...wishlist, currentSlug])];
+      setWishlist(updatedWishlist);
+      updateWishlistButton(!isSaved);
+    });
+
+    let activeGalleryIndex = 0;
+    const lightbox = document.querySelector("#lightbox");
+    function openGalleryImage(index) {
+      activeGalleryIndex = (index + galleryImages.length) % galleryImages.length;
+      const [src, alt] = galleryImages[activeGalleryIndex];
+      document.querySelector("#lightbox-image").src = src;
+      document.querySelector("#lightbox-image").alt = alt;
+      document.querySelector("#lightbox-caption").textContent = `${galleryLabels[activeGalleryIndex]} · ${activeGalleryIndex + 1} of ${galleryImages.length}`;
+      if (!lightbox.open) lightbox.showModal();
+    }
+    galleryGrid.querySelectorAll(".gallery-item").forEach((item, index) => item.addEventListener("click", () => openGalleryImage(index)));
+    document.querySelector("#gallery-prev").addEventListener("click", () => openGalleryImage(activeGalleryIndex - 1));
+    document.querySelector("#gallery-next").addEventListener("click", () => openGalleryImage(activeGalleryIndex + 1));
+    document.querySelector("#lightbox-prev").addEventListener("click", () => openGalleryImage(activeGalleryIndex - 1));
+    document.querySelector("#lightbox-next").addEventListener("click", () => openGalleryImage(activeGalleryIndex + 1));
+    document.querySelector("#lightbox-close").addEventListener("click", () => lightbox.close());
+    lightbox.addEventListener("click", (event) => {
+      if (event.target === lightbox) lightbox.close();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (!lightbox.open) return;
+      if (event.key === "ArrowLeft") openGalleryImage(activeGalleryIndex - 1);
+      if (event.key === "ArrowRight") openGalleryImage(activeGalleryIndex + 1);
+    });
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#site-nav");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+      navigation.classList.toggle("is-open", !isOpen);
+    });
+    navigation.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        navigation.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+      }
+    });
+
+    const consultationForm = document.querySelector("#consult-form");
+    const phoneInput = document.querySelector("#phone");
+    phoneInput.addEventListener("input", () => {
+      const phone = phoneInput.value.trim();
+      phoneInput.setCustomValidity(phone && !/^[+0-9(). -]{7,20}$/.test(phone) ? "Enter a valid phone number." : "");
+    });
+    consultationForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      phoneInput.dispatchEvent(new Event("input", { bubbles: true }));
+      if (!consultationForm.reportValidity()) return;
+      const formData = new FormData(consultationForm);
+      const firstName = String(formData.get("name")).trim().split(/\s+/)[0];
+      const successMessage = document.querySelector("#form-success");
+      successMessage.textContent = `Thank you, ${firstName}. Your details for ${name} are valid, but this form is not connected to a booking service yet. Nothing has been sent. Please use the Contact page to reach DreamSpace.`;
+      successMessage.hidden = false;
+    });
+
+    const revealItems = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12 });
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>

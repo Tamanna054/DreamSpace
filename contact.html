@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Get in touch with DreamSpace. Share your interior design ideas or request a consultation for your home.">
+  <title>Contact Us | DreamSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25221f;
+      --brown: #4b3b30;
+      --muted: #817a72;
+      --cream: #f6f3ed;
+      --sand: #eae3d8;
+      --white: #fffefa;
+      --gold: #b28a5a;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 95px; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button, input, select, textarea { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(75,59,48,.09); background: rgba(246,243,237,.96); backdrop-filter: blur(14px); }
+    .navbar { min-height: 78px; display: flex; align-items: center; gap: 29px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-icon { width: 32px; height: 36px; color: var(--brown); }
+    .brand-icon svg { width: 100%; height: 100%; }
+    .brand-name { font-family: var(--serif); font-size: 22px; letter-spacing: -.7px; }
+    .brand-name span { color: var(--gold); }
+    .board-link { width: 36px; height: 36px; display: grid; place-items: center; flex-shrink: 0; color: var(--brown); }
+    .board-link svg { width: 19px; height: 19px; }
+    .nav-links { display: flex; align-items: center; gap: 30px; margin-left: auto; }
+    .nav-links a { position: relative; padding: 30px 0 27px; color: #625a52; font-size: 10px; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+    .nav-links a.active::after { position: absolute; right: 0; bottom: 20px; left: 0; height: 1px; background: var(--gold); content: ""; }
+    .button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px; padding: 0 19px; border: 1px solid var(--brown); border-radius: 2px; background: var(--brown); color: white; font-size: 10px; font-weight: 600; letter-spacing: .3px; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); background: #624e3f; }
+    .button svg { width: 15px; height: 15px; }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--sand); background: transparent; color: var(--brown); cursor: pointer; }
+
+    .hero { position: relative; min-height: 410px; display: flex; align-items: center; overflow: hidden; background: #40382f; color: white; }
+    .hero::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(28,24,20,.76), rgba(28,24,20,.45) 58%, rgba(28,24,20,.14)); content: ""; }
+    .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 54%; }
+    .hero-copy { position: relative; z-index: 1; width: min(720px, 85%); padding: 72px 0 74px 7%; animation: rise-in .7s ease both; }
+    .eyebrow, .section-label { display: inline-flex; align-items: center; gap: 9px; color: var(--gold); font-size: 8px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; }
+    .eyebrow { color: #e4d1b4; }
+    .eyebrow::before, .section-label::before { width: 23px; height: 1px; background: currentColor; content: ""; }
+    .hero h1 { max-width: 700px; margin: 17px 0 12px; font-family: var(--serif); font-size: clamp(45px, 6vw, 68px); font-weight: 400; letter-spacing: -1.7px; line-height: 1.1; }
+    .hero p { max-width: 530px; margin: 0; color: rgba(255,255,255,.82); font-size: 11px; line-height: 1.9; }
+    .hero .button { margin-top: 24px; border-color: var(--white); background: var(--white); color: var(--ink); }
+    .hero .button:hover { background: #e9dac4; }
+
+    .contact-intro { padding: 67px 0 35px; text-align: center; }
+    .contact-intro .section-label { justify-content: center; }
+    h2 { font-family: var(--serif); font-weight: 400; letter-spacing: -1px; }
+    .contact-intro h2 { margin: 12px 0 9px; font-size: clamp(36px, 4vw, 47px); }
+    .contact-intro p { margin: 0 auto; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .info-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding-bottom: 73px; }
+    .info-card { display: flex; align-items: flex-start; gap: 14px; min-height: 110px; padding: 22px 20px; border: 1px solid #e8e1d7; background: var(--white); box-shadow: 0 6px 20px #352a1f08; transition: transform .2s ease, box-shadow .2s ease; }
+    .info-card:hover { transform: translateY(-3px); box-shadow: 0 12px 25px #352a1f10; }
+    .info-icon { width: 38px; height: 38px; flex-shrink: 0; display: grid; place-items: center; background: #eee7dc; color: var(--gold); }
+    .info-icon svg { width: 18px; height: 18px; }
+    .info-card h3 { margin: 1px 0 7px; font-family: var(--serif); font-size: 17px; font-weight: 400; }
+    .info-card p, .info-card a { margin: 0; color: #716961; font-size: 9px; line-height: 1.65; }
+    .info-card a:hover { color: var(--gold); }
+    .sample-label { display: inline-block; margin-top: 5px; color: var(--gold); font-size: 7px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+
+    .forms-section { padding: 73px 0 78px; background: #eee9e0; }
+    .forms-grid { display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 22px; }
+    .form-panel { padding: 27px; background: var(--white); box-shadow: 0 9px 28px #352a1f0b; }
+    .form-panel h2 { margin: 10px 0 8px; font-size: 31px; }
+    .form-panel > p { margin: 0 0 21px; color: var(--muted); font-size: 9px; line-height: 1.8; }
+    .contact-form { display: grid; grid-template-columns: 1fr 1fr; gap: 13px 12px; }
+    .field { display: grid; gap: 6px; }
+    .field.full { grid-column: 1 / -1; }
+    .field label { color: #5e564e; font-size: 8px; font-weight: 700; letter-spacing: .35px; }
+    .field input, .field select, .field textarea { width: 100%; min-height: 43px; padding: 11px 12px; border: 1px solid #e2dbd1; border-radius: 4px; outline: none; background: #fffefa; color: var(--ink); font-size: 10px; transition: border-color .2s ease, box-shadow .2s ease; }
+    .field input::placeholder, .field textarea::placeholder { color: #aaa197; }
+    .field textarea { min-height: 94px; resize: vertical; }
+    .field input:focus, .field select:focus, .field textarea:focus { border-color: var(--gold); box-shadow: 0 0 0 2px #b28a5a20; }
+    .form-submit { grid-column: 1 / -1; justify-self: start; margin-top: 3px; }
+    .form-status { grid-column: 1 / -1; margin: 0; padding: 11px 12px; border-left: 2px solid #a34a3d; background: #f8efec; color: #713e36; font-size: 9px; line-height: 1.7; }
+    .form-status[hidden] { display: none; }
+    .form-status.is-info { border-color: var(--gold); background: #f5f0e7; color: #5f4b35; }
+
+    .why-section { padding: 78px 0 83px; }
+    .section-heading { max-width: 650px; margin: 0 auto 29px; text-align: center; }
+    .section-heading .section-label { justify-content: center; }
+    .section-heading h2 { margin: 12px 0 8px; font-size: clamp(34px, 4vw, 45px); }
+    .section-heading p { max-width: 465px; margin: 0 auto; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .benefit-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 15px; }
+    .benefit-card { min-height: 165px; padding: 21px; border: 1px solid #e8e1d7; background: var(--white); transition: transform .23s ease, box-shadow .23s ease; }
+    .benefit-card:hover { transform: translateY(-4px); box-shadow: 0 13px 25px #352a1f10; }
+    .benefit-icon { width: 35px; height: 35px; display: grid; place-items: center; background: #eee7dc; color: var(--gold); }
+    .benefit-icon svg { width: 17px; height: 17px; }
+    .benefit-card h3 { margin: 13px 0 6px; font-family: var(--serif); font-size: 17px; font-weight: 400; }
+    .benefit-card p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.75; }
+
+    .location-section { padding: 70px 0 76px; background: #eee9e0; }
+    .location-grid { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 50px; }
+    .location-copy h2 { margin: 12px 0 10px; font-size: 38px; }
+    .location-copy p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .location-note { display: inline-flex; align-items: center; gap: 7px; margin-top: 15px; padding: 8px 10px; background: #f8f5ef; color: #675943; font-size: 8px; }
+    .location-note svg { width: 14px; height: 14px; color: var(--gold); }
+    .map-visual { position: relative; min-height: 230px; overflow: hidden; display: grid; place-items: center; background-color: #e2dbcf; background-image: linear-gradient(27deg, transparent 47%, #cfc5b5 48%, #cfc5b5 49%, transparent 50%), linear-gradient(153deg, transparent 45%, #d2c8b9 46%, #d2c8b9 47%, transparent 48%), linear-gradient(90deg, transparent 48%, #d4caba 49%, #d4caba 50%, transparent 51%); background-size: 115px 85px, 130px 100px, 85px 100%; }
+    .map-pin { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid #ffffffc7; border-radius: 50%; background: var(--brown); color: white; box-shadow: 0 4px 15px #352a1f35; }
+    .map-pin svg { width: 19px; height: 19px; }
+    .map-caption { position: absolute; right: 12px; bottom: 12px; left: 12px; padding: 10px 12px; background: #fffefaed; color: #5e564e; font-size: 8px; text-align: center; }
+
+    .social-section { padding: 66px 0 72px; text-align: center; }
+    .social-section h2 { margin: 11px 0 8px; font-size: 35px; }
+    .social-section p { margin: 0 auto; color: var(--muted); font-size: 9px; }
+    .social-links { display: flex; justify-content: center; gap: 10px; margin-top: 19px; }
+    .social-links a { width: 38px; height: 38px; display: grid; place-items: center; border: 1px solid #d8cfc2; border-radius: 50%; background: var(--white); color: var(--brown); transition: background .2s ease, color .2s ease, transform .2s ease; }
+    .social-links a:hover { transform: translateY(-3px); background: var(--brown); color: white; }
+    .social-links svg { width: 15px; height: 15px; }
+
+    .footer { padding: 51px 0 0; background: #28231f; color: #f7f3ec; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr .8fr 1fr 1fr; gap: 38px; padding-bottom: 38px; }
+    .footer .brand-icon { color: #e0c49f; }
+    .footer .brand-name { color: white; }
+    .footer-about p { max-width: 260px; margin: 15px 0 0; color: #c1b9af; font-size: 9px; line-height: 1.9; }
+    .footer h3 { margin: 4px 0 15px; color: #e6d5bd; font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+    .footer-links, .footer-contact { display: grid; gap: 10px; }
+    .footer-links a, .footer-contact a, .footer-contact span { color: #c1b9af; font-size: 9px; line-height: 1.6; }
+    .footer-links a:hover, .footer-contact a:hover { color: white; }
+    .footer-bottom { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid #ffffff20; color: #aaa198; font-size: 8px; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+    .scroll-progress { position: fixed; top: 0; left: 0; z-index: 30; width: 0; height: 2px; background: var(--gold); pointer-events: none; }
+    .reveal { opacity: 0; transform: translateY(17px); transition: opacity .55s ease, transform .55s ease; transition-delay: var(--reveal-delay, 0ms); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .field.is-invalid input, .field.is-invalid select, .field.is-invalid textarea { border-color: #a34a3d; box-shadow: 0 0 0 2px #a34a3d16; }
+    .form-status.is-error { border-color: #a34a3d; background: #f8efec; color: #713e36; }
+    .form-status.is-info { border-color: var(--gold); background: #f5f0e7; color: #5f4b35; }
+    .form-submit:disabled { cursor: wait; opacity: .7; transform: none; }
+    .char-count { justify-self: end; color: var(--muted); font-size: 8px; }
+    .contact-form .char-count { grid-column: 1 / -1; margin-top: -8px; }
+    .section-heading, .info-card, .form-panel, .benefit-card, .location-copy, .map-visual, .social-section { --reveal-delay: 0ms; }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    @media (min-width: 681px) {
+      .hero h1 { font-size: clamp(52px, 6vw, 76px); }
+      .hero p { font-size: 13px; }
+      .contact-intro p, .section-heading p { font-size: 12px; }
+      .info-card h3 { font-size: 20px; }
+      .info-card p, .info-card a { font-size: 11px; }
+      .form-panel h2 { font-size: 35px; }
+      .form-panel > p { font-size: 11px; }
+      .field label { font-size: 9px; }
+      .field input, .field select, .field textarea { font-size: 11px; }
+      .benefit-card h3 { font-size: 19px; }
+      .benefit-card p, .location-copy p { font-size: 11px; }
+    }
+    @media (max-width: 960px) {
+      .container { width: min(100% - 48px, 850px); }
+      .nav-links { gap: 19px; }
+      .forms-grid { gap: 14px; }
+      .form-panel { padding: 21px; }
+      .footer-grid { grid-template-columns: 1.2fr 1fr 1fr; gap: 28px; }
+      .footer-about { grid-row: span 2; }
+    }
+    @media (max-width: 680px) {
+      html { scroll-padding-top: 72px; }
+      .container { width: calc(100% - 36px); }
+      .navbar { min-height: 68px; gap: 9px; }
+      .brand-icon { width: 28px; height: 32px; }
+      .brand-name { font-size: 20px; }
+      .nav-links { position: absolute; top: 68px; right: 0; left: 0; display: none; align-items: stretch; gap: 0; padding: 7px 18px 15px; border-top: 1px solid var(--sand); background: var(--cream); }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 12px 0; }
+      .nav-links a.active::after { right: auto; bottom: 6px; width: 53px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .menu-toggle svg { width: 18px; height: 18px; }
+      .header-cta { min-height: 37px; margin-left: auto; padding: 0 11px; font-size: 8px; }
+      .hero { min-height: 405px; align-items: end; }
+      .hero::after { background: linear-gradient(0deg, rgba(28,24,20,.8), rgba(28,24,20,.25) 82%); }
+      .hero-image { object-position: 58% center; }
+      .hero-copy { width: 100%; padding: 0 20px 45px; }
+      .hero h1 { font-size: clamp(42px, 11vw, 57px); letter-spacing: -1.4px; }
+      .hero p { font-size: 10px; }
+      .contact-intro { padding: 54px 0 27px; }
+      .info-grid { grid-template-columns: 1fr; gap: 9px; padding-bottom: 55px; }
+      .info-card { min-height: auto; padding: 17px; }
+      .forms-section { padding: 56px 0; }
+      .forms-grid { grid-template-columns: 1fr; gap: 13px; }
+      .form-panel { padding: 20px 16px; }
+      .form-panel h2 { font-size: 28px; }
+      .field input, .field select { min-height: 42px; }
+      .why-section { padding: 60px 0; }
+      .section-heading h2 { font-size: 36px; }
+      .benefit-grid { grid-template-columns: 1fr; gap: 9px; }
+      .benefit-card { min-height: auto; padding: 17px; }
+      .location-section { padding: 55px 0; }
+      .location-grid { grid-template-columns: 1fr; gap: 22px; }
+      .map-visual { min-height: 200px; }
+      .social-section { padding: 53px 0 60px; }
+      .footer { padding-top: 42px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px 18px; padding-bottom: 30px; }
+      .footer-about { grid-column: 1 / -1; grid-row: auto; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; justify-content: center; gap: 7px; padding: 12px 0; line-height: 1.6; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media (max-width: 1100px) {
+      .navbar { position: relative; }
+      .nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; align-items: stretch; gap: 0; margin: 0; padding: 8px 18px 14px; border-top: 1px solid var(--sand); background: var(--cream); box-shadow: 0 12px 24px #352a1f12; }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 11px 0; font-size: 10px; }
+      .nav-links a.active::after { right: auto; bottom: 5px; width: 150px; }
+      .menu-toggle { display: grid; place-items: center; flex-shrink: 0; }
+      .navbar > .header-cta, .navbar > .get-started, .navbar > .wishlist-link, .navbar > .wishlist-nav { margin-left: auto; }
+    }
+    @media (max-width: 360px) {
+      .navbar { gap: 6px; }
+      .brand { gap: 5px; }
+      .brand-icon { width: 24px; height: 28px; }
+      .brand-name { font-size: 17px; }
+      .header-cta { padding-inline: 6px; font-size: 7px; }
+      .menu-toggle { width: 36px; height: 36px; }
+    }
+  </style>
+  <link rel="stylesheet" href="readability.css">
+</head>
+<body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="DreamSpace home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">Dream<span>Space</span></span>
+      </a>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a>
+        <a href="explore-designs.html">Explore Designs</a>
+        <a href="about.html">About Us</a>
+        <a class="active" href="#top" aria-current="page">Contact</a>
+        <a href="budget-calculator.html">Budget Calculator</a>
+        <a href="transformations.html">Before &amp; After Gallery</a>
+        <a href="compare-designs.html">Compare Designs</a>
+      </nav>
+      <a class="board-link" href="my-dream-board.html" aria-label="My Dream Board"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.5a4.4 4.4 0 0 1 8.8 2.3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="button header-cta" href="#contact-form">Get Started <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="container hero">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=2200&amp;q=88" alt="Warm modern living room designed with natural materials" fetchpriority="high">
+      <div class="hero-copy">
+        <span class="eyebrow">Good things begin with a conversation</span>
+        <h1>Let's Bring Your Dream Space to Life.</h1>
+        <p>Have a design idea or need help creating your perfect space? We'd love to hear from you.</p>
+        <a class="button" href="#contact-form">Contact Us <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12m-5-5 5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+
+    <section class="container" aria-labelledby="get-in-touch">
+      <div class="contact-intro reveal">
+        <span class="section-label">We’re here to help</span>
+        <h2 id="get-in-touch">Get in Touch</h2>
+        <p>Have a question, a project in mind, or simply looking for a little inspiration?</p>
+      </div>
+      <div class="info-grid">
+        <article class="info-card reveal">
+          <span class="info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="1" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <div><h3>Email Us</h3><a data-contact-email href="mailto:hello@dreamspace.com">hello@dreamspace.com</a></div>
+        </article>
+        <article class="info-card reveal">
+          <span class="info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M7 3h3l2 5-2.1 1.6a15 15 0 0 0 4.5 4.5L16 12l5 2v3c0 1.1-.9 2-2 2C10 19 5 14 5 5c0-1.1.9-2 2-2Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+          <div><h3>Call Us</h3><p data-contact-phone>Phone number to be confirmed</p><span class="sample-label">Contact detail not configured</span></div>
+        </article>
+        <article class="info-card reveal">
+          <span class="info-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <div><h3>Visit Us</h3><p data-contact-location>Jaipur, Rajasthan, India</p><span class="sample-label">Sample studio location · confirm before visiting</span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="forms-section" id="forms">
+      <div class="container forms-grid">
+        <article class="form-panel reveal" id="contact-form">
+          <span class="section-label">Tell us what you’re imagining</span>
+          <h2>Send Us a Message</h2>
+          <p>Tell us about your ideas, and let's create something beautiful together.</p>
+          <form class="contact-form" id="message-form" data-form-kind="message">
+            <div class="field"><label for="message-name">Full Name *</label><input id="message-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" placeholder="Your name" required></div>
+            <div class="field"><label for="message-email">Email Address *</label><input id="message-email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="you@example.com" required></div>
+            <div class="field"><label for="message-phone">Phone Number *</label><input id="message-phone" name="phone" type="tel" autocomplete="tel" minlength="7" maxlength="20" placeholder="+91 98765 43210" required></div>
+            <div class="field"><label for="message-design">Design Type *</label><select id="message-design" name="designType" required><option value="">Select a design type</option><option>Living Room</option><option>Bedroom</option><option>Modular Kitchen</option><option>Bathroom</option><option>Full Home Interior</option><option>Other</option></select></div>
+            <div class="field full"><label for="message-budget">Estimated Budget</label><select id="message-budget" name="budget"><option value="">Choose an approximate range</option><option>Under ₹50,000</option><option>₹50,000 – ₹1,00,000</option><option>₹1,00,000 – ₹3,00,000</option><option>Above ₹3,00,000</option><option>Not sure yet</option></select></div>
+            <div class="field full"><label for="message-body">Message *</label><textarea id="message-body" name="message" minlength="10" maxlength="1500" placeholder="Tell us about your space, ideas, and what you hope to create..." required></textarea><span class="char-count" aria-live="polite">0 / 1500</span></div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+            <button class="button form-submit" type="submit">Send Message <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3 10 18 3l-5 15-3-6-7-2Zm7 2 4-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </form>
+        </article>
+
+        <article class="form-panel reveal" id="consult-form-panel">
+          <span class="section-label">A little time, a lot of possibility</span>
+          <h2>Book Your Free Consultation</h2>
+          <p>Ready to transform your home? Schedule a consultation and share your dream interior ideas with us.</p>
+          <form class="contact-form" id="consultation-form" data-form-kind="consultation">
+            <div class="field"><label for="consult-name">Full Name *</label><input id="consult-name" name="name" type="text" autocomplete="name" minlength="2" maxlength="80" placeholder="Your name" required></div>
+            <div class="field"><label for="consult-email">Email Address *</label><input id="consult-email" name="email" type="email" autocomplete="email" maxlength="120" placeholder="you@example.com" required></div>
+            <div class="field"><label for="consult-phone">Phone Number *</label><input id="consult-phone" name="phone" type="tel" autocomplete="tel" minlength="7" maxlength="20" placeholder="+91 98765 43210" required></div>
+            <div class="field"><label for="consult-date">Preferred Date *</label><input id="consult-date" name="date" type="date" required></div>
+            <div class="field"><label for="consult-time">Preferred Time *</label><select id="consult-time" name="time" required><option value="">Choose a time</option><option>10:00 AM – 12:00 PM</option><option>12:00 PM – 2:00 PM</option><option>2:00 PM – 4:00 PM</option><option>4:00 PM – 6:00 PM</option></select></div>
+            <div class="field"><label for="consult-design">Design Type *</label><select id="consult-design" name="designType" required><option value="">Choose a design type</option><option>Living Room</option><option>Bedroom</option><option>Modular Kitchen</option><option>Bathroom</option><option>Full Home Interior</option><option>Other</option></select></div>
+            <div class="field full"><label for="consult-message">Design Requirements *</label><textarea id="consult-message" name="message" minlength="10" maxlength="1500" placeholder="Share your goals, room details, or questions..." required></textarea><span class="char-count" aria-live="polite">0 / 1500</span></div>
+            <p class="form-status" role="status" aria-live="polite" hidden></p>
+            <button class="button form-submit" type="submit">Book Consultation <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 5h12v14H4zM8 3v4m4-4v4M7 11h2m3 0h1m-6 3h2m3 0h1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          </form>
+        </article>
+      </div>
+    </section>
+
+    <section class="why-section">
+      <div class="container">
+        <div class="section-heading reveal">
+          <span class="section-label">A thoughtful first step</span>
+          <h2>Why Contact DreamSpace?</h2>
+          <p>A good conversation starts with listening. We’re here to help you see what your space can become.</p>
+        </div>
+        <div class="benefit-grid">
+          <article class="benefit-card reveal"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M5 20a7 7 0 0 1 14 0m-2.5-15a3 3 0 0 1 0 5.8M18 14a5 5 0 0 1 3 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><h3>Personalized Design Guidance</h3><p>Share your priorities and receive thoughtful direction shaped around your space and lifestyle.</p></article>
+          <article class="benefit-card reveal"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none"><path d="m12 3 1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3Zm7 12 .9 2.1L22 18l-2.1.9L19 21l-.9-2.1L16 18l2.1-.9L19 15Z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></span><h3>Creative Interior Solutions</h3><p>Explore fresh ideas and practical details that make a room both beautiful and useful.</p></article>
+          <article class="benefit-card reveal"><span class="benefit-icon"><svg viewBox="0 0 24 24" fill="none"><path d="M4 7h16M4 12h11M4 17h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><circle cx="18" cy="16.5" r="3" stroke="currentColor" stroke-width="1.4"/></svg></span><h3>Ideas for Every Budget</h3><p>Talk through priorities and find an approach that respects your plans and budget.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="location-section">
+      <div class="container location-grid">
+        <div class="location-copy reveal">
+          <span class="section-label">A place to start</span>
+          <h2>Our Studio Location</h2>
+          <p data-contact-location>Jaipur, Rajasthan, India</p>
+          <span class="sample-label">Sample location only · please confirm before visiting</span>
+          <div><span class="location-note"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 2v16M2 10h16M4.3 4.3l11.4 11.4m0-11.4L4.3 15.7" stroke="currentColor" stroke-width="1.1"/></svg>Location shown is indicative, not a verified map pin.</span></div>
+        </div>
+        <div class="map-visual reveal" role="img" aria-label="Decorative map-style graphic, not a precise map">
+          <span class="map-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="10" r="2.5" stroke="currentColor" stroke-width="1.5"/></svg></span>
+          <span class="map-caption">Jaipur, Rajasthan, India · Sample studio location</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="social-section reveal">
+      <div class="container">
+        <span class="section-label">A little inspiration, wherever you are</span>
+        <h2>Connect With Us</h2>
+        <p>Follow along for spaces, details, and ideas we can’t wait to share. Update the profile links in the page configuration to use DreamSpace’s verified accounts.</p>
+        <div class="social-links" aria-label="DreamSpace social media">
+          <a data-social="instagram" href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="3.2" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="5.6" r=".9" fill="currentColor"/></svg></a>
+          <a data-social="pinterest" href="https://www.pinterest.com/" aria-label="Pinterest"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17a7 7 0 1 0-3.1-.73l1-3.43m-1.08-3.3c0-3.43 5.4-4.12 5.4-.94 0 2.25-1.62 5.67-3.52 4.12-.75-.6-.67-1.5-.43-2.44l.75-2.86" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a data-social="facebook" href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M11.5 17v-6.2h2.1l.32-2.42H11.5V6.83c0-.7.2-1.18 1.2-1.18h1.3V3.48c-.23-.03-1.02-.1-1.94-.1-1.92 0-3.23 1.12-3.23 3.3v1.7H6.65v2.42h2.18V17h2.67Z" fill="currentColor"/></svg></a>
+          <a data-social="linkedin" href="https://www.linkedin.com/" aria-label="LinkedIn"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8v8M5 5.2v.1M9 16v-8m0 3.5c0-2 5-3.5 5 0V16m-9-8h.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="5" cy="5" r="1" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about reveal">
+          <a class="brand" href="index.html" aria-label="DreamSpace home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Dream<span>Space</span></span></a>
+          <p>Thoughtful interiors, timeless inspiration, and beautiful ideas for the home you’ve always imagined.</p>
+          <div class="social-links" aria-label="Social media">
+            <a data-social="instagram" href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="3.2" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="5.6" r=".9" fill="currentColor"/></svg></a>
+            <a data-social="pinterest" href="https://www.pinterest.com/" aria-label="Pinterest"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17a7 7 0 1 0-3.1-.73l1-3.43m-1.08-3.3c0-3.43 5.4-4.12 5.4-.94 0 2.25-1.62 5.67-3.52 4.12-.75-.6-.67-1.5-.43-2.44l.75-2.86" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a data-social="facebook" href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M11.5 17v-6.2h2.1l.32-2.42H11.5V6.83c0-.7.2-1.18 1.2-1.18h1.3V3.48c-.23-.03-1.02-.1-1.94-.1-1.92 0-3.23 1.12-3.23 3.3v1.7H6.65v2.42h2.18V17h2.67Z" fill="currentColor"/></svg></a>
+            <a data-social="linkedin" href="https://www.linkedin.com/" aria-label="LinkedIn"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 8v8M5 5.2v.1M9 16v-8m0 3.5c0-2 5-3.5 5 0V16m-9-8h.1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><circle cx="5" cy="5" r="1" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div><h3>Quick Links</h3><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="#top">Contact</a><a href="budget-calculator.html">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a><a href="my-dream-board.html">My Dream Board</a></nav></div>
+        <div><h3>Get in touch</h3><div class="footer-contact"><a data-contact-email href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span data-contact-phone>Phone number to be confirmed</span><span data-contact-location>Jaipur, Rajasthan, India (sample location)</span></div></div>
+        <div><h3>Our philosophy</h3><div class="footer-contact"><span>Personal, never precious.</span><span>Timeless, never ordinary.</span><span>Always a little more you.</span></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 DreamSpace. All Rights Reserved.</span><a href="#top">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const DREAMSPACE_CONTACT = {
+      email: "hello@dreamspace.com",
+      phone: "",
+      location: "Jaipur, Rajasthan, India",
+      locationIsSample: true,
+      formEndpoint: "",
+      social: {
+        instagram: "https://www.instagram.com/",
+        pinterest: "https://www.pinterest.com/",
+        facebook: "https://www.facebook.com/",
+        linkedin: "https://www.linkedin.com/"
+      }
+    };
+
+    document.querySelectorAll("[data-contact-email]").forEach((link) => {
+      link.textContent = DREAMSPACE_CONTACT.email;
+      link.href = `mailto:${DREAMSPACE_CONTACT.email}`;
+    });
+    document.querySelectorAll("[data-contact-phone]").forEach((element) => {
+      if (DREAMSPACE_CONTACT.phone) {
+        element.textContent = DREAMSPACE_CONTACT.phone;
+        if (element instanceof HTMLAnchorElement) element.href = `tel:${DREAMSPACE_CONTACT.phone.replace(/[^+0-9]/g, "")}`;
+      } else {
+        element.textContent = "Phone number to be confirmed";
+      }
+    });
+    document.querySelectorAll("[data-contact-location]").forEach((element) => {
+      element.textContent = DREAMSPACE_CONTACT.location;
+    });
+    document.querySelectorAll("[data-social]").forEach((link) => {
+      link.href = DREAMSPACE_CONTACT.social[link.dataset.social];
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.title = `${link.getAttribute("aria-label")} · replace with the DreamSpace profile URL in the contact configuration`;
+    });
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#site-nav");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+      navigation.classList.toggle("is-open", !isOpen);
+    });
+    navigation.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        navigation.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+      }
+    });
+
+    const today = new Date();
+    const localDate = new Date(today.getTime() - today.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+    document.querySelector("#consult-date").min = localDate;
+
+    function validatePhone(input) {
+      const value = input.value.trim();
+      input.setCustomValidity(value && !/^[+0-9(). -]{7,20}$/.test(value) ? "Enter a valid phone number." : "");
+    }
+    function updateFieldState(field) {
+      const control = field.querySelector("input, select, textarea");
+      const isInvalid = control.value !== "" && !control.checkValidity();
+      field.classList.toggle("is-invalid", isInvalid);
+      if (isInvalid) control.setAttribute("aria-invalid", "true");
+      else control.removeAttribute("aria-invalid");
+    }
+
+    document.querySelectorAll('input[type="tel"]').forEach((input) => {
+      input.addEventListener("input", () => {
+        validatePhone(input);
+        updateFieldState(input.closest(".field"));
+      });
+    });
+
+    document.querySelectorAll(".contact-form textarea").forEach((textarea) => {
+      const counter = textarea.parentElement.querySelector(".char-count");
+      const updateCount = () => {
+        counter.textContent = `${textarea.value.length} / ${textarea.maxLength}`;
+      };
+      textarea.addEventListener("input", updateCount);
+      updateCount();
+    });
+
+    document.querySelectorAll(".contact-form").forEach((form) => {
+      const status = form.querySelector(".form-status");
+      form.querySelectorAll("input, select, textarea").forEach((control) => {
+        const updateControl = () => {
+          updateFieldState(control.closest(".field"));
+          if (form.checkValidity()) status.hidden = true;
+        };
+        control.addEventListener("input", updateControl);
+        control.addEventListener("change", updateControl);
+      });
+      form.addEventListener("invalid", (event) => {
+        const control = event.target;
+        if (!(control instanceof HTMLInputElement || control instanceof HTMLSelectElement || control instanceof HTMLTextAreaElement)) return;
+        const field = control.closest(".field");
+        if (field) {
+          field.classList.add("is-invalid");
+          control.setAttribute("aria-invalid", "true");
+        }
+        status.textContent = "Please check the highlighted fields. Enter a valid email and phone number and complete each required field.";
+        status.hidden = false;
+        status.classList.add("is-error");
+        status.classList.remove("is-info");
+      }, true);
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const phone = form.querySelector('input[type="tel"]');
+        validatePhone(phone);
+        status.hidden = true;
+        status.classList.remove("is-info");
+        status.classList.remove("is-error");
+
+        const isValid = form.checkValidity();
+        form.querySelectorAll(".field").forEach(updateFieldState);
+        if (!isValid) {
+          status.textContent = "Please check the highlighted fields. Enter a valid email and phone number and complete each required field.";
+          status.hidden = false;
+          status.classList.add("is-error");
+          form.reportValidity();
+          const firstInvalid = form.querySelector(":invalid");
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+
+        if (!DREAMSPACE_CONTACT.formEndpoint) {
+          status.textContent = `Your details are valid, but this form is not connected to a message delivery service yet. Nothing has been sent. Please email ${DREAMSPACE_CONTACT.email} or configure a verified form endpoint.`;
+          status.hidden = false;
+          status.classList.add("is-info");
+          return;
+        }
+
+        const submitButton = form.querySelector('[type="submit"]');
+        submitButton.disabled = true;
+        submitButton.setAttribute("aria-busy", "true");
+        status.textContent = "Sending your request…";
+        status.hidden = false;
+        status.classList.add("is-info");
+        try {
+          const response = await fetch(DREAMSPACE_CONTACT.formEndpoint, {
+            method: "POST",
+            headers: { "Content-Type": "application/json", "Accept": "application/json" },
+            body: JSON.stringify({
+              formType: form.dataset.formKind,
+              ...Object.fromEntries(new FormData(form).entries())
+            })
+          });
+          if (!response.ok) {
+            status.textContent = `We couldn't submit your request (server returned ${response.status}). Please try again or email ${DREAMSPACE_CONTACT.email}.`;
+            status.classList.remove("is-info");
+            return;
+          }
+          status.textContent = form.dataset.formKind === "consultation"
+            ? "Your consultation request has been submitted successfully. Our team will be in touch."
+            : "Your message has been submitted successfully. Our team will be in touch.";
+          status.classList.add("is-info");
+          form.reset();
+          form.querySelectorAll(".field").forEach((field) => field.classList.remove("is-invalid"));
+          form.querySelectorAll(".char-count").forEach((counter) => {
+            counter.textContent = `0 / ${counter.previousElementSibling.maxLength}`;
+          });
+        } catch (error) {
+          status.textContent = `We couldn't connect to the message service. Your request was not sent. Please try again or email ${DREAMSPACE_CONTACT.email}.`;
+          status.classList.remove("is-info");
+          console.error("DreamSpace contact form submission failed:", error);
+        } finally {
+          submitButton.disabled = false;
+          submitButton.removeAttribute("aria-busy");
+        }
+      });
+    });
+
+    const revealElements = document.querySelectorAll(
+      "main > section:not(.hero), .contact-intro, .info-card, .form-panel, .benefit-card, .location-copy, .map-visual, .footer-about"
+    );
+    revealElements.forEach((element) => {
+      element.classList.add("reveal");
+      const siblingIndex = [...element.parentElement.children].indexOf(element);
+      element.style.setProperty("--reveal-delay", `${Math.min(siblingIndex, 4) * 70}ms`);
+    });
+    if ("IntersectionObserver" in window) {
+      const sectionObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: .12 });
+      revealElements.forEach((element) => sectionObserver.observe(element));
+    } else {
+      revealElements.forEach((element) => element.classList.add("is-visible"));
+    }
+
+    const progressBar = document.querySelector(".scroll-progress");
+    let progressFrame = 0;
+    window.addEventListener("scroll", () => {
+      if (progressFrame) return;
+      progressFrame = window.requestAnimationFrame(() => {
+        const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = scrollableHeight > 0 ? (window.scrollY / scrollableHeight) * 100 : 0;
+        progressBar.style.width = `${Math.min(progress, 100)}%`;
+        progressFrame = 0;
+      });
+    }, { passive: true });
+  </script>
+</body>
+</html>

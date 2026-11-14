@@ -1,0 +1,895 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Plan your DreamSpace interior budget with a smart, interactive room planner and downloadable estimate.">
+  <title>Smart Budget Planner | DreamSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25221f;
+      --brown: #4b3b30;
+      --muted: #817a72;
+      --cream: #f6f3ed;
+      --sand: #eae3d8;
+      --white: #fffefa;
+      --gold: #b28a5a;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", Arial, sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 95px; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button, input { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+    .site-header { position: sticky; top: 0; z-index: 20; border-bottom: 1px solid rgba(75,59,48,.09); background: rgba(246,243,237,.96); backdrop-filter: blur(14px); }
+    .navbar { min-height: 78px; display: flex; align-items: center; gap: 25px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-icon { width: 32px; height: 36px; color: var(--brown); }
+    .brand-icon svg { width: 100%; height: 100%; }
+    .brand-name { font-family: var(--serif); font-size: 22px; letter-spacing: -.7px; }
+    .brand-name span { color: var(--gold); }
+    .nav-links { display: flex; align-items: center; gap: 22px; margin-left: auto; }
+    .nav-links a { position: relative; padding: 30px 0 27px; color: #625a52; font-size: 10px; white-space: nowrap; transition: color .2s ease; }
+    .nav-links a:hover, .nav-links a.active { color: var(--brown); }
+    .nav-links a.active::after { position: absolute; right: 0; bottom: 20px; left: 0; height: 1px; background: var(--gold); content: ""; }
+    .button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 9px; padding: 0 18px; border: 1px solid var(--brown); border-radius: 2px; background: var(--brown); color: white; font-size: 10px; font-weight: 600; letter-spacing: .3px; cursor: pointer; transition: transform .2s ease, background .2s ease; }
+    .button:hover { transform: translateY(-2px); background: #624e3f; }
+    .button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .button svg { width: 15px; height: 15px; }
+    .button-light { border-color: var(--sand); background: transparent; color: var(--brown); }
+    .button-light:hover { background: var(--sand); }
+    .wishlist-link { position: relative; width: 36px; height: 36px; display: grid; place-items: center; flex-shrink: 0; color: var(--brown); }
+    .wishlist-link svg { width: 18px; height: 18px; }
+    .wishlist-count { position: absolute; top: -1px; right: -3px; min-width: 15px; height: 15px; display: grid; place-items: center; padding-inline: 3px; border-radius: 50%; background: var(--gold); color: white; font-size: 8px; }
+    .menu-toggle { display: none; width: 40px; height: 40px; border: 1px solid var(--sand); background: transparent; color: var(--brown); cursor: pointer; }
+    .menu-toggle svg { width: 18px; height: 18px; }
+    .hero { position: relative; min-height: 440px; display: flex; align-items: center; overflow: hidden; background: #40382f; color: white; }
+    .hero::after { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(28,24,20,.78), rgba(28,24,20,.44) 59%, rgba(28,24,20,.12)); content: ""; }
+    .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 54%; }
+    .hero-copy { position: relative; z-index: 1; width: min(760px, 85%); padding: 76px 0 78px 7%; animation: rise-in .7s ease both; }
+    .eyebrow, .section-label { display: inline-flex; align-items: center; gap: 9px; color: var(--gold); font-size: 8px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; }
+    .eyebrow { color: #e4d1b4; }
+    .eyebrow::before, .section-label::before { width: 23px; height: 1px; background: currentColor; content: ""; }
+    .hero h1 { max-width: 740px; margin: 17px 0 12px; font-family: var(--serif); font-size: clamp(45px, 6vw, 69px); font-weight: 400; letter-spacing: -1.7px; line-height: 1.08; }
+    .hero p { max-width: 570px; margin: 0; color: rgba(255,255,255,.82); font-size: 11px; line-height: 1.9; }
+    .hero .button { margin-top: 24px; border-color: var(--white); background: var(--white); color: var(--ink); }
+    .hero .button:hover { background: #e9dac4; }
+    .planner-intro { padding: 66px 0 27px; text-align: center; }
+    .planner-intro .section-label { justify-content: center; }
+    h2, h3 { font-family: var(--serif); font-weight: 400; }
+    .planner-intro h2 { margin: 12px 0 8px; font-size: clamp(35px, 4vw, 47px); letter-spacing: -1px; }
+    .planner-intro p { margin: 0 auto; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .planner-wrap { padding-bottom: 82px; }
+    .planner-grid { display: grid; grid-template-columns: minmax(0, 1fr) 340px; align-items: start; gap: 22px; }
+    .planner-main { display: grid; gap: 15px; min-width: 0; }
+    .planner-step { padding: 24px 25px; border: 1px solid #e8e1d7; background: var(--white); box-shadow: 0 7px 22px #352a1f08; }
+    .step-heading { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+    .step-number { width: 28px; height: 28px; display: grid; place-items: center; flex-shrink: 0; border-radius: 50%; background: #eee7dc; color: var(--gold); font-size: 10px; font-weight: 700; }
+    .step-heading h2 { margin: 0 0 5px; font-size: 24px; letter-spacing: -.4px; }
+    .step-heading p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.7; }
+    .room-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px; }
+    .room-option, .style-option { position: relative; display: block; min-width: 0; padding: 0; border: 1px solid #e5ddd2; background: var(--white); color: var(--ink); text-align: left; cursor: pointer; transition: border-color .2s ease, transform .2s ease, box-shadow .2s ease; }
+    .room-option:hover, .style-option:hover { transform: translateY(-2px); box-shadow: 0 8px 20px #352a1f12; }
+    .room-option[aria-pressed="true"], .style-option[aria-pressed="true"] { border-color: var(--gold); box-shadow: 0 0 0 2px #b28a5a25; }
+    .room-option img { width: 100%; height: 112px; object-fit: cover; }
+    .room-option span { display: block; padding: 10px 11px; font-size: 10px; font-weight: 600; }
+    .room-option[aria-pressed="true"] span::after, .style-option[aria-pressed="true"] .style-name::after { content: "  ✓"; color: var(--gold); }
+    .field-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 12px; }
+    .field { display: grid; gap: 6px; min-width: 0; }
+    .field label { color: #5e564e; font-size: 8px; font-weight: 700; letter-spacing: .35px; }
+    .field input { width: 100%; min-height: 43px; padding: 10px 12px; border: 1px solid #e2dbd1; border-radius: 3px; outline: none; background: #fffefa; color: var(--ink); font-size: 10px; }
+    .field input:focus { border-color: var(--gold); box-shadow: 0 0 0 2px #b28a5a20; }
+    .field input[aria-invalid="true"] { border-color: #a34a3d; }
+    .dimension-hint { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 13px; padding: 11px 13px; background: #f6f3ed; color: var(--muted); font-size: 9px; }
+    .dimension-hint strong { color: var(--brown); font-size: 11px; }
+    .error-message { min-height: 14px; margin: 7px 0 0; color: #984b3f; font-size: 9px; }
+    .style-grid { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 10px; }
+    .style-option img { width: 100%; height: 92px; object-fit: cover; }
+    .style-copy { padding: 9px; }
+    .style-name { display: block; margin-bottom: 4px; font-size: 9px; font-weight: 700; }
+    .style-desc { display: block; color: var(--muted); font-size: 8px; line-height: 1.5; }
+    .selection-note { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.7; }
+    .furniture-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+    .furniture-option { display: grid; grid-template-columns: 67px minmax(0,1fr) auto; align-items: center; gap: 11px; min-width: 0; padding: 9px; border: 1px solid #e8e1d7; background: #fffefa; }
+    .furniture-option img { width: 67px; height: 64px; object-fit: cover; }
+    .furniture-option h3 { margin: 0 0 5px; font-family: var(--sans); font-size: 10px; font-weight: 700; }
+    .furniture-option p { margin: 0; color: var(--muted); font-size: 9px; }
+    .furniture-controls { display: grid; justify-items: end; gap: 7px; }
+    .check-control { display: inline-flex; align-items: center; gap: 6px; color: var(--brown); font-size: 8px; font-weight: 700; cursor: pointer; }
+    .check-control input { width: 15px; height: 15px; margin: 0; accent-color: var(--brown); }
+    .quantity-control { display: flex; align-items: center; gap: 5px; color: var(--muted); font-size: 8px; }
+    .quantity-control input { width: 48px; height: 27px; padding: 4px; border: 1px solid var(--sand); background: var(--white); color: var(--ink); font-size: 9px; }
+    .material-list { display: grid; gap: 10px; }
+    .material-group { display: grid; grid-template-columns: 104px minmax(0,1fr); align-items: start; gap: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee8df; }
+    .material-group:last-child { padding-bottom: 0; border-bottom: 0; }
+    .material-group h3 { margin: 8px 0 0; font-size: 14px; }
+    .material-choices { display: flex; flex-wrap: wrap; gap: 7px; }
+    .material-choice { position: relative; }
+    .material-choice input { position: absolute; width: 1px; height: 1px; opacity: 0; }
+    .material-choice span { display: grid; gap: 3px; padding: 8px 10px; border: 1px solid #e5ddd2; background: #fffefa; color: var(--ink); cursor: pointer; transition: border-color .2s ease, background .2s ease; }
+    .material-choice input:checked + span { border-color: var(--gold); background: #f5f0e7; box-shadow: inset 0 0 0 1px #b28a5a50; }
+    .material-choice input:focus-visible + span { outline: 2px solid var(--gold); outline-offset: 2px; }
+    .material-choice strong { font-size: 8px; }
+    .material-choice small { color: var(--muted); font-size: 8px; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 9px; }
+    .feature-option { display: flex; align-items: flex-start; gap: 9px; padding: 11px; border: 1px solid #e8e1d7; background: #fffefa; cursor: pointer; }
+    .feature-option input { width: 15px; height: 15px; margin: 2px 0 0; accent-color: var(--brown); }
+    .feature-option strong, .feature-option small { display: block; }
+    .feature-option strong { margin-bottom: 3px; color: var(--brown); font-size: 9px; }
+    .feature-option small { color: var(--muted); font-size: 8px; }
+    .budget-summary { position: sticky; top: 98px; overflow: hidden; border: 1px solid #e5ddd2; background: var(--white); box-shadow: 0 10px 30px #352a1f0b; }
+    .summary-head { padding: 21px 21px 19px; background: var(--brown); color: white; }
+    .summary-head .section-label { color: #dfc7a6; }
+    .summary-head h2 { margin: 10px 0 4px; font-size: 24px; }
+    .summary-head p { margin: 0; color: #d3c7b9; font-size: 8px; line-height: 1.6; }
+    .summary-total { padding: 18px 21px; border-bottom: 1px solid #eee8df; }
+    .summary-total span { display: block; margin-bottom: 5px; color: var(--muted); font-size: 8px; text-transform: uppercase; letter-spacing: 1px; }
+    .summary-total strong { color: var(--brown); font-family: var(--serif); font-size: 34px; font-weight: 400; letter-spacing: -.8px; }
+    .summary-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 15px 21px; border-bottom: 1px solid #eee8df; }
+    .summary-meta div { display: grid; gap: 4px; }
+    .summary-meta span { color: var(--muted); font-size: 8px; }
+    .summary-meta strong { overflow-wrap: anywhere; color: var(--brown); font-size: 9px; }
+    .breakdown { display: grid; gap: 10px; padding: 16px 21px; }
+    .breakdown-row { display: flex; justify-content: space-between; gap: 10px; color: #655c53; font-size: 9px; }
+    .breakdown-row strong { color: var(--ink); font-size: 9px; font-weight: 600; white-space: nowrap; }
+    .summary-divider { height: 1px; background: #e9e1d6; }
+    .selection-summary { color: var(--muted); font-size: 8px; line-height: 1.7; overflow-wrap: anywhere; }
+    .summary-actions { display: grid; gap: 8px; padding: 0 21px 17px; }
+    .summary-actions .button { width: 100%; }
+    .summary-actions .button-light { background: transparent; }
+    .estimate-note { margin: 0; padding: 0 21px 18px; color: var(--muted); font-size: 8px; line-height: 1.65; }
+    .summary-empty { color: var(--muted); font-size: 9px; line-height: 1.7; }
+    .budget-tips { padding: 72px 0; background: #eee9e0; }
+    .section-heading { max-width: 620px; margin: 0 auto 28px; text-align: center; }
+    .section-heading .section-label { justify-content: center; }
+    .section-heading h2 { margin: 12px 0 8px; font-size: clamp(34px,4vw,45px); letter-spacing: -1px; }
+    .section-heading p { margin: 0; color: var(--muted); font-size: 10px; line-height: 1.8; }
+    .tips-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 13px; }
+    .tip-card { min-height: 155px; padding: 20px 17px; border: 1px solid #e3dbcf; background: var(--white); transition: transform .2s ease, box-shadow .2s ease; }
+    .tip-card:hover { transform: translateY(-3px); box-shadow: 0 10px 22px #352a1f0d; }
+    .tip-index { color: var(--gold); font-size: 9px; letter-spacing: 1px; }
+    .tip-card h3 { margin: 13px 0 7px; font-size: 18px; }
+    .tip-card p { margin: 0; color: var(--muted); font-size: 9px; line-height: 1.7; }
+    .cta-band { position: relative; overflow: hidden; padding: 58px 0; background: var(--brown); color: white; }
+    .cta-inner { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 25px; }
+    .cta-inner .section-label { color: #dfc7a6; }
+    .cta-inner h2 { margin: 11px 0 7px; font-size: clamp(30px,4vw,43px); letter-spacing: -.8px; }
+    .cta-inner p { margin: 0; color: #d3c7b9; font-size: 10px; line-height: 1.7; }
+    .cta-inner .button { flex-shrink: 0; border-color: #e6d5bd; background: #e6d5bd; color: var(--ink); }
+    .footer { padding: 52px 0 0; background: #28231f; color: #f7f3ec; }
+    .footer-grid { display: grid; grid-template-columns: 1.5fr .9fr 1fr 1fr; gap: 34px; padding-bottom: 38px; }
+    .footer .brand-icon { color: #e0c49f; }
+    .footer .brand-name { color: white; }
+    .footer-about p { max-width: 270px; margin: 14px 0 0; color: #c1b9af; font-size: 9px; line-height: 1.9; }
+    .footer h3 { margin: 4px 0 15px; color: #e6d5bd; font-family: var(--sans); font-size: 8px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+    .footer-links, .footer-contact { display: grid; gap: 9px; }
+    .footer-links a, .footer-contact a, .footer-contact span { color: #c1b9af; font-size: 9px; line-height: 1.6; }
+    .footer-links a:hover, .footer-contact a:hover { color: white; }
+    .social-links { display: flex; gap: 8px; margin-top: 16px; }
+    .social-links a { width: 29px; height: 29px; display: grid; place-items: center; border: 1px solid #655b50; border-radius: 50%; color: #e6d5bd; }
+    .social-links svg { width: 12px; height: 12px; }
+    .footer-bottom { min-height: 52px; display: flex; align-items: center; justify-content: space-between; gap: 15px; border-top: 1px solid #ffffff20; color: #aaa198; font-size: 8px; }
+    [hidden] { display: none !important; }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    @media (max-width: 1050px) {
+      .container { width: min(100% - 48px, 900px); }
+      .navbar { gap: 15px; }
+      .nav-links { gap: 15px; }
+      .nav-links a { font-size: 9px; }
+      .planner-grid { grid-template-columns: minmax(0,1fr) 300px; gap: 15px; }
+      .planner-step { padding: 21px; }
+      .room-option img { height: 98px; }
+      .furniture-grid { grid-template-columns: 1fr; }
+      .style-option img { height: 76px; }
+      .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; gap: 28px; }
+      .footer-about { grid-row: span 2; }
+    }
+    @media (max-width: 760px) {
+      html { scroll-padding-top: 75px; }
+      .container { width: calc(100% - 36px); }
+      .navbar { min-height: 68px; gap: 9px; }
+      .brand-icon { width: 28px; height: 32px; }
+      .brand-name { font-size: 20px; }
+      .wishlist-link { margin-left: auto; }
+      .header-cta { min-height: 37px; padding: 0 11px; font-size: 8px; }
+      .menu-toggle { display: grid; place-items: center; }
+      .nav-links { position: absolute; top: 68px; right: 0; left: 0; display: none; align-items: stretch; gap: 0; padding: 7px 18px 15px; border-top: 1px solid var(--sand); background: var(--cream); }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 12px 0; font-size: 10px; }
+      .nav-links a.active::after { right: auto; bottom: 6px; width: 110px; }
+      .hero { min-height: 420px; }
+      .hero::after { background: linear-gradient(0deg,rgba(28,24,20,.78),rgba(28,24,20,.3) 90%); }
+      .hero-copy { width: 100%; padding: 72px 18px; }
+      .hero h1 { font-size: clamp(42px,11vw,57px); }
+      .planner-intro { padding-top: 55px; }
+      .planner-grid { grid-template-columns: 1fr; }
+      .budget-summary { position: static; grid-row: 1; }
+      .planner-main { grid-row: 2; }
+      .summary-total strong { font-size: 32px; }
+      .room-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .room-option img { height: 112px; }
+      .style-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+      .style-option img { height: 90px; }
+      .furniture-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .furniture-option { grid-template-columns: 54px minmax(0,1fr); gap: 8px; }
+      .furniture-option img { width: 54px; height: 54px; }
+      .furniture-controls { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; }
+      .budget-tips { padding: 58px 0; }
+      .tips-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .cta-inner { align-items: flex-start; flex-direction: column; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 25px 17px; }
+      .footer-about { grid-column: 1 / -1; grid-row: auto; }
+    }
+    @media (max-width: 480px) {
+      .container { width: calc(100% - 28px); }
+      .header-cta { display: none; }
+      .hero-copy { padding-inline: 14px; }
+      .planner-step { padding: 17px 14px; }
+      .step-heading h2 { font-size: 21px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .room-option img { height: 95px; }
+      .style-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+      .style-option img { height: 110px; }
+      .furniture-grid { grid-template-columns: 1fr; }
+      .material-group { grid-template-columns: 1fr; gap: 7px; }
+      .material-group h3 { margin-top: 0; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .dimension-hint { align-items: flex-start; flex-direction: column; }
+      .tips-grid { gap: 9px; }
+      .tip-card { min-height: 150px; padding: 15px 12px; }
+      .tip-card h3 { font-size: 16px; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; justify-content: center; padding: 12px 0; line-height: 1.5; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+    }
+    @media (max-width: 1100px) {
+      .navbar { position: relative; }
+      .nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; align-items: stretch; gap: 0; margin: 0; padding: 8px 18px 14px; border-top: 1px solid var(--sand); background: var(--cream); box-shadow: 0 12px 24px #352a1f12; }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 11px 0; font-size: 10px; }
+      .nav-links a.active::after { right: auto; bottom: 5px; width: 150px; }
+      .menu-toggle { display: grid; place-items: center; flex-shrink: 0; }
+      .navbar > .header-cta, .navbar > .get-started, .navbar > .wishlist-link, .navbar > .wishlist-nav { margin-left: auto; }
+    }
+    @media (min-width: 761px) and (max-width: 900px) {
+      .planner-grid { grid-template-columns: minmax(0,1fr); }
+      .budget-summary { position: static; grid-row: 1; }
+      .planner-main { grid-row: 2; }
+    }
+    :root { --muted: #6f665f; }
+    .nav-links a { font-size: 12px; }
+    .button { font-size: 13px; }
+    .eyebrow,.section-label { font-size: 10px; }
+    .section-label { color: #89663f; }
+    .summary-head .section-label,.cta-inner .section-label { color: #dfc7a6; }
+    .hero p,.planner-intro p,.step-heading p,.selection-note,.furniture-option p,.style-desc,
+    .section-heading p,.tip-card p,.cta-inner p,.footer-about p,.footer-links a,.footer-contact a,.footer-contact span { font-size: 14px; }
+    .step-number { color: #89663f; font-size: 12px; }
+    .step-heading h2 { font-size: 25px; }
+    .room-option span,.field label,.style-name,.furniture-option h3,.check-control,.feature-option strong { font-size: 14px; }
+    .room-option span { padding: 12px; }
+    .field input { font-size: 16px; }
+    .dimension-hint { gap: 14px; font-size: 13px; }
+    .dimension-hint strong { font-size: 15px; }
+    .error-message { font-size: 12px; }
+    .style-copy { padding: 11px; }
+    .style-desc,.furniture-option p,.quantity-control,.material-choice small,.feature-option small { color: #6b625b; font-size: 12px; }
+    .furniture-grid { gap: 12px; }
+    .furniture-option { grid-template-columns: 76px minmax(0,1fr) auto; gap: 12px; padding: 12px; }
+    .furniture-option img { width: 76px; height: 72px; }
+    .quantity-control { gap: 7px; }
+    .quantity-step { width: 40px; height: 40px; border: 1px solid #d9d0c3; background: var(--white); color: var(--brown); font: inherit; font-size: 19px; line-height: 1; cursor: pointer; }
+    .quantity-step:hover:not(:disabled) { border-color: var(--gold); background: #f5f0e7; }
+    .quantity-step:disabled { opacity: .45; cursor: not-allowed; }
+    .quantity-control input { height: 40px; text-align: center; }
+    .check-control input,.feature-option input { width: 18px; height: 18px; }
+    .quantity-control input { width: 60px; height: 36px; font-size: 14px; }
+    .material-list { gap: 14px; }
+    .material-group { grid-template-columns: 120px minmax(0,1fr); gap: 12px; padding-bottom: 14px; }
+    .material-group h3 { margin-top: 6px; font-size: 18px; }
+    .material-choices { gap: 9px; }
+    .material-choice span { gap: 5px; min-height: 58px; padding: 10px 12px; }
+    .material-choice strong { font-size: 13px; }
+    .feature-grid { gap: 12px; }
+    .feature-option { gap: 11px; padding: 14px; }
+    .feature-option strong { margin-bottom: 5px; }
+    .summary-head h2 { font-size: 28px; }
+    .summary-head p { font-size: 13px; }
+    .summary-total span,.summary-meta span { font-size: 12px; }
+    .summary-total strong { font-size: 38px; }
+    .summary-meta strong { font-size: 13px; }
+    .breakdown-row,.breakdown-row strong { font-size: 13px; }
+    .selection-summary,.estimate-note,.summary-empty { font-size: 12px; }
+    .tip-index { color: #89663f; font-size: 12px; }
+    .tip-card h3 { font-size: 20px; }
+    .footer h3 { font-size: 10px; }
+    .footer-bottom { font-size: 12px; }
+    @media (max-width: 760px) {
+      .furniture-option { grid-template-columns: 64px minmax(0,1fr); }
+      .furniture-option img { width: 64px; height: 64px; }
+      .summary-total strong { font-size: 34px; }
+    }
+    @media (max-width: 480px) {
+      .material-group { grid-template-columns: 1fr; gap: 7px; }
+    }
+  </style>
+  <link rel="stylesheet" href="readability.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="DreamSpace home">
+        <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        <span class="brand-name">Dream<span>Space</span></span>
+      </a>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+        <a href="index.html">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a class="active" href="#top" aria-current="page">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a>
+      </nav>
+      <a class="wishlist-link" href="my-dream-board.html" aria-label="My Dream Board">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.5a4.4 4.4 0 0 1 8.8 2.3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span class="wishlist-count" id="wishlist-count" aria-live="polite">0</span>
+      </a>
+      <a class="button header-cta" href="contact.html#contact-form">Get Started</a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=2200&amp;q=88" alt="Beautiful contemporary living room in warm neutral tones" fetchpriority="high">
+      <div class="hero-copy">
+        <span class="eyebrow">Thoughtful planning, beautiful living</span>
+        <h1>Plan Your Dream Space Within Your Budget</h1>
+        <p>Choose your room size, furniture, and materials to discover an estimated interior design budget that fits your needs.</p>
+        <a class="button" id="calculate-cta" href="#calculator">Calculate My Budget <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 4v12m-5-5 5 5 5-5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+
+    <section class="planner-intro container" id="calculator">
+      <span class="section-label">Your space, your priorities</span>
+      <h2>Build Your Room Estimate</h2>
+      <p>Make a few choices to see an illustrative estimate update as you plan.</p>
+    </section>
+
+    <section class="container planner-wrap" aria-label="Interactive budget calculator">
+      <div class="planner-grid">
+        <div class="planner-main">
+          <section class="planner-step" aria-labelledby="room-heading">
+            <div class="step-heading"><span class="step-number">01</span><div><h2 id="room-heading">Choose Your Room Type</h2><p>Select the space you would like to plan.</p></div></div>
+            <div class="room-grid" id="room-options">
+              <button class="room-option" type="button" data-room="living" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=540&amp;h=360&amp;q=80" alt="" loading="lazy"><span>Living Room</span></button>
+              <button class="room-option" type="button" data-room="bedroom" aria-pressed="false"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&amp;fit=crop&amp;w=540&amp;h=360&amp;q=80" alt="" loading="lazy"><span>Bedroom</span></button>
+              <button class="room-option" type="button" data-room="kitchen" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=540&amp;h=360&amp;q=80" alt="" loading="lazy"><span>Modular Kitchen</span></button>
+              <button class="room-option" type="button" data-room="bathroom" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=540&amp;h=360&amp;q=80" alt="" loading="lazy"><span>Bathroom</span></button>
+              <button class="room-option" type="button" data-room="dining" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=540&amp;h=360&amp;q=80" alt="" loading="lazy"><span>Dining Room</span></button>
+              <button class="room-option" type="button" data-room="fullhome" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=540&amp;h=360&amp;q=80" alt="" loading="lazy"><span>Full Home Interior</span></button>
+            </div>
+            <p class="error-message" id="room-error" aria-live="polite"></p>
+          </section>
+
+          <section class="planner-step" aria-labelledby="dimensions-heading">
+            <div class="step-heading"><span class="step-number">02</span><div><h2 id="dimensions-heading">Enter Your Room Dimensions</h2><p>Enter approximate dimensions in feet to calculate flooring area.</p></div></div>
+            <div class="field-grid">
+              <div class="field"><label for="room-length">Room Length (feet)</label><input id="room-length" type="number" min="1" max="500" step="0.1" inputmode="decimal" placeholder="e.g. 16" aria-describedby="dimension-error"></div>
+              <div class="field"><label for="room-width">Room Width (feet)</label><input id="room-width" type="number" min="1" max="500" step="0.1" inputmode="decimal" placeholder="e.g. 12" aria-describedby="dimension-error"></div>
+              <div class="field"><label for="room-height">Room Height (feet)</label><input id="room-height" type="number" min="6" max="50" step="0.1" inputmode="decimal" placeholder="e.g. 10" aria-describedby="dimension-error"></div>
+            </div>
+            <p class="error-message" id="dimension-error" aria-live="polite"></p>
+            <div class="dimension-hint"><span>Estimated floor area</span><strong id="area-value">Enter length and width to calculate</strong></div>
+          </section>
+
+          <section class="planner-step" aria-labelledby="style-heading">
+            <div class="step-heading"><span class="step-number">03</span><div><h2 id="style-heading">Choose Your Design Style</h2><p>Choose the direction that feels most like you.</p></div></div>
+            <div class="style-grid" id="style-options">
+              <button type="button" class="style-option" data-style="Modern" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=400&amp;h=260&amp;q=75" alt="" loading="lazy"><span class="style-copy"><span class="style-name">Modern</span><span class="style-desc">Clean lines, balanced comfort.</span></span></button>
+              <button type="button" class="style-option" data-style="Luxury" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=400&amp;h=260&amp;q=75" alt="" loading="lazy"><span class="style-copy"><span class="style-name">Luxury</span><span class="style-desc">Rich textures, refined detail.</span></span></button>
+              <button type="button" class="style-option" data-style="Minimalist" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=400&amp;h=260&amp;q=75" alt="" loading="lazy"><span class="style-copy"><span class="style-name">Minimalist</span><span class="style-desc">Calm, purposeful simplicity.</span></span></button>
+              <button type="button" class="style-option" data-style="Traditional" aria-pressed="false"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=400&amp;h=260&amp;q=75" alt="" loading="lazy"><span class="style-copy"><span class="style-name">Traditional</span><span class="style-desc">Warm, lasting character.</span></span></button>
+              <button type="button" class="style-option" data-style="Contemporary" aria-pressed="false"><img src="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?auto=format&amp;fit=crop&amp;w=400&amp;h=260&amp;q=75" alt="" loading="lazy"><span class="style-copy"><span class="style-name">Contemporary</span><span class="style-desc">Fresh forms, natural ease.</span></span></button>
+            </div>
+            <p class="error-message" id="style-error" aria-live="polite"></p>
+          </section>
+
+          <section class="planner-step" aria-labelledby="furniture-heading">
+            <div class="step-heading"><span class="step-number">04</span><div><h2 id="furniture-heading">Select Your Furniture</h2><p>Choose what to include and adjust quantities where needed.</p></div></div>
+            <div class="furniture-grid" id="furniture-options"><p class="selection-note">Choose a room type to see furniture options for your space.</p></div>
+          </section>
+
+          <section class="planner-step" aria-labelledby="materials-heading">
+            <div class="step-heading"><span class="step-number">05</span><div><h2 id="materials-heading">Choose Your Materials</h2><p>Illustrative material rates are applied to your room area where relevant.</p></div></div>
+            <div class="material-list" id="material-options"></div>
+          </section>
+
+          <section class="planner-step" aria-labelledby="features-heading">
+            <div class="step-heading"><span class="step-number">06</span><div><h2 id="features-heading">Additional Features</h2><p>Add optional upgrades to explore how they affect your estimate.</p></div></div>
+            <div class="feature-grid" id="feature-options"></div>
+          </section>
+        </div>
+
+        <aside class="budget-summary" aria-labelledby="summary-heading" aria-live="polite">
+          <div class="summary-head"><span class="section-label">Your planning snapshot</span><h2 id="summary-heading">Your Estimated Interior Budget</h2><p>Illustrative estimate only — not a quotation.</p></div>
+          <div class="summary-total"><span>Estimated project cost</span><strong id="grand-total">Choose your room</strong></div>
+          <div class="summary-meta"><div><span>Room area</span><strong id="summary-area">—</strong></div><div><span>Room type</span><strong id="summary-room">Not selected</strong></div><div><span>Design style</span><strong id="summary-style">Not selected</strong></div><div><span>Dimensions</span><strong id="summary-dimensions">—</strong></div></div>
+          <div class="breakdown">
+            <div class="breakdown-row"><span>Furniture</span><strong id="furniture-total">₹0</strong></div>
+            <div class="breakdown-row"><span>Materials</span><strong id="materials-total">₹0</strong></div>
+            <div class="breakdown-row"><span>Additional features</span><strong id="features-total">₹0</strong></div>
+            <div class="summary-divider"></div>
+            <div class="breakdown-row"><span>Installation (10%)</span><strong id="installation-total">₹0</strong></div>
+            <div class="summary-divider"></div>
+            <div class="breakdown-row"><span>Grand total</span><strong id="breakdown-total">₹0</strong></div>
+            <div class="selection-summary" id="selection-summary">Select a room, dimensions, and design style to begin your estimate.</div>
+          </div>
+          <div class="summary-actions">
+            <button class="button" id="download-pdf" type="button" disabled>Download Budget PDF</button>
+            <a class="button button-light" href="contact.html#contact-form">Book a Consultation</a>
+            <button class="button button-light" id="reset-calculator" type="button">Start Again</button>
+          </div>
+          <p class="estimate-note">Prices shown are sample planning estimates in Indian Rupees. Actual costs vary by location, measurements, materials, brand, and installation requirements.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section class="budget-tips">
+      <div class="container">
+        <div class="section-heading"><span class="section-label">Thoughtful choices go a long way</span><h2>Smart Tips to Save Your Budget</h2><p>A beautiful space is about considered decisions, not simply spending more.</p></div>
+        <div class="tips-grid">
+          <article class="tip-card"><span class="tip-index">01 / MATERIALS</span><h3>Choose with care</h3><p>Mix practical everyday finishes with a few standout materials where they matter most.</p></article>
+          <article class="tip-card"><span class="tip-index">02 / FURNITURE</span><h3>Compare options</h3><p>Compare construction and durability as well as price before investing in key furniture.</p></article>
+          <article class="tip-card"><span class="tip-index">03 / SPACE</span><h3>Make room work</h3><p>Space-saving pieces and smart storage can keep a room useful without adding clutter.</p></article>
+          <article class="tip-card"><span class="tip-index">04 / LIGHTING</span><h3>Layer your lighting</h3><p>Combine good ambient light with focused task lighting before adding decorative accents.</p></article>
+        </div>
+      </div>
+    </section>
+    <section class="cta-band">
+      <div class="container cta-inner"><div><span class="section-label">Here when you need us</span><h2>Need Help Planning Your Dream Space?</h2><p>Talk through your ideas with the DreamSpace team and take the next step with confidence.</p></div><a class="button" href="contact.html#contact-form">Book a Consultation</a></div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about"><a class="brand" href="index.html" aria-label="DreamSpace home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Dream<span>Space</span></span></a><p>Thoughtful interiors, timeless inspiration, and beautiful ideas for the home you’ve always imagined.</p>
+          <div class="social-links" aria-label="Social media"><a href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="3.2" stroke="currentColor" stroke-width="1.4"/></svg></a><a href="https://www.pinterest.com/" aria-label="Pinterest"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.4"/><path d="m8 16 2-7m0 0c0-3 5-3 4 0-1 3-4 3-4 0" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></a><a href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M11.5 17v-6.2h2.1l.32-2.42H11.5V6.83c0-.7.2-1.18 1.2-1.18h1.3V3.48c-.23-.03-1.02-.1-1.94-.1-1.92 0-3.23 1.12-3.23 3.3v1.7H6.65v2.42h2.18V17h2.67Z"/></svg></a></div>
+        </div>
+        <div><h3>Quick Links</h3><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="#top">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a><a href="my-dream-board.html">My Dream Board</a></nav></div>
+        <div><h3>Contact</h3><div class="footer-contact"><a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span>Phone number to be confirmed</span><span>Jaipur, Rajasthan, India (sample location)</span></div></div>
+        <div><h3>Our philosophy</h3><div class="footer-contact"><span>Personal, never precious.</span><span>Timeless, never ordinary.</span><span>Always a little more you.</span></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 DreamSpace. All Rights Reserved.</span><a href="#top">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const roomNames = {
+      living: "Living Room", bedroom: "Bedroom", kitchen: "Modular Kitchen",
+      bathroom: "Bathroom", dining: "Dining Room", fullhome: "Full Home Interior"
+    };
+    const furnitureCatalog = {
+      living: [
+        ["sofa","Sofa",42000,"photo-1555041469-a586c61ea9bc"],["coffee","Coffee Table",12000,"photo-1533090481720-856c6e3c1fdc"],
+        ["tv","TV Unit",22000,"photo-1600210492486-724fe5c67fb0"],["curtains","Curtains",9000,"photo-1616486338812-3dadae4b4ace"],
+        ["bookshelf","Bookshelf",15000,"photo-1503602642458-232111445657"]
+      ],
+      bedroom: [
+        ["bed","Bed",38000,"photo-1505693416388-ac5ce068fe85"],["wardrobe","Wardrobe",42000,"photo-1616486338812-3dadae4b4ace"],
+        ["side-tables","Side Tables",8500,"photo-1618221195710-dd6b41faaea6"],["dressing","Dressing Table",18000,"photo-1616486338812-3dadae4b4ace"],
+        ["curtains","Curtains",9000,"photo-1616486338812-3dadae4b4ace"]
+      ],
+      kitchen: [
+        ["cabinets","Modular Cabinets",95000,"photo-1600607687920-4e2a09cf159d"],["countertop","Countertop",38000,"photo-1600607687920-4e2a09cf159d"],
+        ["storage","Storage Units",22000,"photo-1600607687920-4e2a09cf159d"],["lighting","Kitchen Lighting",9500,"photo-1600607687920-4e2a09cf159d"]
+      ],
+      bathroom: [
+        ["washbasin","Washbasin",12000,"photo-1600566753086-00f18fb6b3ea"],["shower","Shower",18000,"photo-1600566753086-00f18fb6b3ea"],
+        ["bath-cabinet","Bathroom Cabinet",14500,"photo-1600566753086-00f18fb6b3ea"],["mirror","Mirror",6500,"photo-1600566753086-00f18fb6b3ea"]
+      ],
+      dining: [
+        ["dining-table","Dining Table",32000,"photo-1600607687939-ce8a6c25118c"],["dining-chairs","Dining Chairs",18000,"photo-1600607687939-ce8a6c25118c"],
+        ["sideboard","Sideboard",24000,"photo-1600607687939-ce8a6c25118c"],["pendant","Pendant Lighting",12000,"photo-1600607687939-ce8a6c25118c"]
+      ],
+      fullhome: [
+        ["sofa","Living Room Sofa",42000,"photo-1555041469-a586c61ea9bc"],["bed","Bedroom Bed",38000,"photo-1505693416388-ac5ce068fe85"],
+        ["wardrobe","Wardrobe",42000,"photo-1616486338812-3dadae4b4ace"],["cabinets","Kitchen Cabinets",95000,"photo-1600607687920-4e2a09cf159d"],
+        ["countertop","Kitchen Countertop",38000,"photo-1600607687920-4e2a09cf159d"],["dining-table","Dining Table",32000,"photo-1600607687939-ce8a6c25118c"],
+        ["bath-cabinet","Bathroom Cabinet",14500,"photo-1600566753086-00f18fb6b3ea"]
+      ]
+    };
+    const materials = [
+      { id:"flooring", name:"Flooring", unit:"sq ft", options:[["Basic Tiles",55],["Premium Tiles",100],["Wooden Flooring",140],["Marble",220]] },
+      { id:"wall", name:"Wall Finish", unit:"wall sq ft", options:[["Standard Paint",18],["Premium Paint",35],["Wallpaper",90],["Decorative Wall Panels",160]] },
+      { id:"lighting", name:"Lighting", unit:"per room", options:[["Basic Lighting",5000],["LED Lighting",10000],["Premium Decorative Lighting",22000]] }
+    ];
+    const features = [
+      {id:"false-ceiling",name:"False Ceiling",note:"₹130 per sq ft",mode:"area",rate:130},
+      {id:"smart-lighting",name:"Smart Lighting",note:"₹8,500 per room",mode:"flat",rate:8500},
+      {id:"wall-decoration",name:"Wall Decoration",note:"₹12,000 per room",mode:"flat",rate:12000},
+      {id:"custom-furniture",name:"Custom Furniture",note:"₹20,000 per room",mode:"flat",rate:20000},
+      {id:"premium-finishing",name:"Premium Finishing",note:"₹250 per sq ft",mode:"area",rate:250}
+    ];
+    const currency = new Intl.NumberFormat("en-IN", {style:"currency",currency:"INR",maximumFractionDigits:0});
+    const state = { room:null, style:null, furniture:new Map(), materials:{}, features:new Set() };
+    const dimensions = {
+      length:document.querySelector("#room-length"),
+      width:document.querySelector("#room-width"),
+      height:document.querySelector("#room-height")
+    };
+    const roomError = document.querySelector("#room-error");
+    const styleError = document.querySelector("#style-error");
+    const dimensionError = document.querySelector("#dimension-error");
+    let dimensionsAttempted = false;
+    const furnitureOptions = document.querySelector("#furniture-options");
+    const materialOptions = document.querySelector("#material-options");
+    const featureOptions = document.querySelector("#feature-options");
+    const summarySelection = document.querySelector("#selection-summary");
+    const pdfButton = document.querySelector("#download-pdf");
+    let latestEstimate = null;
+
+    function formatMoney(value) {
+      return currency.format(Math.round(value || 0));
+    }
+
+    function getDimensions() {
+      const length = Number(dimensions.length.value);
+      const width = Number(dimensions.width.value);
+      const height = Number(dimensions.height.value);
+      const values = [dimensions.length, dimensions.width, dimensions.height];
+      const lengthWidthValid = [
+        [dimensions.length,length,1,500],
+        [dimensions.width,width,1,500]
+      ].every(([input,value,minimum,maximum]) => input.value.trim() !== "" && Number.isFinite(value) && value >= minimum && value <= maximum);
+      let error = "";
+      values.forEach((input) => input.setAttribute("aria-invalid", "false"));
+      const hasAnyValue = values.some((input) => input.value.trim() !== "") || dimensionsAttempted;
+      for (const [input, value, minimum, maximum, label] of [
+        [dimensions.length,length,1,500,"Length"],[dimensions.width,width,1,500,"Width"],[dimensions.height,height,6,50,"Height"]
+      ]) {
+        if (!input.value.trim()) {
+          if (hasAnyValue) {
+            error = "Please enter all three room dimensions.";
+            input.setAttribute("aria-invalid", "true");
+          }
+          continue;
+        }
+        if (!Number.isFinite(value) || value < minimum || value > maximum) {
+          error = `${label} must be a number between ${minimum} and ${maximum} feet.`;
+          input.setAttribute("aria-invalid", "true");
+        }
+      }
+      dimensionError.textContent = error;
+      const valid = values.every((input) => input.value.trim() !== "" && input.getAttribute("aria-invalid") !== "true");
+      const area = lengthWidthValid ? length * width : 0;
+      document.querySelector("#area-value").textContent = lengthWidthValid ? `${area.toLocaleString("en-IN",{maximumFractionDigits:1})} sq ft` : "Enter valid length and width";
+      document.querySelector("#summary-area").textContent = lengthWidthValid ? `${area.toLocaleString("en-IN",{maximumFractionDigits:1})} sq ft` : "—";
+      document.querySelector("#summary-dimensions").textContent = valid ? `${length} × ${width} × ${height} ft` : "—";
+      return {valid,length,width,height,area,wallArea:valid ? 2*(length+width)*height : 0};
+    }
+
+    function renderFurniture() {
+      if (!state.room) {
+        furnitureOptions.innerHTML = '<p class="selection-note">Choose a room type to see furniture options for your space.</p>';
+        return;
+      }
+      furnitureOptions.innerHTML = furnitureCatalog[state.room].map(([id,name,price,image]) => {
+        const selected = state.furniture.has(id);
+        const quantity = state.furniture.get(id) || 1;
+        return `<article class="furniture-option">
+          <img src="https://images.unsplash.com/${image}?auto=format&amp;fit=crop&amp;w=180&amp;h=160&amp;q=75" alt="" loading="lazy">
+          <div><h3>${name}</h3><p>${formatMoney(price)} / item</p></div>
+          <div class="furniture-controls">
+            <label class="check-control"><input type="checkbox" data-furniture="${id}" ${selected ? "checked" : ""}>${selected ? "Added" : "Add"}</label>
+            ${selected ? `<div class="quantity-control"><span>Qty</span><button class="quantity-step" type="button" data-quantity-step="-1" aria-label="Decrease ${name} quantity" ${quantity <= 1 ? "disabled" : ""}>-</button><input type="number" min="1" max="20" value="${quantity}" inputmode="numeric" data-quantity="${id}" aria-label="${name} quantity"><button class="quantity-step" type="button" data-quantity-step="1" aria-label="Increase ${name} quantity" ${quantity >= 20 ? "disabled" : ""}>+</button></div>` : ""}
+          </div>
+        </article>`;
+      }).join("");
+    }
+
+    function renderMaterials() {
+      materialOptions.innerHTML = materials.map((group) => `
+        <div class="material-group"><h3>${group.name}</h3><div class="material-choices" role="radiogroup" aria-label="${group.name}">
+          ${group.options.map(([name,rate],index) => `<label class="material-choice"><input type="radio" name="material-${group.id}" value="${index}" data-material="${group.id}" ${state.materials[group.id] === index ? "checked" : ""}><span><strong>${name}</strong><small>${formatMoney(rate)} / ${group.unit}</small></span></label>`).join("")}
+        </div></div>`).join("");
+    }
+
+    function renderFeatures() {
+      featureOptions.innerHTML = features.map((feature) => `
+        <label class="feature-option"><input type="checkbox" data-feature="${feature.id}" ${state.features.has(feature.id) ? "checked" : ""}><span><strong>${feature.name}</strong><small>${feature.note}</small></span></label>`).join("");
+    }
+
+    function calculate() {
+      const dims = getDimensions();
+      const roomName = state.room ? roomNames[state.room] : "Not selected";
+      document.querySelector("#summary-room").textContent = roomName;
+      document.querySelector("#summary-style").textContent = state.style || "Not selected";
+      let furniture = 0;
+      const furnitureLines = [];
+      if (state.room) {
+        for (const [id,name,price] of furnitureCatalog[state.room]) {
+          const quantity = state.furniture.get(id);
+          if (quantity) {
+            furniture += price * quantity;
+            furnitureLines.push(`${name} x${quantity}: ${formatMoney(price*quantity)}`);
+          }
+        }
+      }
+      let materialTotal = 0;
+      const materialLines = [];
+      if (dims.valid) {
+        materials.forEach((group) => {
+          const chosenIndex = state.materials[group.id];
+          if (chosenIndex === undefined) return;
+          const [name,rate] = group.options[chosenIndex];
+          let cost = rate;
+          let basis = group.unit;
+          if (group.id === "flooring") { cost = rate * dims.area; basis = `${dims.area.toFixed(1)} sq ft`; }
+          if (group.id === "wall") { cost = rate * dims.wallArea; basis = `${dims.wallArea.toFixed(1)} wall sq ft`; }
+          cost = Math.round(cost);
+          materialTotal += cost;
+          materialLines.push(`${group.name} — ${name} (${basis}): ${formatMoney(cost)}`);
+        });
+      }
+      let featureTotal = 0;
+      const featureLines = [];
+      if (dims.valid) {
+        features.forEach((feature) => {
+          if (!state.features.has(feature.id)) return;
+          const cost = Math.round(feature.mode === "area" ? feature.rate * dims.area : feature.rate);
+          featureTotal += cost;
+          featureLines.push(`${feature.name}: ${formatMoney(cost)}`);
+        });
+      }
+      const subtotal = furniture + materialTotal + featureTotal;
+      const installation = Math.round(subtotal * 0.1);
+      const total = subtotal + installation;
+      const complete = Boolean(state.room && state.style && dims.valid);
+      document.querySelector("#furniture-total").textContent = formatMoney(furniture);
+      document.querySelector("#materials-total").textContent = formatMoney(materialTotal);
+      document.querySelector("#features-total").textContent = formatMoney(featureTotal);
+      document.querySelector("#installation-total").textContent = formatMoney(installation);
+      document.querySelector("#breakdown-total").textContent = formatMoney(total);
+      document.querySelector("#grand-total").textContent = complete ? formatMoney(total) : "Complete details";
+      const selectedLines = [...furnitureLines, ...materialLines, ...featureLines];
+      summarySelection.textContent = complete
+        ? `Selected: ${selectedLines.length ? selectedLines.join(" · ") : "No optional items"}`
+        : "Choose a room and design style, then enter valid dimensions to unlock your estimate.";
+      pdfButton.disabled = !complete;
+      latestEstimate = complete ? {dims,room:roomName,style:state.style,furnitureLines,materialLines,featureLines,furniture,materialTotal,featureTotal,installation,total} : null;
+    }
+
+    document.querySelectorAll(".room-option").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.room = button.dataset.room;
+        state.furniture.clear();
+        document.querySelectorAll(".room-option").forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
+        roomError.textContent = "";
+        renderFurniture();
+        calculate();
+      });
+    });
+
+    document.querySelectorAll(".style-option").forEach((button) => {
+      button.addEventListener("click", () => {
+        state.style = button.dataset.style;
+        document.querySelectorAll(".style-option").forEach((option) => option.setAttribute("aria-pressed", String(option === button)));
+        styleError.textContent = "";
+        calculate();
+      });
+    });
+
+    Object.values(dimensions).forEach((input) => input.addEventListener("input", calculate));
+    furnitureOptions.addEventListener("click", (event) => {
+      const stepButton = event.target.closest("[data-quantity-step]");
+      if (!stepButton) return;
+      const quantityControl = stepButton.closest(".quantity-control");
+      const quantityInput = quantityControl.querySelector("[data-quantity]");
+      const quantity = Math.min(20, Math.max(1, Number(quantityInput.value) + Number(stepButton.dataset.quantityStep)));
+      quantityInput.value = String(quantity);
+      quantityInput.setAttribute("aria-invalid", "false");
+      state.furniture.set(quantityInput.dataset.quantity, quantity);
+      quantityControl.querySelector('[data-quantity-step="-1"]').disabled = quantity <= 1;
+      quantityControl.querySelector('[data-quantity-step="1"]').disabled = quantity >= 20;
+      calculate();
+    });
+    furnitureOptions.addEventListener("input", (event) => {
+      const input = event.target.closest("[data-quantity]");
+      if (!input) return;
+      const quantity = Number(input.value);
+      const valid = Number.isInteger(quantity) && quantity >= 1 && quantity <= 20;
+      input.setAttribute("aria-invalid", String(!valid));
+      if (!valid) return;
+      state.furniture.set(input.dataset.quantity, quantity);
+      calculate();
+    });
+    furnitureOptions.addEventListener("change", (event) => {
+      const checkbox = event.target.closest("[data-furniture]");
+      if (checkbox) {
+        if (checkbox.checked) state.furniture.set(checkbox.dataset.furniture, 1);
+        else state.furniture.delete(checkbox.dataset.furniture);
+        renderFurniture();
+        calculate();
+        return;
+      }
+      const quantityInput = event.target.closest("[data-quantity]");
+      if (quantityInput) {
+        const quantity = Math.min(20, Math.max(1, Number(quantityInput.value) || 1));
+        state.furniture.set(quantityInput.dataset.quantity, quantity);
+        renderFurniture();
+        calculate();
+      }
+    });
+    materialOptions.addEventListener("change", (event) => {
+      const input = event.target.closest("[data-material]");
+      if (!input) return;
+      state.materials[input.dataset.material] = Number(input.value);
+      calculate();
+    });
+    featureOptions.addEventListener("change", (event) => {
+      const input = event.target.closest("[data-feature]");
+      if (!input) return;
+      if (input.checked) state.features.add(input.dataset.feature);
+      else state.features.delete(input.dataset.feature);
+      calculate();
+    });
+
+    function pdfText(value) {
+      return String(value).replace(/₹/g, "INR ").replace(/×/g, " x ").normalize("NFKD").replace(/[^\x20-\x7e]/g, "").replace(/([\\()])/g, "\\$1");
+    }
+
+    function downloadPdf() {
+      if (!latestEstimate) return;
+      const estimate = latestEstimate;
+      const rows = [
+        "DREAMSPACE | ROOM BUDGET PLAN",
+        "Illustrative planning estimate - not a quotation",
+        "",
+        `Room: ${estimate.room}`,
+        `Dimensions: ${estimate.dims.length} x ${estimate.dims.width} x ${estimate.dims.height} ft`,
+        `Floor area: ${estimate.dims.area.toFixed(1)} sq ft`,
+        `Design style: ${estimate.style}`,
+        "",
+        "SELECTED FURNITURE",
+        ...(estimate.furnitureLines.length ? estimate.furnitureLines : ["No furniture selected"]),
+        "",
+        "SELECTED MATERIALS",
+        ...(estimate.materialLines.length ? estimate.materialLines : ["No materials selected"]),
+        "",
+        "ADDITIONAL FEATURES",
+        ...(estimate.featureLines.length ? estimate.featureLines : ["No additional features"]),
+        "",
+        "BUDGET BREAKDOWN (INR)",
+        `Furniture: ${formatMoney(estimate.furniture)}`,
+        `Materials: ${formatMoney(estimate.materialTotal)}`,
+        `Additional features: ${formatMoney(estimate.featureTotal)}`,
+        `Estimated installation (10%): ${formatMoney(estimate.installation)}`,
+        `GRAND TOTAL: ${formatMoney(estimate.total)}`,
+        "",
+        "Prices are illustrative sample estimates. Actual costs vary by location, materials, brands,",
+        "measurements and installation requirements. Please request a project-specific quotation.",
+        "DreamSpace | Design Your Dream Home"
+      ];
+      const wrappedRows = rows.flatMap((row) => {
+        if (row.length <= 78) return [row];
+        const words = row.split(/\s+/);
+        const lines = [];
+        let line = "";
+        words.forEach((word) => {
+          if (line && `${line} ${word}`.length > 78) {
+            lines.push(line);
+            line = word;
+          } else {
+            line = line ? `${line} ${word}` : word;
+          }
+        });
+        if (line) lines.push(line);
+        return lines;
+      });
+      const commands = ["BT", "/F1 10 Tf", "50 790 Td", "14 TL"];
+      wrappedRows.forEach((row,index) => {
+        if (index) commands.push("T*");
+        commands.push(`(${pdfText(row)}) Tj`);
+      });
+      commands.push("ET");
+      const stream = commands.join("\n");
+      const objects = [
+        "<< /Type /Catalog /Pages 2 0 R >>",
+        "<< /Type /Pages /Kids [3 0 R] /Count 1 >>",
+        "<< /Type /Page /Parent 2 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 4 0 R >> >> /Contents 5 0 R >>",
+        "<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>",
+        `<< /Length ${stream.length} >>\nstream\n${stream}\nendstream`
+      ];
+      let pdf = "%PDF-1.4\n";
+      const offsets = [0];
+      objects.forEach((object,index) => {
+        offsets.push(pdf.length);
+        pdf += `${index+1} 0 obj\n${object}\nendobj\n`;
+      });
+      const xrefOffset = pdf.length;
+      pdf += `xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;
+      offsets.slice(1).forEach((offset) => { pdf += `${String(offset).padStart(10,"0")} 00000 n \n`; });
+      pdf += `trailer\n<< /Size ${objects.length+1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF`;
+      const blob = new Blob([pdf], {type:"application/pdf"});
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = "dreamspace-budget-estimate.pdf";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    }
+    pdfButton.addEventListener("click", downloadPdf);
+
+    document.querySelector("#calculate-cta").addEventListener("click", (event) => {
+      event.preventDefault();
+      roomError.textContent = state.room ? "" : "Please choose a room type to continue.";
+      styleError.textContent = state.style ? "" : "Please choose a design style to continue.";
+      dimensionsAttempted = true;
+      const attemptedDimensions = getDimensions();
+      if (!attemptedDimensions.valid && !dimensionError.textContent) {
+        dimensionError.textContent = "Please enter all three room dimensions.";
+        Object.values(dimensions).filter((input) => !input.value.trim()).forEach((input) => input.setAttribute("aria-invalid","true"));
+      }
+      if (!state.room) document.querySelector("#room-options").scrollIntoView({behavior:"smooth",block:"center"});
+      else if (!attemptedDimensions.valid) {
+        const invalidField = Object.values(dimensions).find((input) => input.getAttribute("aria-invalid") === "true");
+        if (invalidField) invalidField.focus({preventScroll:true});
+        invalidField?.scrollIntoView({behavior:"smooth",block:"center"});
+      } else if (!state.style) document.querySelector("#style-options").scrollIntoView({behavior:"smooth",block:"center"});
+      else document.querySelector("#grand-total").scrollIntoView({behavior:"smooth",block:"center"});
+      calculate();
+    });
+
+    document.querySelector("#reset-calculator").addEventListener("click", () => {
+      state.room = null;
+      state.style = null;
+      state.furniture.clear();
+      state.materials = {};
+      state.features.clear();
+      Object.values(dimensions).forEach((input) => { input.value = ""; input.setAttribute("aria-invalid","false"); });
+      dimensionsAttempted = false;
+      document.querySelectorAll(".room-option, .style-option").forEach((option) => option.setAttribute("aria-pressed","false"));
+      roomError.textContent = "";
+      styleError.textContent = "";
+      dimensionError.textContent = "";
+      renderFurniture();
+      renderMaterials();
+      renderFeatures();
+      calculate();
+      document.querySelector("#room-heading").scrollIntoView({behavior:"smooth",block:"center"});
+    });
+
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#site-nav");
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded",String(!isOpen));
+      menuToggle.setAttribute("aria-label",isOpen ? "Open navigation menu" : "Close navigation menu");
+      navigation.classList.toggle("is-open",!isOpen);
+    });
+    navigation.addEventListener("click",(event) => {
+      if (!event.target.closest("a")) return;
+      navigation.classList.remove("is-open");
+      menuToggle.setAttribute("aria-expanded","false");
+      menuToggle.setAttribute("aria-label","Open navigation menu");
+    });
+    try {
+      const saved = JSON.parse(localStorage.getItem("dreamspace-wishlist") || "[]");
+      document.querySelector("#wishlist-count").textContent = Array.isArray(saved) ? String(saved.length) : "0";
+    } catch (error) {
+      console.error("Could not read the saved DreamSpace wishlist.", error);
+    }
+    renderFurniture();
+    renderMaterials();
+    renderFeatures();
+    calculate();
+  </script>
+</body>
+</html>

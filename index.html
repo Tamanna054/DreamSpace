@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Discover beautiful interiors, thoughtful ideas, and inspiration to transform your dream home with DreamSpace.">
+  <title>DreamSpace — Design Your Dream Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #25221f;
+      --brown: #4b3b30;
+      --muted: #817a72;
+      --cream: #f6f3ed;
+      --sand: #eae3d8;
+      --white: #fffefa;
+      --gold: #b28a5a;
+      --serif: "Playfair Display", Georgia, serif;
+      --sans: "DM Sans", "Segoe UI", Arial, sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+    body { margin: 0; background: var(--cream); color: var(--ink); font-family: var(--sans); -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    img { display: block; max-width: 100%; }
+    .container { width: min(1200px, calc(100% - 64px)); margin-inline: auto; }
+
+    .site-header { position: relative; z-index: 10; background: var(--cream); }
+    .navbar { min-height: 82px; display: flex; align-items: center; justify-content: space-between; gap: 30px; }
+    .brand { display: inline-flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .brand-icon { width: 34px; height: 38px; color: var(--brown); }
+    .brand-icon svg { width: 100%; height: 100%; }
+    .brand-name { font-family: var(--serif); font-size: 23px; letter-spacing: -.7px; }
+    .brand-name span { color: var(--gold); }
+    .board-link { width: 36px; height: 36px; display: grid; place-items: center; flex-shrink: 0; color: var(--brown); }
+    .board-link svg { width: 19px; height: 19px; }
+    .nav-links { display: flex; align-items: center; gap: 34px; margin-left: auto; }
+    .nav-links a { color: #5e5851; font-size: 12px; transition: color .2s ease; }
+    .nav-links a:hover { color: var(--gold); }
+    .header-cta, .button {
+      display: inline-flex; min-height: 45px; align-items: center; justify-content: center; gap: 9px;
+      padding: 0 20px; border: 1px solid var(--brown); border-radius: 2px; background: var(--brown);
+      color: var(--white); font-size: 11px; font-weight: 600; letter-spacing: .3px; cursor: pointer;
+      transition: background .2s ease, color .2s ease, transform .2s ease;
+    }
+    .header-cta:hover, .button:hover { transform: translateY(-2px); background: #624e3f; }
+    .button svg, .header-cta svg { width: 15px; height: 15px; }
+    .menu-toggle { display: none; width: 42px; height: 42px; border: 1px solid var(--sand); background: transparent; color: var(--brown); cursor: pointer; }
+
+    .hero { position: relative; min-height: 590px; display: flex; align-items: center; overflow: hidden; background: #4a4036; color: white; }
+    .hero::before { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(22, 20, 17, .68) 0%, rgba(22, 20, 17, .48) 45%, rgba(22, 20, 17, .12) 100%); content: ""; z-index: 1; }
+    .hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 56%; animation: image-arrive 1.2s ease both; }
+    .hero-content { position: relative; z-index: 2; width: min(650px, 72%); padding: 85px 0 92px 7.5%; animation: rise-in .8s .1s both; }
+    .overline { display: inline-flex; align-items: center; gap: 11px; color: #e6d3b8; font-size: 9px; font-weight: 600; letter-spacing: 2.4px; text-transform: uppercase; }
+    .overline::before { width: 28px; height: 1px; background: currentColor; content: ""; }
+    .hero h1 { max-width: 660px; margin: 23px 0 18px; font-family: var(--serif); font-size: clamp(48px, 6vw, 78px); font-weight: 400; letter-spacing: -2.4px; line-height: 1.08; }
+    .hero h1 em { color: #e7d4b8; font-weight: 400; }
+    .hero p { max-width: 490px; margin: 0; color: rgba(255,255,255,.82); font-size: 13px; line-height: 1.9; }
+    .hero-actions { display: flex; align-items: center; gap: 22px; margin-top: 30px; }
+    .button-light { border-color: var(--white); background: var(--white); color: var(--ink); }
+    .button-light:hover { border-color: #e9dac4; background: #e9dac4; }
+    .button-quiet { display: inline-flex; align-items: center; gap: 9px; color: white; font-size: 11px; font-weight: 600; }
+    .button-quiet svg { width: 16px; height: 16px; transition: transform .2s ease; }
+    .button-quiet:hover svg { transform: translateX(4px); }
+    .hero-index { position: absolute; z-index: 2; right: 7%; bottom: 28px; color: rgba(255,255,255,.8); font-size: 9px; letter-spacing: 1.4px; }
+
+    .welcome { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 76px; padding-block: 112px; }
+    .welcome-photo { position: relative; min-height: 430px; }
+    .welcome-photo img { width: 88%; height: 430px; object-fit: cover; object-position: center; }
+    .welcome-photo::after { position: absolute; right: 0; bottom: -19px; z-index: -1; width: 72%; height: 79%; border: 1px solid #cbbba7; content: ""; }
+    .photo-caption { position: absolute; right: 0; bottom: 12px; display: flex; align-items: center; gap: 10px; padding: 13px 15px; background: var(--white); box-shadow: 0 9px 28px rgba(49,39,29,.1); }
+    .caption-line { width: 25px; height: 1px; background: var(--gold); }
+    .photo-caption span:last-child { color: var(--brown); font-family: var(--serif); font-size: 12px; }
+    .section-label { display: inline-flex; align-items: center; gap: 10px; color: var(--gold); font-size: 9px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    .section-label::before { width: 25px; height: 1px; background: currentColor; content: ""; }
+    .welcome h2, .section-heading h2 { margin: 16px 0 17px; font-family: var(--serif); font-size: clamp(37px, 4vw, 51px); font-weight: 400; letter-spacing: -1.5px; line-height: 1.17; }
+    .welcome h2 em { color: var(--gold); font-weight: 400; }
+    .welcome-copy { max-width: 490px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.95; }
+    .welcome-link { display: inline-flex; align-items: center; gap: 10px; margin-top: 27px; padding-bottom: 7px; border-bottom: 1px solid #baa27f; color: var(--brown); font-size: 11px; font-weight: 700; }
+    .welcome-link svg { width: 15px; transition: transform .2s ease; }
+    .welcome-link:hover svg { transform: translateX(4px); }
+
+    .designs { padding: 88px 0 102px; background: #eee9e0; }
+    .section-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 34px; }
+    .section-heading h2 { margin-bottom: 0; }
+    .section-heading p { max-width: 340px; margin: 0 0 5px; color: var(--muted); font-size: 12px; line-height: 1.8; }
+    .design-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+    .design-card { min-width: 0; background: var(--white); box-shadow: 0 7px 25px rgba(53,42,31,.055); transition: transform .28s ease, box-shadow .28s ease; }
+    .design-card:hover { transform: translateY(-6px); box-shadow: 0 18px 34px rgba(53,42,31,.12); }
+    .design-photo { position: relative; height: 245px; overflow: hidden; background: #d3c8b9; }
+    .design-photo img { width: 100%; height: 100%; object-fit: cover; transition: transform .55s ease; }
+    .design-card:hover .design-photo img { transform: scale(1.05); }
+    .design-number { position: absolute; right: 12px; bottom: 10px; color: white; font-family: var(--serif); font-size: 13px; text-shadow: 0 1px 5px #0008; }
+    .design-info { padding: 19px 17px 20px; }
+    .design-info h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 20px; font-weight: 400; }
+    .design-info p { min-height: 41px; margin: 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+    .card-link { display: inline-flex; align-items: center; gap: 7px; margin-top: 15px; color: var(--brown); font-size: 9px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase; }
+    .card-link svg { width: 13px; height: 13px; transition: transform .2s ease; }
+    .card-link:hover svg { transform: translateX(4px); }
+
+    .contact-band { padding: 78px 0; background: var(--brown); color: white; }
+    .contact-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; }
+    .contact-band .section-label { color: #d7bc96; }
+    .contact-band h2 { max-width: 600px; margin: 14px 0 0; font-family: var(--serif); font-size: clamp(32px, 4vw, 46px); font-weight: 400; letter-spacing: -1px; line-height: 1.2; }
+    .contact-band .button { flex-shrink: 0; border-color: #e4d3bc; background: #e4d3bc; color: var(--ink); }
+    .contact-band .button:hover { background: white; }
+
+    .footer { padding: 64px 0 0; background: #28231f; color: #f7f3ec; }
+    .footer-grid { display: grid; grid-template-columns: 1.45fr .8fr 1fr 1fr; gap: 44px; padding-bottom: 50px; }
+    .footer .brand-icon { color: #e0c49f; }
+    .footer .brand-name { color: white; }
+    .footer-about p { max-width: 260px; margin: 18px 0 0; color: #c1b9af; font-size: 11px; line-height: 1.9; }
+    .footer h3 { margin: 5px 0 19px; color: #e6d5bd; font-size: 9px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+    .footer-links, .footer-contact { display: grid; gap: 12px; }
+    .footer-links a, .footer-contact a, .footer-contact span { color: #c1b9af; font-size: 10px; line-height: 1.65; transition: color .2s ease; }
+    .footer-links a:hover, .footer-contact a:hover { color: white; }
+    .social-links { display: flex; gap: 9px; margin-top: 20px; }
+    .social-links a { width: 31px; height: 31px; display: grid; place-items: center; border: 1px solid #655b50; border-radius: 50%; color: #e6d5bd; transition: color .2s ease, background .2s ease; }
+    .social-links a:hover { background: #e6d5bd; color: var(--ink); }
+    .social-links svg { width: 13px; height: 13px; }
+    .footer-bottom { min-height: 56px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-top: 1px solid #ffffff20; color: #aaa198; font-size: 9px; }
+    .footer-bottom a { transition: color .2s ease; }
+    .footer-bottom a:hover { color: white; }
+
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes image-arrive { from { transform: scale(1.04); } to { transform: scale(1); } }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+    @media (max-width: 960px) {
+      .container { width: min(100% - 48px, 820px); }
+      .nav-links { gap: 21px; }
+      .hero { min-height: 540px; }
+      .hero-content { padding-left: 6%; }
+      .welcome { gap: 46px; padding-block: 88px; }
+      .welcome-photo, .welcome-photo img { min-height: 370px; height: 370px; }
+      .design-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+      .design-photo { height: 255px; }
+      .footer-grid { grid-template-columns: 1.3fr 1fr 1fr; gap: 36px; }
+      .footer-about { grid-row: span 2; }
+    }
+    @media (max-width: 650px) {
+      html { scroll-padding-top: 70px; }
+      .container { width: calc(100% - 36px); }
+      .navbar { min-height: 70px; gap: 5px; }
+      .brand { gap: 6px; }
+      .brand-icon { width: 26px; height: 30px; }
+      .brand-name { font-size: 18px; }
+      .nav-links {
+        position: absolute; top: 70px; right: 0; left: 0; display: none; align-items: stretch; gap: 0;
+        padding: 8px 18px 16px; border-top: 1px solid var(--sand); background: var(--cream);
+      }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 12px 0; }
+      .header-cta { min-height: 36px; margin-left: 0; padding: 0 8px; font-size: 8px; }
+      .menu-toggle { width: 38px; height: 38px; display: grid; place-items: center; }
+      .menu-toggle svg { width: 19px; height: 19px; }
+      .hero { min-height: 585px; align-items: end; }
+      .hero::before { background: linear-gradient(0deg, rgba(22,20,17,.78), rgba(22,20,17,.3) 68%, rgba(22,20,17,.12)); }
+      .hero-image { object-position: 58% center; }
+      .hero-content { width: 100%; padding: 0 22px 65px; }
+      .hero h1 { max-width: 530px; margin: 17px 0 14px; font-size: clamp(44px, 12vw, 61px); letter-spacing: -1.7px; }
+      .hero p { max-width: 440px; font-size: 12px; }
+      .hero-actions { gap: 17px; margin-top: 24px; }
+      .hero-index { right: 22px; bottom: 20px; }
+      .welcome { grid-template-columns: 1fr; gap: 42px; padding-block: 73px; }
+      .welcome-photo, .welcome-photo img { min-height: 300px; height: 300px; }
+      .welcome-photo img { width: 91%; }
+      .welcome-photo::after { bottom: -12px; }
+      .welcome h2, .section-heading h2 { font-size: 39px; }
+      .welcome-copy { font-size: 12px; }
+      .designs { padding: 69px 0 74px; }
+      .section-heading { align-items: flex-start; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+      .section-heading p { max-width: 430px; }
+      .design-grid { gap: 12px; }
+      .design-photo { height: clamp(145px, 47vw, 225px); }
+      .design-info { padding: 14px 12px 16px; }
+      .design-info h3 { font-size: 17px; }
+      .design-info p { min-height: 51px; font-size: 9px; }
+      .card-link { font-size: 8px; }
+      .contact-band { padding: 57px 0; }
+      .contact-inner { align-items: flex-start; flex-direction: column; gap: 24px; }
+      .footer { padding-top: 48px; }
+      .footer-grid { grid-template-columns: 1fr 1fr; gap: 32px 22px; padding-bottom: 37px; }
+      .footer-about { grid-column: 1 / -1; grid-row: auto; }
+      .footer-about p { max-width: 370px; }
+      .footer-bottom { align-items: flex-start; flex-direction: column; justify-content: center; gap: 8px; padding: 15px 0; line-height: 1.6; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; }
+      .reveal { opacity: 1; transform: none; }
+    }
+    @media (max-width: 1100px) {
+      .navbar { position: relative; gap: 8px; }
+      .nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; align-items: stretch; gap: 0; margin: 0; padding: 8px 18px 14px; border-top: 1px solid var(--sand); background: var(--cream); box-shadow: 0 12px 24px #352a1f12; }
+      .nav-links.is-open { display: flex; flex-direction: column; }
+      .nav-links a { padding: 11px 0; font-size: 10px; }
+      .nav-links a.active::after { right: auto; bottom: 5px; width: 150px; }
+      .menu-toggle { display: grid; place-items: center; flex-shrink: 0; }
+      .navbar > .board-link { margin-left: auto; }
+      .navbar > .header-cta, .navbar > .get-started, .navbar > .wishlist-link, .navbar > .wishlist-nav { margin-left: 0; }
+    }
+    @media (max-width: 650px) {
+      .navbar { gap: 5px; }
+      .brand { gap: 6px; }
+      .board-link { width: 32px; }
+      .header-cta { min-height: 36px; padding: 0 8px; font-size: 8px; }
+      .menu-toggle { width: 38px; height: 38px; }
+    }
+  </style>
+  <link rel="stylesheet" href="readability.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="#home" aria-label="DreamSpace home">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </span>
+        <span class="brand-name">Dream<span>Space</span></span>
+      </a>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation">
+        <a href="#home">Home</a>
+        <a href="explore-designs.html">Explore Designs</a>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact</a>
+        <a href="budget-calculator.html">Budget Calculator</a>
+        <a href="transformations.html">Before &amp; After Gallery</a>
+        <a href="compare-designs.html">Compare Designs</a>
+      </nav>
+      <a class="board-link" href="my-dream-board.html" aria-label="My Dream Board"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.5a4.4 4.4 0 0 1 8.8 2.3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <a class="header-cta" href="contact.html#contact-form">Get Started <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="container hero" id="home">
+      <img class="hero-image" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=2200&amp;q=88" alt="Elegant luxury living room with warm neutral tones and designer furniture" fetchpriority="high">
+      <div class="hero-content">
+        <span class="overline">Thoughtful interiors, made for living</span>
+        <h1>Design a Space That <em>Feels Like Home.</em></h1>
+        <p>Discover beautiful interiors, creative ideas, and inspiration to transform your dream home into reality.</p>
+        <div class="hero-actions">
+          <a class="button button-light" href="explore-designs.html">Explore Designs <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="button-quiet" href="about.html">Get Inspired <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <span class="hero-index">EST. FOR LIVING WELL &nbsp; / &nbsp; 01—04</span>
+    </section>
+
+    <section class="container welcome" id="about">
+      <div class="welcome-photo reveal">
+        <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&amp;fit=crop&amp;w=1100&amp;q=85" alt="Warm, light-filled DreamSpace interior with natural materials" loading="lazy">
+        <div class="photo-caption"><span class="caption-line"></span><span>Made for the way you live</span></div>
+      </div>
+      <div class="welcome-text reveal">
+        <span class="section-label">A little about us</span>
+        <h2>Welcome to <em>DreamSpace</em></h2>
+        <p class="welcome-copy">Your home tells your story. At DreamSpace, we bring creativity, comfort, and elegance together to help you discover spaces that reflect your personality and lifestyle.</p>
+        <a class="welcome-link" href="#designs">Find your inspiration <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+
+    <section class="designs" id="designs">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div><span class="section-label">The art of feeling at home</span><h2>Explore Popular Designs</h2></div>
+          <p>Discover considered spaces, beautiful materials, and timeless ideas for every corner of your home.</p>
+        </div>
+        <div class="design-grid">
+          <article class="design-card reveal">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=850&amp;h=1050&amp;q=85" alt="Modern living room with comfortable designer furniture" loading="lazy"><span class="design-number">01</span></div>
+            <div class="design-info"><h3>Modern Living Room</h3><p>Relaxed silhouettes and warm details make room to unwind.</p><a class="card-link" href="explore-designs.html">Explore More <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+          </article>
+          <article class="design-card reveal">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?auto=format&amp;fit=crop&amp;w=850&amp;h=1050&amp;q=85" alt="Serene luxury bedroom with layered linens and elegant lighting" loading="lazy"><span class="design-number">02</span></div>
+            <div class="design-info"><h3>Luxury Bedroom</h3><p>A restorative retreat with soft textures and quiet luxury.</p><a class="card-link" href="explore-designs.html">Explore More <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+          </article>
+          <article class="design-card reveal">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&amp;fit=crop&amp;w=850&amp;h=1050&amp;q=85" alt="Contemporary modular kitchen with refined natural finishes" loading="lazy"><span class="design-number">03</span></div>
+            <div class="design-info"><h3>Modular Kitchen</h3><p>Smart, seamless design that brings everyone together.</p><a class="card-link" href="explore-designs.html">Explore More <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+          </article>
+          <article class="design-card reveal">
+            <div class="design-photo"><img src="https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&amp;fit=crop&amp;w=850&amp;h=1050&amp;q=85" alt="Elegant spa-inspired bathroom with natural stone finishes" loading="lazy"><span class="design-number">04</span></div>
+            <div class="design-info"><h3>Elegant Bathroom</h3><p>Everyday rituals, elevated with calm and considered detail.</p><a class="card-link" href="explore-designs.html">Explore More <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-band" id="contact">
+      <div class="container contact-inner reveal">
+        <div><span class="section-label">Your home, your story</span><h2>Ready to make room for something beautiful?</h2></div>
+        <a class="button" href="contact.html">Let’s talk design <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h12m-5-5 5 5-5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-about">
+          <a class="brand" href="#home" aria-label="DreamSpace home">
+            <span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+            <span class="brand-name">Dream<span>Space</span></span>
+          </a>
+          <p>Thoughtful interiors and timeless inspiration for making your home feel unmistakably yours.</p>
+          <div class="social-links" aria-label="Social media">
+            <a href="https://www.instagram.com/" aria-label="Instagram"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><rect x="3" y="3" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.4"/><circle cx="10" cy="10" r="3.2" stroke="currentColor" stroke-width="1.4"/><circle cx="14.6" cy="5.6" r=".9" fill="currentColor"/></svg></a>
+            <a href="https://www.pinterest.com/" aria-label="Pinterest"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M10 17a7 7 0 1 0-3.1-.73l1-3.43m-1.08-3.3c0-3.43 5.4-4.12 5.4-.94 0 2.25-1.62 5.67-3.52 4.12-.75-.6-.67-1.5-.43-2.44l.75-2.86" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+            <a href="https://www.facebook.com/" aria-label="Facebook"><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M11.5 17v-6.2h2.1l.32-2.42H11.5V6.83c0-.7.2-1.18 1.2-1.18h1.3V3.48c-.23-.03-1.02-.1-1.94-.1-1.92 0-3.23 1.12-3.23 3.3v1.7H6.65v2.42h2.18V17h2.67Z" fill="currentColor"/></svg></a>
+          </div>
+        </div>
+        <div><h3>Quick Links</h3><nav class="footer-links" aria-label="Footer navigation"><a href="#home">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="budget-calculator.html">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a><a href="my-dream-board.html">My Dream Board</a></nav></div>
+        <div><h3>Get in touch</h3><div class="footer-contact"><a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span>Phone number to be confirmed</span><span>Jaipur, Rajasthan, India (sample location)</span></div></div>
+        <div><h3>Our philosophy</h3><div class="footer-contact"><span>Personal, never precious.</span><span>Timeless, never ordinary.</span><span>Always a little more you.</span></div></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 DreamSpace. All Rights Reserved.</span><a href="#home">Back to top ↑</a></div>
+    </div>
+  </footer>
+
+  <script>
+    const menuToggle = document.querySelector(".menu-toggle");
+    const navigation = document.querySelector("#site-nav");
+
+    menuToggle.addEventListener("click", () => {
+      const isOpen = menuToggle.getAttribute("aria-expanded") === "true";
+      menuToggle.setAttribute("aria-expanded", String(!isOpen));
+      menuToggle.setAttribute("aria-label", isOpen ? "Open navigation menu" : "Close navigation menu");
+      navigation.classList.toggle("is-open", !isOpen);
+    });
+
+    navigation.addEventListener("click", (event) => {
+      if (event.target.closest("a")) {
+        navigation.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded", "false");
+        menuToggle.setAttribute("aria-label", "Open navigation menu");
+      }
+    });
+
+    const revealItems = document.querySelectorAll(".reveal");
+    if ("IntersectionObserver" in window) {
+      const revealObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("is-visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.14 });
+      revealItems.forEach((item) => revealObserver.observe(item));
+    } else {
+      revealItems.forEach((item) => item.classList.add("is-visible"));
+    }
+  </script>
+</body>
+</html>

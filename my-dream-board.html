@@ -1,0 +1,723 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f3ed">
+  <meta name="description" content="Save your favourite DreamSpace interiors, colour palettes, and personal inspiration in one beautiful design board.">
+  <title>My Dream Board | DreamSpace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root { color-scheme:light; --ink:#25221f; --brown:#4b3b30; --muted:#817a72; --cream:#f6f3ed; --sand:#eae3d8; --white:#fffefa; --gold:#b28a5a; --serif:"Playfair Display",Georgia,serif; --sans:"DM Sans","Segoe UI",Arial,sans-serif; }
+    * { box-sizing:border-box; }
+    html { scroll-behavior:smooth; scroll-padding-top:95px; }
+    body { margin:0; background:var(--cream); color:var(--ink); font-family:var(--sans); -webkit-font-smoothing:antialiased; }
+    a { color:inherit; text-decoration:none; }
+    button,input,select,textarea { font:inherit; }
+    img { display:block; max-width:100%; }
+    [hidden] { display:none !important; }
+    .container { width:min(1200px,calc(100% - 64px)); margin-inline:auto; }
+    .site-header { position:sticky; top:0; z-index:20; border-bottom:1px solid rgba(75,59,48,.09); background:rgba(246,243,237,.96); backdrop-filter:blur(14px); }
+    .navbar { min-height:78px; display:flex; align-items:center; gap:24px; }
+    .brand { display:inline-flex; align-items:center; gap:10px; flex-shrink:0; }
+    .brand-icon { width:32px; height:36px; color:var(--brown); }
+    .brand-icon svg { width:100%; height:100%; }
+    .brand-name { font-family:var(--serif); font-size:22px; letter-spacing:-.7px; }
+    .brand-name span { color:var(--gold); }
+    .nav-links { display:flex; align-items:center; gap:26px; margin-left:auto; }
+    .nav-links a { position:relative; padding:30px 0 27px; color:#625a52; font-size:12px; white-space:nowrap; }
+    .nav-links a:hover,.nav-links a.active { color:var(--brown); }
+    .nav-links a.active::after { position:absolute; right:0; bottom:20px; left:0; height:1px; background:var(--gold); content:""; }
+    .button { min-height:42px; display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:0 17px; border:1px solid var(--brown); border-radius:2px; background:var(--brown); color:#fff; font-size:11px; font-weight:700; letter-spacing:.3px; cursor:pointer; transition:transform .2s ease,background .2s ease; }
+    .button:hover { transform:translateY(-2px); background:#624e3f; }
+    .button-light { border-color:#d9d0c3; background:transparent; color:var(--brown); }
+    .button-light:hover { background:#eee7dc; }
+    .button-small { min-height:36px; padding-inline:12px; font-size:10px; }
+    .button-danger { border-color:#a94d47; background:#a94d47; }
+    .icon-link { position:relative; width:36px; height:38px; display:grid; place-items:center; flex-shrink:0; color:var(--brown); }
+    .icon-link svg { width:19px; height:19px; }
+    .icon-count { position:absolute; top:-1px; right:-3px; min-width:15px; height:15px; display:grid; place-items:center; padding-inline:3px; border-radius:50%; background:var(--gold); color:white; font-size:8px; }
+    .menu-toggle { display:none; width:40px; height:40px; border:1px solid var(--sand); background:transparent; color:var(--brown); cursor:pointer; }
+    .hero { position:relative; min-height:425px; display:flex; align-items:center; overflow:hidden; background:#40382f; color:white; }
+    .hero::after { position:absolute; inset:0; background:linear-gradient(90deg,rgba(28,24,20,.78),rgba(28,24,20,.42) 60%,rgba(28,24,20,.12)); content:""; }
+    .hero-image { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 55%; }
+    .hero-copy { position:relative; z-index:1; width:min(770px,88%); padding:76px 0 78px 7%; animation:rise-in .65s ease both; }
+    .eyebrow,.section-label { display:inline-flex; align-items:center; gap:9px; color:var(--gold); font-size:10px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; }
+    .eyebrow { color:#e4d1b4; }
+    .eyebrow::before,.section-label::before { width:23px; height:1px; background:currentColor; content:""; }
+    .hero h1 { max-width:760px; margin:17px 0 12px; font-family:var(--serif); font-size:clamp(43px,6vw,68px); font-weight:400; letter-spacing:-1.7px; line-height:1.08; }
+    .hero p { max-width:560px; margin:0; color:#ffffffd1; font-size:15px; line-height:1.9; }
+    .hero .button { margin-top:23px; border-color:var(--white); background:var(--white); color:var(--ink); }
+    .hero .button:hover { background:#e9dac4; }
+    .board-toolbar { display:flex; align-items:center; justify-content:space-between; gap:15px; padding:22px 0; border-bottom:1px solid #e6dfd4; }
+    .board-count { color:var(--muted); font-size:12px; }
+    .board-actions { display:flex; flex-wrap:wrap; gap:8px; }
+    .empty-state { padding:78px 20px 82px; text-align:center; }
+    .empty-illustration { width:82px; height:82px; display:grid; place-items:center; margin:0 auto 22px; border:1px solid #ded5c8; border-radius:50%; background:#f0e9df; color:var(--gold); }
+    .empty-illustration svg { width:40px; height:40px; }
+    .empty-state h2 { margin:0 0 10px; font-family:var(--serif); font-size:clamp(33px,4vw,45px); font-weight:400; }
+    .empty-state p { max-width:450px; margin:0 auto 20px; color:var(--muted); font-size:13px; line-height:1.8; }
+    .board-section { padding:56px 0 65px; }
+    .section-heading { display:flex; align-items:end; justify-content:space-between; gap:20px; margin-bottom:22px; }
+    .section-heading h2 { margin:10px 0 0; font-family:var(--serif); font-size:clamp(32px,4vw,43px); font-weight:400; letter-spacing:-1px; }
+    .section-heading p { max-width:380px; margin:0; color:var(--muted); font-size:12px; line-height:1.8; }
+    .design-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:17px; }
+    .design-card { min-width:0; overflow:hidden; border:1px solid #e6dfd4; background:var(--white); box-shadow:0 7px 25px rgba(53,42,31,.035); animation:rise-in .35s ease both; }
+    .design-image-wrap { position:relative; height:230px; overflow:hidden; background:#ddd3c5; }
+    .design-image-wrap img { width:100%; height:100%; object-fit:cover; transition:transform .45s ease; }
+    .design-card:hover .design-image-wrap img { transform:scale(1.035); }
+    .remove-button { position:absolute; top:11px; right:11px; width:37px; height:37px; display:grid; place-items:center; border:1px solid #ffffffb3; border-radius:50%; background:#fffefaed; color:#a94d47; cursor:pointer; }
+    .remove-button svg { width:18px; height:18px; }
+    .design-copy { padding:16px; }
+    .design-meta { color:var(--gold); font-size:10px; font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+    .design-copy h3 { margin:7px 0 7px; font-family:var(--serif); font-size:24px; font-weight:400; }
+    .design-description { min-height:35px; margin:0; color:var(--muted); font-size:12px; line-height:1.7; }
+    .design-bottom { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-top:13px; padding-top:11px; border-top:1px solid #eee9e0; }
+    .design-bottom strong { font-family:var(--serif); font-size:17px; font-weight:400; }
+    .card-link { color:var(--brown); font-size:10px; font-weight:700; }
+    .card-link:hover { color:var(--gold); }
+    .inspiration-section { padding:67px 0 72px; background:#eee9e0; }
+    .collection-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+    .collection-card { min-width:0; padding:16px; border:1px solid #dfd6ca; background:var(--white); }
+    .collection-header { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .collection-heading { min-width:0; }
+    .collection-heading h3 { margin:0; overflow-wrap:anywhere; font-family:var(--serif); font-size:22px; font-weight:400; }
+    .collection-heading p { margin:5px 0 0; color:var(--muted); font-size:10px; }
+    .collection-tools { display:flex; flex-shrink:0; gap:4px; }
+    .text-action { padding:5px; border:0; background:transparent; color:var(--brown); font-size:10px; cursor:pointer; }
+    .text-action:hover { color:var(--gold); }
+    .text-action.delete { color:#a94d47; }
+    .collection-preview { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:5px; margin-top:13px; }
+    .collection-preview img { width:100%; height:77px; object-fit:cover; background:#e9e1d5; }
+    .collection-preview .preview-empty { grid-column:1/-1; height:77px; display:grid; place-items:center; border:1px dashed #ded5c8; color:var(--muted); font-size:10px; text-align:center; }
+    .collection-notes { margin:11px 0 0; color:#716961; font-size:11px; line-height:1.7; white-space:pre-wrap; overflow-wrap:anywhere; }
+    .collection-palette { display:flex; gap:4px; margin-top:10px; }
+    .collection-palette span { width:18px; height:18px; border-radius:50%; border:1px solid #00000012; }
+    .collection-items { display:flex; flex-wrap:wrap; gap:5px; margin-top:9px; }
+    .collection-items span { padding:5px 7px; background:#f2eee7; color:#6f665c; font-size:10px; }
+    .palette-section { padding:64px 0 72px; }
+    .palette-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:13px; }
+    .palette-card { min-width:0; padding:14px; border:1px solid #e5ddd1; background:var(--white); }
+    .palette-card h3 { margin:0; font-family:var(--serif); font-size:19px; font-weight:400; }
+    .palette-card p { margin:4px 0 11px; color:var(--muted); font-size:10px; }
+    .swatches { display:grid; grid-template-columns:repeat(5,minmax(0,1fr)); gap:5px; }
+    .swatch { min-width:0; }
+    .swatch-color { height:47px; border:1px solid #00000012; }
+    .swatch { position:relative; min-width:0; }
+    .swatch-name { display:block; margin-top:5px; overflow:hidden; color:#716961; font-size:10px; text-overflow:ellipsis; white-space:nowrap; }
+    .color-select { width:100%; display:block; padding:0; border:1px solid transparent; background:transparent; text-align:left; cursor:pointer; }
+    .color-select .swatch-color { transition:border-color .15s ease,box-shadow .15s ease; }
+    .color-select[aria-pressed="true"] { border-color:var(--gold); background:#f7f2e9; }
+    .color-select[aria-pressed="true"] .swatch-color { border:2px solid var(--gold); box-shadow:inset 0 0 0 2px var(--white); }
+    .color-select[aria-pressed="true"]::after { position:absolute; top:6px; right:6px; width:17px; height:17px; display:grid; place-items:center; border-radius:50%; background:var(--brown); color:white; font-size:11px; font-weight:700; content:"✓"; }
+    .copy-hex { width:100%; margin-top:4px; padding:4px 1px; border:0; background:transparent; color:var(--brown); font-size:10px; cursor:pointer; }
+    .copy-hex:hover { color:var(--gold); }
+    .palette-actions { margin-top:10px; }
+    .saved-palettes { margin-top:30px; }
+    .saved-palettes h3 { margin:0 0 12px; font-family:var(--serif); font-size:24px; font-weight:400; }
+    .selected-colors { margin-top:30px; }
+    .selected-colors h3 { margin:0 0 12px; font-family:var(--serif); font-size:24px; font-weight:400; }
+    .selected-color-card { display:flex; align-items:center; gap:13px; padding:12px; border:1px solid #e5ddd1; background:var(--white); }
+    .selected-color-card + .selected-color-card { margin-top:8px; }
+    .selected-color-chip { width:44px; height:44px; flex-shrink:0; border:1px solid #00000018; }
+    .selected-color-details { min-width:0; flex:1; }
+    .selected-color-details strong,.selected-color-details span { display:block; }
+    .selected-color-details strong { font-family:var(--serif); font-size:17px; font-weight:400; }
+    .selected-color-details span { margin-top:3px; color:var(--muted); font-size:11px; }
+    .inspiration-form-section { padding:65px 0; background:#eee9e0; }
+    .form-layout { display:grid; grid-template-columns:.75fr 1.25fr; gap:36px; align-items:start; }
+    .form-intro h2 { margin:10px 0 9px; font-family:var(--serif); font-size:clamp(31px,4vw,42px); font-weight:400; }
+    .form-intro p { margin:0; color:var(--muted); font-size:12px; line-height:1.9; }
+    .board-form { display:grid; grid-template-columns:1fr 1fr; gap:12px; padding:21px; border:1px solid #dfd6ca; background:var(--white); }
+    .field { display:grid; gap:6px; min-width:0; }
+    .field.full { grid-column:1/-1; }
+    .field label,.field-label { color:#5f574f; font-size:10px; font-weight:700; letter-spacing:.35px; }
+    .field input,.field select,.field textarea { width:100%; min-height:42px; padding:10px 11px; border:1px solid #e1d9cd; border-radius:2px; outline:0; background:#fff; color:var(--ink); font-size:12px; }
+    .field textarea { min-height:86px; resize:vertical; line-height:1.6; }
+    .field input:focus,.field select:focus,.field textarea:focus { border-color:var(--gold); box-shadow:0 0 0 2px #b28a5a20; }
+    .field-help { color:var(--muted); font-size:9px; line-height:1.6; }
+    .design-checks,.palette-checks { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:6px; max-height:152px; overflow:auto; padding:9px; border:1px solid #e1d9cd; }
+    .check-option { display:flex; align-items:center; gap:7px; min-width:0; padding:5px; color:#5f574f; font-size:10px; }
+    .check-option input { width:14px; min-height:14px; height:14px; margin:0; accent-color:var(--brown); }
+    .check-option span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .form-actions { display:flex; align-items:center; flex-wrap:wrap; gap:8px; }
+    .status-message { min-height:17px; margin:0; color:#55704c; font-size:11px; line-height:1.6; }
+    .status-message.error { color:#a94d47; }
+    .empty-inline { padding:20px; border:1px dashed #ded5c8; color:var(--muted); font-size:11px; line-height:1.7; text-align:center; }
+    .footer { padding:53px 0 19px; background:#302a25; color:white; }
+    .footer-grid { display:grid; grid-template-columns:1.35fr .8fr 1fr .8fr; gap:38px; padding-bottom:35px; }
+    .footer .brand { color:white; }
+    .footer .brand-icon { color:#e4d1b4; }
+    .footer-about p { max-width:270px; margin:13px 0 0; color:#c1b9af; font-size:11px; line-height:1.8; }
+    .footer h3 { margin:4px 0 14px; font-family:var(--sans); font-size:11px; font-weight:700; letter-spacing:.9px; text-transform:uppercase; }
+    .footer-links,.footer-contact { display:grid; gap:8px; }
+    .footer-links a,.footer-contact a,.footer-contact span { color:#c1b9af; font-size:10px; line-height:1.6; }
+    .footer-links a:hover,.footer-contact a:hover { color:white; }
+    .footer-bottom { display:flex; justify-content:space-between; gap:12px; padding-top:15px; border-top:1px solid #ffffff1a; color:#a9a198; font-size:10px; }
+    .toast { position:fixed; right:22px; bottom:22px; z-index:50; max-width:min(360px,calc(100% - 32px)); padding:12px 16px; background:var(--brown); color:white; box-shadow:0 8px 26px #20171035; font-size:11px; opacity:0; pointer-events:none; transform:translateY(10px); transition:opacity .2s ease,transform .2s ease; }
+    .toast.is-visible { opacity:1; transform:translateY(0); }
+    dialog { width:min(620px,calc(100% - 28px)); max-height:calc(100% - 32px); padding:0; border:1px solid #ded5c8; background:var(--white); color:var(--ink); box-shadow:0 22px 80px #20171040; }
+    dialog::backdrop { background:#20171080; backdrop-filter:blur(3px); }
+    .dialog-head { display:flex; align-items:center; justify-content:space-between; gap:12px; padding:18px 21px; border-bottom:1px solid #eee9e0; }
+    .dialog-head h2 { margin:0; font-family:var(--serif); font-size:25px; font-weight:400; }
+    .dialog-close { width:32px; height:32px; border:1px solid #e1d9cd; background:transparent; color:var(--brown); cursor:pointer; }
+    .dialog-body { padding:20px 21px; }
+    .dialog-actions { display:flex; justify-content:flex-end; gap:8px; margin-top:14px; }
+    .share-copy { width:100%; min-height:110px; margin-top:12px; padding:10px; border:1px solid #e1d9cd; background:#fff; color:var(--ink); font-size:12px; line-height:1.6; resize:vertical; }
+    .board-toolbar,.board-section,.inspiration-section,.palette-section,.inspiration-form-section,.footer { font-size:17px; }
+    .board-count,.section-heading p,.empty-state p,.design-description,.collection-heading p,.collection-notes,.form-intro p { font-size:16px; }
+    .design-meta,.collection-heading p,.field label,.field-label,.field-help,.check-option,.status-message,.empty-inline,
+    .collection-items span,.swatch-name,.copy-hex,.text-action,.footer-links a,.footer-contact a,.footer-contact span,
+    .footer-about p,.footer-bottom,.toast,.palette-card p { font-size:14px; }
+    .eyebrow,.section-label { font-size:11px; }
+    .design-bottom strong { font-size:20px; }
+    .card-link { font-size:14px; }
+    .collection-heading h3 { font-size:26px; }
+    .palette-card h3 { font-size:22px; }
+    .field input,.field select,.field textarea,.share-copy { font-size:16px; }
+    .button,.button-small { font-size:14px; }
+    @keyframes rise-in { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+    @media (max-width:980px) {
+      .navbar { gap:16px; }
+      .nav-links { gap:16px; }
+      .nav-links a { font-size:10px; }
+      .design-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .footer-grid { gap:22px; }
+    }
+    @media (max-width:760px) {
+      .container { width:min(100% - 36px,600px); }
+      .navbar { min-height:68px; gap:11px; }
+      .brand-icon { width:28px; height:32px; }
+      .brand-name { font-size:20px; }
+      .nav-links { position:absolute; top:68px; right:0; left:0; display:none; align-items:flex-start; gap:0; padding:8px 22px 15px; border-bottom:1px solid #ded6ca; background:var(--cream); box-shadow:0 12px 20px #21170d12; }
+      .nav-links.is-open { display:flex; flex-direction:column; }
+      .nav-links a { width:100%; padding:10px 0; font-size:12px; }
+      .nav-links a.active::after { right:auto; bottom:5px; width:145px; }
+      .menu-toggle { width:36px; height:36px; display:grid; place-items:center; flex-shrink:0; }
+      .navbar > .icon-link { margin-left:auto; }
+      .navbar > .button { min-height:36px; margin-left:0; padding-inline:11px; font-size:9px; }
+      .hero { min-height:390px; }
+      .hero-copy { width:93%; padding:62px 0 62px 6%; }
+      .board-toolbar { align-items:flex-start; flex-direction:column; }
+      .section-heading { align-items:flex-start; flex-direction:column; }
+      .collection-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .palette-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .form-layout { grid-template-columns:1fr; gap:19px; }
+      .footer-grid { grid-template-columns:1fr 1fr; gap:25px 20px; }
+    }
+    @media (max-width:480px) {
+      .container { width:calc(100% - 28px); }
+      .navbar { gap:8px; }
+      .navbar > .button { padding-inline:8px; font-size:8px; }
+      .hero { min-height:365px; }
+      .hero h1 { font-size:43px; }
+      .design-grid,.collection-grid { grid-template-columns:1fr; }
+      .design-image-wrap { height:220px; }
+      .board-actions { width:100%; }
+      .board-actions .button { flex:1; }
+      .palette-grid { grid-template-columns:1fr; }
+      .board-form { grid-template-columns:1fr; padding:15px; }
+      .field.full { grid-column:auto; }
+      .design-checks,.palette-checks { grid-template-columns:1fr; }
+      .footer-grid { grid-template-columns:1fr; gap:23px; }
+      .footer-bottom { flex-direction:column; }
+    }
+    @media (prefers-reduced-motion:reduce) { *,*::before,*::after { scroll-behavior:auto !important; animation-duration:.01ms !important; transition-duration:.01ms !important; } }
+  </style>
+  <link rel="stylesheet" href="readability.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container navbar">
+      <a class="brand" href="index.html" aria-label="DreamSpace home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Dream<span>Space</span></span></a>
+      <nav class="nav-links" id="site-nav" aria-label="Main navigation"><a href="index.html">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a class="active" href="#top" aria-current="page">My Dream Board</a></nav>
+      <a class="icon-link" href="#saved-designs" aria-label="My Dream Board, saved designs"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M20.8 8.8c0 5.2-8.8 10.1-8.8 10.1S3.2 14 3.2 8.8A4.4 4.4 0 0 1 12 6.5a4.4 4.4 0 0 1 8.8 2.3Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="icon-count" id="wishlist-count">0</span></a>
+      <a class="button" href="explore-designs.html#featured">Explore Designs</a>
+      <button class="menu-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="site-nav"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+    </div>
+  </header>
+  <main id="top">
+    <section class="hero"><img class="hero-image" src="https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&amp;fit=crop&amp;w=2200&amp;q=88" alt="Elegant sunlit living room in warm neutral colors" fetchpriority="high"><div class="hero-copy"><span class="eyebrow">A collection that feels like you</span><h1>Your Ideas. Your Style. Your Dream Space.</h1><p>Collect your favourite designs, save beautiful inspirations, and create your own dream home collection.</p><a class="button" href="explore-designs.html#featured">Explore Designs <span aria-hidden="true">→</span></a></div></section>
+
+    <div class="container board-toolbar" id="saved-designs">
+      <p class="board-count" id="board-count" aria-live="polite">Your personal collection</p>
+      <div class="board-actions"><button class="button button-light button-small" id="share-board" type="button">Share Dream Board</button><button class="button button-light button-small" id="download-board" type="button">Download as PDF</button><button class="button button-light button-small" id="clear-board" type="button">Clear All Saved Items</button></div>
+    </div>
+
+    <section class="empty-state container" id="empty-state" hidden><div class="empty-illustration" aria-hidden="true"><svg viewBox="0 0 48 48" fill="none"><path d="M24 39S7 28 7 17a8 8 0 0 1 15-4 8 8 0 0 1 15 4c0 11-13 20-13 20Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M16 24h16m-8-8v16" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg></div><h2>Your Dream Board Is Waiting!</h2><p>Start exploring beautiful interiors and save your favourite ideas here.</p><a class="button" href="explore-designs.html#featured">Explore Designs <span aria-hidden="true">→</span></a></section>
+
+    <section class="board-section container" id="favourites-section"><div class="section-heading"><div><span class="section-label">Saved for your future home</span><h2>Your Favourite Designs</h2></div><p>Designs you save on Explore and Design Details appear here automatically.</p></div><div class="design-grid" id="design-grid"></div><p class="empty-inline" id="design-empty" hidden>No saved designs yet. Tap the heart on any design to keep it here.</p></section>
+
+    <section class="inspiration-section" id="collections"><div class="container"><div class="section-heading"><div><span class="section-label">Collected by room and idea</span><h2>Your Personal Inspiration Gallery</h2></div><button class="button button-light" id="new-collection-shortcut" type="button">Create a Collection</button></div><div class="collection-grid" id="collection-grid"></div></div></section>
+
+    <section class="palette-section container" id="palettes"><div class="section-heading"><div><span class="section-label">Little details, lasting impact</span><h2>Explore Colour Combinations</h2></div><p>Tap any colour to select it, copy its HEX code, or save the complete palette to your collection.</p></div><div class="palette-grid" id="palette-options"></div><div class="saved-palettes" id="saved-palettes-section"><h3>My Favourite Colour Palettes</h3><div class="palette-grid" id="saved-palettes"></div><p class="empty-inline" id="palette-empty" hidden>Save a colour palette to start your collection.</p></div><div class="selected-colors"><h3>My Selected Colours</h3><div id="selected-colors"></div><p class="empty-inline" id="selected-colors-empty" hidden>Select any swatch above to start a personal colour shortlist.</p></div></section>
+
+    <section class="inspiration-form-section" id="create-board"><div class="container form-layout">
+      <div class="form-intro"><span class="section-label">Make it personal</span><h2>Create Your Own Dream Board</h2><p>Name a collection, choose a room, gather saved designs and palettes, and leave a note for the details you want to remember.</p><p class="status-message" id="form-status" role="status" aria-live="polite"></p></div>
+      <form class="board-form" id="collection-form">
+        <input id="collection-id" type="hidden">
+        <div class="field"><label for="collection-name">Board name</label><input id="collection-name" name="name" maxlength="60" required placeholder="e.g. Our calm bedroom"></div>
+        <div class="field"><label for="collection-category">Room category</label><select id="collection-category" name="category" required><option value="Living Room">Living Room</option><option value="Bedroom">Bedroom</option><option value="Kitchen">Kitchen</option><option value="Bathroom">Bathroom</option><option value="Colour Combinations">Colour Combinations</option><option value="Furniture Inspiration">Furniture Inspiration</option><option value="Dining Room">Dining Room</option><option value="Home Office">Home Office</option><option value="Other">Other</option></select></div>
+        <div class="field full"><span class="field-label">Add saved designs</span><div class="design-checks" id="collection-designs"></div><span class="field-help">Only designs already saved to your favourites can be added.</span></div>
+        <div class="field full"><span class="field-label">Choose favourite colour combinations</span><div class="palette-checks" id="collection-palettes"></div></div>
+        <div class="field full"><span class="field-label">Add selected colours</span><div class="palette-checks" id="collection-colors"></div></div>
+        <div class="field full"><label for="collection-notes">Personal notes</label><textarea id="collection-notes" name="notes" maxlength="1000" placeholder="What do you love about this collection? Add measurements, ideas, or reminders."></textarea></div>
+        <div class="field full"><div class="form-actions"><button class="button" id="collection-submit" type="submit">Create Collection</button><button class="button button-light" id="collection-cancel" type="button" hidden>Cancel Edit</button></div></div>
+      </form>
+    </div></section>
+
+    <section class="board-section container" id="add-inspiration"><div class="section-heading"><div><span class="section-label">Keep a visual note</span><h2>Save an Inspiration Image</h2></div><p>Add an image URL from a source you can access, then file it in one of your collections.</p></div>
+      <form class="board-form" id="inspiration-form">
+        <div class="field"><label for="inspiration-title">Image title</label><input id="inspiration-title" name="title" maxlength="70" required placeholder="e.g. Linen pendant lights"></div>
+        <div class="field"><label for="inspiration-category">Inspiration type</label><select id="inspiration-category" name="category" required><option>Living Room Ideas</option><option>Bedroom Inspiration</option><option>Kitchen Designs</option><option>Bathroom Ideas</option><option>Colour Combinations</option><option>Furniture Inspiration</option><option>Other</option></select></div>
+        <div class="field full"><label for="inspiration-url">Image URL</label><input id="inspiration-url" name="url" type="url" inputmode="url" required placeholder="https://example.com/image.jpg"><span class="field-help">Use an HTTPS or HTTP image URL. The image is linked from its source; DreamSpace does not upload it.</span></div>
+        <div class="field full"><label for="inspiration-note">Personal note (optional)</label><textarea id="inspiration-note" name="note" maxlength="500" placeholder="Add a thought or detail to remember."></textarea></div>
+        <div class="field full"><div class="form-actions"><button class="button" type="submit">Save Inspiration</button></div><p class="status-message" id="inspiration-status" role="status" aria-live="polite"></p></div>
+      </form>
+    </section>
+  </main>
+  <footer class="footer"><div class="container"><div class="footer-grid">
+    <div class="footer-about"><a class="brand" href="index.html" aria-label="DreamSpace home"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 40 44" fill="none"><path d="M4 20 20 6l16 14v19H4V20Z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M14 39V25h12v14M2 21 20 5l18 16" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><path d="M8 16v-5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="brand-name">Dream<span>Space</span></span></a><p>Thoughtful interiors, timeless inspiration, and beautiful ideas for the home you’ve always imagined.</p></div>
+    <div><h3>Quick Links</h3><nav class="footer-links" aria-label="Footer navigation"><a href="index.html">Home</a><a href="explore-designs.html">Explore Designs</a><a href="about.html">About Us</a><a href="contact.html">Contact</a><a href="budget-calculator.html">Budget Calculator</a><a href="transformations.html">Before &amp; After Gallery</a><a href="compare-designs.html">Compare Designs</a><a href="#top">My Dream Board</a></nav></div>
+    <div><h3>Contact</h3><div class="footer-contact"><a href="mailto:hello@dreamspace.com">hello@dreamspace.com</a><span>Phone number to be confirmed</span><span>Jaipur, Rajasthan, India (sample location)</span></div></div>
+    <div><h3>Our philosophy</h3><div class="footer-contact"><span>Personal, never precious.</span><span>Timeless, never ordinary.</span><span>Always a little more you.</span></div></div>
+  </div><div class="footer-bottom"><span>© 2026 DreamSpace. All Rights Reserved.</span><a href="#top">Back to top ↑</a></div></div></footer>
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title"><div class="dialog-head"><h2 id="confirm-title">Please confirm</h2><button class="dialog-close" type="button" aria-label="Close dialog">×</button></div><div class="dialog-body"><p id="confirm-copy"></p><div class="dialog-actions"><button class="button button-light" type="button" data-confirm-cancel>Cancel</button><button class="button button-danger" type="button" data-confirm-accept>Confirm</button></div></div></dialog>
+  <dialog id="share-dialog" aria-labelledby="share-title"><div class="dialog-head"><h2 id="share-title">Share your Dream Board</h2><button class="dialog-close" type="button" aria-label="Close share dialog">×</button></div><div class="dialog-body"><p>Your browser can’t open a share sheet here. Copy this summary and send it to someone.</p><textarea class="share-copy" id="share-copy" readonly></textarea><div class="dialog-actions"><button class="button button-light" type="button" data-share-close>Close</button><button class="button" type="button" id="copy-share">Copy Summary</button></div></div></dialog>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const wishlistKey="dreamspace-wishlist";
+    const boardKey="dreamspace-dream-board";
+    const catalog=[
+      {id:"the-sunday-edit",name:"The Sunday Edit",category:"Living Room",style:"Modern",budget:42000,image:"photo-1600210492486-724fe5c67fb0",description:"A relaxed modern living room with warm woods, sculptural seating, and a quiet, sunlit palette.",colors:[["Soft Ivory","#F4EFE7"],["Warm Oak","#B28A5A"],["Mushroom","#A99B8C"],["Charcoal","#403B37"],["Olive","#73745D"]]},
+      {id:"the-quiet-suite",name:"The Quiet Suite",category:"Bedroom",style:"Luxury",budget:185000,image:"photo-1616594039964-ae9021a400a0",description:"A serene bedroom retreat layered with tactile linen, gentle lighting, and tailored details.",colors:[["Linen","#E9E1D5"],["Mink","#9B8879"],["Walnut","#624638"],["Soft Gold","#C3A06B"],["Cream","#F7F1E8"]]},
+      {id:"sunday-kitchen",name:"Sunday Kitchen",category:"Kitchen",style:"Minimalist",budget:78000,image:"photo-1600607687920-4e2a09cf159d",description:"A streamlined kitchen with clever storage, honest materials, and space to make everyday rituals special.",colors:[["Chalk","#F4F2ED"],["Pale Ash","#D0C8BB"],["Natural Oak","#B38C61"],["Sage","#8D9684"],["Graphite","#4A4945"]]},
+      {id:"stone-and-steam",name:"Stone & Steam",category:"Bathroom",style:"Luxury",budget:340000,image:"photo-1600566753086-00f18fb6b3ea",description:"A spa-like bath with natural stone, graceful hardware, and a soft balance of light and texture.",colors:[["Travertine","#D3C4B0"],["Ivory","#F2ECE2"],["Bronze","#80664D"],["Stone","#AAA296"],["Deep Taupe","#5F554B"]]},
+      {id:"sunday-table",name:"Sunday Table",category:"Dining Room",style:"Traditional",budget:92000,image:"photo-1600607687939-ce8a6c25118c",description:"A welcoming dining room that pairs timeless craftsmanship with a relaxed, contemporary spirit.",colors:[["Antique White","#F1EADF"],["Teak","#8B5E3C"],["Biscuit","#D4C1A7"],["Forest","#596A55"],["Brass","#B28A5A"]]},
+      {id:"work-in-light",name:"Work in Light",category:"Home Office",style:"Minimalist",budget:48000,image:"photo-1497366754035-f200968a6e72",description:"A calm, light-filled home office that helps you find focus without sacrificing comfort.",colors:[["Warm White","#F5F1E9"],["Pale Oak","#D0B99A"],["Soft Grey","#ABA9A2"],["Sage","#8B9785"],["Ink","#42413E"]]},
+      {id:"the-heritage-living-room",name:"The Heritage Living Room",category:"Living Room",style:"Traditional",budget:265000,image:"photo-1600607687939-ce8a6c25118c",description:"A character-rich living room grounded in heritage forms, rich timber, and beautifully collected pieces.",colors:[["Aged Ivory","#EDE4D6"],["Rosewood","#684738"],["Muted Terracotta","#AD7660"],["Antique Brass","#A27B4E"],["Deep Green","#465548"]]},
+      {id:"the-curated-kitchen",name:"The Curated Kitchen",category:"Kitchen",style:"Modern",budget:115000,image:"photo-1600607687920-4e2a09cf159d",description:"An efficient, expressive kitchen that balances modern lines with welcoming natural finishes.",colors:[["Porcelain","#F5F1E9"],["Smoked Oak","#80634A"],["Warm Grey","#ACA59B"],["Deep Bronze","#53473E"],["Sand","#D5C6B2"]]}
+    ];
+    const defaults=[
+      ["default-living","Living Room Ideas","Living Room"],["default-bedroom","Bedroom Inspiration","Bedroom"],["default-kitchen","Kitchen Designs","Kitchen"],["default-bathroom","Bathroom Ideas","Bathroom"],["default-colours","Colour Combinations","Colour Combinations"],["default-furniture","Furniture Inspiration","Furniture Inspiration"]
+    ].map(([id,name,category])=>({id,name,category,notes:"",designIds:[],paletteIds:[],colorIds:[]}));
+    const money=(value)=>`₹${Number(value).toLocaleString("en-IN")}`;
+    const imageUrl=(id,width=900)=>id.startsWith("http")?id:`https://images.unsplash.com/${id}?auto=format&fit=crop&w=${width}&q=85`;
+    const escapeHtml=(value)=>String(value??"").replace(/[&<>"']/g,(char)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+    const toast=document.querySelector("#toast");
+    let toastTimer;
+    let board;
+    function showToast(message,isError=false) {
+      toast.textContent=message;
+      toast.style.background=isError?"#8b4038":"var(--brown)";
+      toast.classList.add("is-visible");
+      window.clearTimeout(toastTimer);
+      toastTimer=window.setTimeout(()=>toast.classList.remove("is-visible"),2800);
+    }
+    function showCopyFallback(title,description,text) {
+      document.querySelector("#share-title").textContent=title;
+      document.querySelector("#share-dialog .dialog-body p").textContent=description;
+      document.querySelector("#share-copy").value=text;
+      document.querySelector("#share-dialog").showModal();
+    }
+    async function copyText(text,successMessage,errorMessage) {
+      try {
+        if(!navigator.clipboard) throw new Error("Clipboard access is unavailable.");
+        await navigator.clipboard.writeText(text);
+        showToast(successMessage);
+      } catch(error) {
+        console.error(errorMessage,error);
+        showCopyFallback("Copy colour code","Your browser can’t copy directly here. Copy this colour code manually.",text);
+      }
+    }
+    function readJson(key,fallback) {
+      try { return JSON.parse(localStorage.getItem(key) || "null") ?? fallback; }
+      catch(error) { console.error(`Could not read ${key} from local storage.`,error); showToast("Saved data could not be read. Check your browser storage settings.",true); return fallback; }
+    }
+    function validBoard(value) {
+      return value && Array.isArray(value.collections) && Array.isArray(value.inspirations) && Array.isArray(value.palettes);
+    }
+    function loadBoard() {
+      const loaded=readJson(boardKey,null);
+      const state=validBoard(loaded)?loaded:{collections:[],inspirations:[],palettes:[],selectedColors:[]};
+      state.selectedColors=Array.isArray(state.selectedColors)?state.selectedColors:[];
+      state.collections=state.collections.map((item)=>({...item,designIds:Array.isArray(item.designIds)?item.designIds:[],paletteIds:Array.isArray(item.paletteIds)?item.paletteIds:[],colorIds:Array.isArray(item.colorIds)?item.colorIds:[]}));
+      const existing=new Set(state.collections.map((item)=>item.id));
+      state.collections=[...state.collections,...defaults.filter((item)=>!existing.has(item.id))];
+      return state;
+    }
+    function persistBoard() {
+      try { localStorage.setItem(boardKey,JSON.stringify(board)); return true; }
+      catch(error) { console.error("Could not save your Dream Board.",error); showToast("Your changes could not be saved. Check available browser storage.",true); return false; }
+    }
+    function readWishlist() {
+      const saved=readJson(wishlistKey,[]);
+      if(!Array.isArray(saved)) { showToast("Your saved designs list is invalid and could not be loaded.",true); return []; }
+      return [...new Set(saved.filter((item)=>typeof item==="string"))];
+    }
+    function persistWishlist(items) {
+      try { localStorage.setItem(wishlistKey,JSON.stringify([...new Set(items)])); return true; }
+      catch(error) { console.error("Could not update your saved designs.",error); showToast("Your saved designs could not be updated. Check browser storage.",true); return false; }
+    }
+    function designById(id) { return catalog.find((item)=>item.id===id); }
+    function detailsUrl(design) {
+      const url=new URL("design-details.html",window.location.href);
+      Object.entries({name:design.name,category:design.category,style:design.style,budget:design.budget,image:imageUrl(design.image,1400),description:design.description}).forEach(([key,value])=>url.searchParams.set(key,value));
+      return url.href;
+    }
+    function renderDesigns() {
+      const saved=readWishlist();
+      const grid=document.querySelector("#design-grid");
+      const known=saved.map(designById).filter(Boolean);
+      const unknown=saved.filter((id)=>!designById(id));
+      grid.innerHTML=known.map((design)=>`<article class="design-card"><div class="design-image-wrap"><img src="${imageUrl(design.image,900)}" alt="${escapeHtml(design.name)} interior" loading="lazy"><button class="remove-button" type="button" data-remove-design="${design.id}" aria-label="Remove ${escapeHtml(design.name)} from your Dream Board"><svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true"><path d="M10 17s-7-4.6-7-9a3.8 3.8 0 0 1 7-2.1A3.8 3.8 0 0 1 17 8c0 4.4-7 9-7 9Z"/></svg></button></div><div class="design-copy"><span class="design-meta">${escapeHtml(design.category)} · ${escapeHtml(design.style)}</span><h3>${escapeHtml(design.name)}</h3><p class="design-description">${escapeHtml(design.description)}</p><div class="design-bottom"><strong>Est. ${money(design.budget)}</strong><a class="card-link" href="${escapeHtml(detailsUrl(design))}">View Details →</a></div></div></article>`).join("");
+      if(unknown.length) {
+        grid.insertAdjacentHTML("beforeend",unknown.map((id)=>`<article class="design-card"><div class="design-copy"><span class="design-meta">Saved design</span><h3>${escapeHtml(id.replace(/-/g," "))}</h3><p class="design-description">This saved design is no longer in the current catalogue.</p><div class="design-bottom"><strong>Details unavailable</strong><button class="text-action delete" type="button" data-remove-design="${escapeHtml(id)}">Remove</button></div></div></article>`).join(""));
+      }
+      document.querySelector("#design-empty").hidden=saved.length!==0;
+      document.querySelector("#favourites-section").hidden=saved.length===0;
+      document.querySelector("#wishlist-count").textContent=String(saved.length);
+      document.querySelector("#board-count").textContent=`${saved.length} saved ${saved.length===1?"design":"designs"} · ${board.inspirations.length} inspiration ${board.inspirations.length===1?"image":"images"} · ${board.palettes.length} saved ${board.palettes.length===1?"palette":"palettes"} · ${board.selectedColors.length} selected ${board.selectedColors.length===1?"colour":"colours"}`;
+    }
+    function categoryDesigns(category) {
+      if(category==="Colour Combinations") return [];
+      if(category==="Furniture Inspiration") return [];
+      return readWishlist().map(designById).filter((design)=>design && design.category===category);
+    }
+    function renderCollections() {
+      const grid=document.querySelector("#collection-grid");
+      const cards=board.collections.map((collection)=>{
+        const selectedDesigns=(collection.designIds||[]).map(designById).filter(Boolean);
+        const roomDesigns=collection.id.startsWith("default-")?categoryDesigns(collection.category):selectedDesigns;
+        const inspirations=board.inspirations.filter((item)=>item.collectionId===collection.id || item.category===collection.name || (item.category===collection.category && collection.category!=="Other"));
+        const previews=[...roomDesigns.map((design)=>({src:imageUrl(design.image,360),alt:design.name})),...inspirations.map((item)=>({src:item.url,alt:item.title}))].slice(0,3);
+        const palettes=(collection.paletteIds||[]).map((id)=>board.palettes.find((item)=>item.id===id)).filter(Boolean);
+        const selectedColors=(collection.colorIds||[]).map((id)=>board.selectedColors.find((color)=>color.id===id)).filter(Boolean);
+        const paletteDots=[...palettes.flatMap((item)=>item.colors),...selectedColors].slice(0,12);
+        const chips=[...roomDesigns.map((item)=>item.name),...inspirations.map((item)=>item.title)].slice(0,5);
+        return `<article class="collection-card"><div class="collection-header"><div class="collection-heading"><h3>${escapeHtml(collection.name)}</h3><p>${escapeHtml(collection.category)} · ${roomDesigns.length+inspirations.length} saved ${roomDesigns.length+inspirations.length===1?"item":"items"}</p></div><div class="collection-tools"><button class="text-action" type="button" data-edit-collection="${escapeHtml(collection.id)}">Edit</button><button class="text-action delete" type="button" data-delete-collection="${escapeHtml(collection.id)}">Delete</button></div></div><div class="collection-preview">${previews.length?previews.map((item)=>`<img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.alt)}" loading="lazy">`).join(""):'<div class="preview-empty">Add saved designs or inspiration images</div>'}</div>${chips.length?`<div class="collection-items">${chips.map((name)=>`<span>${escapeHtml(name)}</span>`).join("")}</div>`:""}${paletteDots.length?`<div class="collection-palette" aria-label="Selected colour palette">${paletteDots.map((color)=>`<span title="${escapeHtml(color.name)} ${escapeHtml(color.hex)}" style="background:${escapeHtml(color.hex)}"></span>`).join("")}</div>`:""}${collection.notes?`<p class="collection-notes">${escapeHtml(collection.notes)}</p>`:""}</article>`;
+      });
+      board.inspirations.filter((item)=>!board.collections.some((collection)=>collection.id===item.collectionId)).forEach((item)=>{
+        cards.push(`<article class="collection-card"><div class="collection-header"><div class="collection-heading"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.category)} · Personal inspiration</p></div><button class="text-action delete" type="button" data-delete-inspiration="${escapeHtml(item.id)}">Remove</button></div><div class="collection-preview"><img src="${escapeHtml(item.url)}" alt="${escapeHtml(item.title)}" loading="lazy"></div>${item.note?`<p class="collection-notes">${escapeHtml(item.note)}</p>`:""}</article>`);
+      });
+      grid.innerHTML=cards.join("");
+    }
+    function paletteId(designId) { return `palette-${designId}`; }
+    function colorId(designId,index) { return `color-${designId}-${index}`; }
+    function swatchMarkup(designId,color,index) {
+      const id=colorId(designId,index);
+      const selected=board.selectedColors.some((item)=>item.id===id);
+      return `<div class="swatch${selected?" is-selected":""}"><button class="color-select" type="button" data-color-toggle="${escapeHtml(designId)}" data-color-index="${index}" aria-pressed="${selected}" aria-label="${selected?"Unselect":"Select"} ${escapeHtml(color.name)} ${escapeHtml(color.hex)}"><span class="swatch-color" style="background:${escapeHtml(color.hex)}" title="${escapeHtml(color.name)} ${escapeHtml(color.hex)}"></span><span class="swatch-name">${escapeHtml(color.name)}</span></button><button class="copy-hex" type="button" data-copy-hex="${escapeHtml(color.hex)}" aria-label="Copy ${escapeHtml(color.hex)}">Copy ${escapeHtml(color.hex)}</button></div>`;
+    }
+    function renderPaletteOptions() {
+      document.querySelector("#palette-options").innerHTML=catalog.map((design)=>`<article class="palette-card"><h3>${escapeHtml(design.name)}</h3><p>${escapeHtml(design.category)} · ${escapeHtml(design.style)}</p><div class="swatches">${design.colors.map(([name,hex],index)=>swatchMarkup(design.id,{name,hex},index)).join("")}</div><div class="palette-actions"><button class="button button-light button-small" type="button" data-save-palette="${design.id}">${board.palettes.some((palette)=>palette.id===paletteId(design.id))?"Remove saved palette":"Save palette"}</button></div></article>`).join("");
+      const saved=document.querySelector("#saved-palettes");
+      saved.innerHTML=board.palettes.map((palette)=>{const designId=palette.designId||catalog.find((item)=>item.name===palette.name)?.id;return `<article class="palette-card"><h3>${escapeHtml(palette.name)}</h3><p>${escapeHtml(palette.category)} · ${escapeHtml(palette.style)}</p><div class="swatches">${palette.colors.map((color,index)=>swatchMarkup(designId||palette.id,color,index)).join("")}</div><div class="palette-actions"><button class="button button-light button-small" type="button" data-remove-palette="${escapeHtml(palette.id)}">Remove from collection</button></div></article>`;}).join("");
+      document.querySelector("#palette-empty").hidden=board.palettes.length!==0;
+      const selected=document.querySelector("#selected-colors");
+      selected.innerHTML=board.selectedColors.map((color)=>`<div class="selected-color-card"><span class="selected-color-chip" style="background:${escapeHtml(color.hex)}" aria-hidden="true"></span><div class="selected-color-details"><strong>${escapeHtml(color.name)}</strong><span>${escapeHtml(color.hex)} · ${escapeHtml(color.paletteName)}</span></div><button class="text-action delete" type="button" data-unselect-color="${escapeHtml(color.id)}">Remove</button></div>`).join("");
+      document.querySelector("#selected-colors-empty").hidden=board.selectedColors.length!==0;
+    }
+    function renderCollectionChoices(collection) {
+      const saved=readWishlist().map(designById).filter(Boolean);
+      document.querySelector("#collection-designs").innerHTML=saved.length?saved.map((design)=>`<label class="check-option"><input type="checkbox" name="designIds" value="${design.id}" ${collection?.designIds?.includes(design.id)?"checked":""}><span>${escapeHtml(design.name)}</span></label>`).join(""):'<span class="field-help">No saved designs yet. You can create a collection now and add designs later.</span>';
+      document.querySelector("#collection-palettes").innerHTML=board.palettes.length?board.palettes.map((palette)=>`<label class="check-option"><input type="checkbox" name="paletteIds" value="${escapeHtml(palette.id)}" ${collection?.paletteIds?.includes(palette.id)?"checked":""}><span>${escapeHtml(palette.name)} palette</span></label>`).join(""):'<span class="field-help">Save a palette above to add it to this board.</span>';
+      document.querySelector("#collection-colors").innerHTML=board.selectedColors.length?board.selectedColors.map((color)=>`<label class="check-option"><input type="checkbox" name="colorIds" value="${escapeHtml(color.id)}" ${collection?.colorIds?.includes(color.id)?"checked":""}><span>${escapeHtml(color.name)} (${escapeHtml(color.hex)})</span></label>`).join(""):'<span class="field-help">Select colours above to add them to a custom board.</span>';
+    }
+    function render() {
+      renderDesigns();
+      renderCollections();
+      renderPaletteOptions();
+      renderCollectionChoices();
+      document.querySelector("#empty-state").hidden=readWishlist().length+board.inspirations.length+board.palettes.length+board.selectedColors.length!==0 || board.collections.some((item)=>!item.id.startsWith("default-"));
+    }
+    function makeId(prefix) {
+      return `${prefix}-${typeof crypto!=="undefined"&&crypto.randomUUID?crypto.randomUUID():`${Date.now()}-${Math.random().toString(36).slice(2,9)}`}`;
+    }
+    function cleanImageUrl(value) {
+      try {
+        const url=new URL(value);
+        return ["https:","http:"].includes(url.protocol)?url.href:null;
+      } catch { return null; }
+    }
+    function showConfirm(message,action) {
+      const dialog=document.querySelector("#confirm-dialog");
+      document.querySelector("#confirm-copy").textContent=message;
+      const accept=dialog.querySelector("[data-confirm-accept]");
+      const cancel=dialog.querySelector("[data-confirm-cancel]");
+      const close=dialog.querySelector(".dialog-close");
+      const finish=(confirmed)=>{
+        dialog.close();
+        accept.removeEventListener("click",onAccept);
+        cancel.removeEventListener("click",onCancel);
+        close.removeEventListener("click",onCancel);
+        if(confirmed) action();
+      };
+      const onAccept=()=>finish(true);
+      const onCancel=()=>finish(false);
+      accept.addEventListener("click",onAccept);
+      cancel.addEventListener("click",onCancel);
+      close.addEventListener("click",onCancel);
+      dialog.showModal();
+    }
+    function resetCollectionForm() {
+      document.querySelector("#collection-form").reset();
+      document.querySelector("#collection-id").value="";
+      document.querySelector("#collection-submit").textContent="Create Collection";
+      document.querySelector("#collection-cancel").hidden=true;
+      document.querySelector("#form-status").textContent="";
+      document.querySelector("#form-status").classList.remove("error");
+      renderCollectionChoices();
+    }
+    function editCollection(id) {
+      const collection=board.collections.find((item)=>item.id===id);
+      if(!collection) return;
+      document.querySelector("#collection-id").value=collection.id;
+      document.querySelector("#collection-name").value=collection.name;
+      document.querySelector("#collection-category").value=collection.category;
+      document.querySelector("#collection-notes").value=collection.notes||"";
+      renderCollectionChoices(collection);
+      document.querySelector("#collection-submit").textContent="Save Changes";
+      document.querySelector("#collection-cancel").hidden=false;
+      document.querySelector("#form-status").textContent=`Editing “${collection.name}”.`;
+      document.querySelector("#create-board").scrollIntoView({behavior:"smooth"});
+      document.querySelector("#collection-name").focus({preventScroll:true});
+    }
+    function removeDesign(id) {
+      const updated=readWishlist().filter((item)=>item!==id);
+      if(!persistWishlist(updated)) return;
+      board.collections.forEach((collection)=>{collection.designIds=(collection.designIds||[]).filter((item)=>item!==id);});
+      persistBoard();
+      render();
+      showToast("Design removed from your Dream Board.");
+    }
+    function toggleColor(designId,index) {
+      const design=designById(designId);
+      const color=design?.colors[Number(index)];
+      if(!design||!color) { showToast("That colour is no longer available.",true); return; }
+      const id=colorId(designId,Number(index));
+      const selected=board.selectedColors.some((item)=>item.id===id);
+      const previous=board;
+      board={...board,selectedColors:selected?board.selectedColors.filter((item)=>item.id!==id):[...board.selectedColors,{id,designId,name:color[0],hex:color[1],paletteName:design.name}]};
+      if(!persistBoard()) { board=previous; return; }
+      render();
+      showToast(selected?`${color[0]} removed from selected colours.`:`${color[0]} added to selected colours.`);
+    }
+    document.querySelector("#collection-form").addEventListener("submit",(event)=>{
+      event.preventDefault();
+      const id=document.querySelector("#collection-id").value;
+      const name=document.querySelector("#collection-name").value.trim();
+      const category=document.querySelector("#collection-category").value;
+      const notes=document.querySelector("#collection-notes").value.trim();
+      if(!name) return;
+      const current=id?board.collections.find((item)=>item.id===id):null;
+      if(id&&!current) { showToast("That collection is no longer available. Refresh and try again.",true); return; }
+      const collection={id:current?.id||makeId("collection"),name,category,notes,designIds:[...document.querySelectorAll('input[name="designIds"]:checked')].map((input)=>input.value),paletteIds:[...document.querySelectorAll('input[name="paletteIds"]:checked')].map((input)=>input.value),colorIds:[...document.querySelectorAll('input[name="colorIds"]:checked')].map((input)=>input.value)};
+      const previous=board;
+      board={...board,collections:current?board.collections.map((item)=>item.id===id?collection:item):[collection,...board.collections]};
+      if(!persistBoard()) { board=previous; return; }
+      resetCollectionForm();
+      render();
+      showToast(current?"Collection updated.":"Your collection has been created.");
+    });
+    document.querySelector("#collection-cancel").addEventListener("click",resetCollectionForm);
+    document.querySelector("#new-collection-shortcut").addEventListener("click",()=>document.querySelector("#create-board").scrollIntoView({behavior:"smooth"}));
+    document.querySelector("#collection-grid").addEventListener("click",(event)=>{
+      const edit=event.target.closest("[data-edit-collection]");
+      const remove=event.target.closest("[data-delete-collection]");
+      const inspiration=event.target.closest("[data-delete-inspiration]");
+      if(edit) editCollection(edit.dataset.editCollection);
+      if(remove) {
+        const collection=board.collections.find((item)=>item.id===remove.dataset.deleteCollection);
+        if(!collection) return;
+        showConfirm(`Delete “${collection.name}”? Saved designs and images themselves will stay on your Dream Board.`,()=>{
+          board.collections=board.collections.filter((item)=>item.id!==collection.id);
+          board.inspirations=board.inspirations.map((item)=>item.collectionId===collection.id?{...item,collectionId:null}:item);
+          if(persistBoard()) { render(); showToast("Collection deleted."); }
+        });
+      }
+      if(inspiration) {
+        showConfirm("Remove this inspiration image from your Dream Board?",()=>{
+          board.inspirations=board.inspirations.filter((item)=>item.id!==inspiration.dataset.deleteInspiration);
+          if(persistBoard()) { render(); showToast("Inspiration removed."); }
+        });
+      }
+    });
+    document.querySelector("#design-grid").addEventListener("click",(event)=>{
+      const button=event.target.closest("[data-remove-design]");
+      if(button) removeDesign(button.dataset.removeDesign);
+    });
+    document.querySelector("#palette-options").addEventListener("click",(event)=>{
+      const save=event.target.closest("[data-save-palette]");
+      const copy=event.target.closest("[data-copy-hex]");
+      const color=event.target.closest("[data-color-toggle]");
+      if(save) {
+        const design=designById(save.dataset.savePalette);
+        if(!design) return;
+        const id=paletteId(design.id);
+        const existing=board.palettes.some((item)=>item.id===id);
+        const previous=board;
+        board={...board,palettes:existing?board.palettes.filter((item)=>item.id!==id):[...board.palettes,{id,designId:design.id,name:design.name,category:design.category,style:design.style,colors:design.colors.map(([name,hex])=>({name,hex}))}]};
+        if(!persistBoard()) { board=previous; return; }
+        render();
+        showToast(existing?"Palette removed from your collection.":"Colour palette saved.");
+      }
+      if(color) toggleColor(color.dataset.colorToggle,color.dataset.colorIndex);
+      if(copy) copyText(copy.dataset.copyHex,`${copy.dataset.copyHex} copied.`,"Could not copy the colour code.");
+    });
+    document.querySelector("#saved-palettes").addEventListener("click",(event)=>{
+      const copy=event.target.closest("[data-copy-hex]");
+      const remove=event.target.closest("[data-remove-palette]");
+      const color=event.target.closest("[data-color-toggle]");
+      if(color) toggleColor(color.dataset.colorToggle,color.dataset.colorIndex);
+      if(copy) copyText(copy.dataset.copyHex,`${copy.dataset.copyHex} copied.`,"Could not copy the colour code.");
+      if(remove) {
+        const previous=board;
+        board={...board,palettes:board.palettes.filter((item)=>item.id!==remove.dataset.removePalette),collections:board.collections.map((item)=>({...item,paletteIds:(item.paletteIds||[]).filter((id)=>id!==remove.dataset.removePalette)}))};
+        if(persistBoard()) { render(); showToast("Palette removed from your collection."); } else board=previous;
+      }
+    });
+    document.querySelector("#selected-colors").addEventListener("click",(event)=>{
+      const remove=event.target.closest("[data-unselect-color]");
+      if(!remove) return;
+      const previous=board;
+      board={...board,selectedColors:board.selectedColors.filter((item)=>item.id!==remove.dataset.unselectColor),collections:board.collections.map((item)=>({...item,colorIds:(item.colorIds||[]).filter((id)=>id!==remove.dataset.unselectColor)}))};
+      if(persistBoard()) { render(); showToast("Colour removed from your shortlist."); } else board=previous;
+    });
+    document.querySelector("#inspiration-form").addEventListener("submit",(event)=>{
+      event.preventDefault();
+      const status=document.querySelector("#inspiration-status");
+      const title=document.querySelector("#inspiration-title").value.trim();
+      const url=cleanImageUrl(document.querySelector("#inspiration-url").value.trim());
+      const category=document.querySelector("#inspiration-category").value;
+      const note=document.querySelector("#inspiration-note").value.trim();
+      if(!url) { status.textContent="Enter a valid HTTP or HTTPS image URL."; status.classList.add("error"); return; }
+      const collection=board.collections.find((item)=>item.name===category)||board.collections.find((item)=>item.category===category);
+      const previous=board;
+      board={...board,inspirations:[...board.inspirations,{id:makeId("inspiration"),title,url,category,note,collectionId:collection?.id||null}]};
+      if(!persistBoard()) { board=previous; return; }
+      event.currentTarget.reset();
+      status.textContent="Inspiration saved to your Dream Board.";
+      status.classList.remove("error");
+      render();
+      showToast("Inspiration saved.");
+    });
+    document.querySelector("#clear-board").addEventListener("click",()=>{
+      const hasItems=readWishlist().length+board.inspirations.length+board.palettes.length+board.selectedColors.length>0 || board.collections.some((item)=>!item.id.startsWith("default-") || item.notes || item.designIds?.length || item.paletteIds?.length || item.colorIds?.length);
+      if(!hasItems) { showToast("Your Dream Board is already clear."); return; }
+      showConfirm("Clear all saved designs, inspiration images, colour palettes, notes, and custom collections? This cannot be undone.",()=>{
+        const previousWishlist=readWishlist();
+        const previousBoard=board;
+        board={collections:defaults.map((item)=>({...item,designIds:[],paletteIds:[],colorIds:[]})),inspirations:[],palettes:[],selectedColors:[]};
+        if(!persistWishlist([])) { board=previousBoard; return; }
+        if(!persistBoard()) { persistWishlist(previousWishlist); board=previousBoard; return; }
+        resetCollectionForm();
+        document.querySelector("#inspiration-form").reset();
+        render();
+        showToast("Your Dream Board has been cleared.");
+      });
+    });
+    document.querySelector("#share-board").addEventListener("click",async()=>{
+      const text=`My DreamSpace Dream Board: ${readWishlist().length} saved designs, ${board.inspirations.length} inspiration images, and ${board.palettes.length} colour palettes.`;
+      const data={title:"My DreamSpace Dream Board",text,url:window.location.href};
+      try {
+        if(navigator.share) { await navigator.share(data); showToast("Dream Board shared."); }
+        else if(navigator.clipboard) { await navigator.clipboard.writeText(`${text} ${window.location.href}`); showToast("Dream Board summary copied to your clipboard."); }
+      } catch(error) {
+        if(error.name==="AbortError") return;
+        console.error("Could not share your Dream Board.",error);
+        showCopyFallback("Share your Dream Board","Your browser can’t open a share sheet here. Copy this summary and send it to someone.",`${text} ${window.location.href}`);
+      }
+    });
+    document.querySelector("#share-board").addEventListener("click",()=>{
+      if(navigator.share||navigator.clipboard) return;
+      const text=`My DreamSpace Dream Board: ${readWishlist().length} saved designs, ${board.inspirations.length} inspiration images, and ${board.palettes.length} colour palettes.`;
+      showCopyFallback("Share your Dream Board","Your browser can’t open a share sheet here. Copy this summary and send it to someone.",`${text} ${window.location.href}`);
+    });
+    document.querySelector("#share-dialog .dialog-close").addEventListener("click",()=>document.querySelector("#share-dialog").close());
+    document.querySelector("[data-share-close]").addEventListener("click",()=>document.querySelector("#share-dialog").close());
+    document.querySelector("#copy-share").addEventListener("click",async()=>{
+      const copy=document.querySelector("#share-copy");
+      try {
+        await navigator.clipboard.writeText(copy.value);
+        document.querySelector("#share-dialog").close();
+        showToast("Dream Board summary copied.");
+      } catch(error) {
+        console.error("Could not copy the Dream Board summary.",error);
+        copy.focus();
+        copy.select();
+        showToast("Select the highlighted summary and copy it manually.",true);
+      }
+    });
+    function pdfEscape(text) {
+      return String(text).normalize("NFKD").replace(/[^\x20-\x7E]/g,"").replace(/\\/g,"\\\\").replace(/\(/g,"\\(").replace(/\)/g,"\\)");
+    }
+    function downloadPdf() {
+      const lines=["DREAMSPACE - MY DREAM BOARD","Your saved design ideas and inspirations","",`Saved designs: ${readWishlist().length}`,`Inspiration images: ${board.inspirations.length}`,`Colour palettes: ${board.palettes.length}`,""];
+      readWishlist().forEach((id)=>{const design=designById(id);lines.push(`DESIGN: ${design?.name||id}`,design?`${design.category} | ${design.style} | Indicative estimate ${money(design.budget)}`:"Design details unavailable",design?.description||"", "");});
+      board.collections.forEach((item)=>{lines.push(`COLLECTION: ${item.name} (${item.category})`);if(item.notes)lines.push(`Notes: ${item.notes}`);const names=(item.designIds||[]).map((id)=>designById(id)?.name).filter(Boolean);if(names.length)lines.push(`Designs: ${names.join(", ")}`);lines.push("");});
+      board.inspirations.forEach((item)=>lines.push(`INSPIRATION: ${item.title} (${item.category})`,item.url,item.note||"",""));
+      board.palettes.forEach((palette)=>lines.push(`PALETTE: ${palette.name}`,...palette.colors.map((color)=>`${color.name}: ${color.hex}`),""));
+      board.selectedColors.forEach((color)=>lines.push(`SELECTED COLOUR: ${color.name} ${color.hex} (${color.paletteName})`));
+      const pages=[];
+      let pageLines=[];
+      for(const line of lines) {
+        const chunks=line.length>88?line.match(/.{1,88}/g):[line];
+        for(const chunk of chunks) { pageLines.push(chunk); if(pageLines.length===45) { pages.push(pageLines); pageLines=[]; } }
+      }
+      if(pageLines.length||!pages.length) pages.push(pageLines);
+      const objects=[];
+      const add=(body)=>{objects.push(body);return objects.length;};
+      const fontId=add("<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>");
+      const pageIds=[];
+      for(const pageLinesItem of pages) {
+        const content=["BT","/F1 10 Tf","48 790 Td","14 TL",...pageLinesItem.flatMap((line,index)=>index?["T*","("+pdfEscape(line)+") Tj"]:["("+pdfEscape(line)+") Tj"]),"ET"].join("\n");
+        const streamId=add(`<< /Length ${new TextEncoder().encode(content).length} >>\nstream\n${content}\nendstream`);
+        pageIds.push(add(`<< /Type /Page /Parent PAGES_ID 0 R /MediaBox [0 0 612 842] /Resources << /Font << /F1 ${fontId} 0 R >> >> /Contents ${streamId} 0 R >>`));
+      }
+      const pagesId=add(`<< /Type /Pages /Kids [${pageIds.map((id)=>`${id} 0 R`).join(" ")}] /Count ${pageIds.length} >>`);
+      const catalogId=add(`<< /Type /Catalog /Pages ${pagesId} 0 R >>`);
+      pageIds.forEach((id)=>{objects[id-1]=objects[id-1].replace("PAGES_ID",String(pagesId));});
+      let pdf="%PDF-1.4\n";
+      const offsets=[0];
+      objects.forEach((object,index)=>{offsets.push(new TextEncoder().encode(pdf).length);pdf+=`${index+1} 0 obj\n${object}\nendobj\n`;});
+      const xref=new TextEncoder().encode(pdf).length;
+      pdf+=`xref\n0 ${objects.length+1}\n0000000000 65535 f \n`;
+      offsets.slice(1).forEach((offset)=>{pdf+=`${String(offset).padStart(10,"0")} 00000 n \n`;});
+      pdf+=`trailer\n<< /Size ${objects.length+1} /Root ${catalogId} 0 R >>\nstartxref\n${xref}\n%%EOF`;
+      const blob=new Blob([pdf],{type:"application/pdf"});
+      const link=document.createElement("a");
+      link.href=URL.createObjectURL(blob);
+      link.download="dreamspace-dream-board.pdf";
+      document.body.append(link);
+      link.click();
+      link.remove();
+      window.setTimeout(()=>URL.revokeObjectURL(link.href),1000);
+      showToast("Your Dream Board PDF is ready to download.");
+    }
+    document.querySelector("#download-board").addEventListener("click",downloadPdf);
+    const menuToggle=document.querySelector(".menu-toggle");
+    const navigation=document.querySelector("#site-nav");
+    menuToggle.addEventListener("click",()=>{
+      const open=menuToggle.getAttribute("aria-expanded")==="true";
+      menuToggle.setAttribute("aria-expanded",String(!open));
+      menuToggle.setAttribute("aria-label",open?"Open navigation menu":"Close navigation menu");
+      navigation.classList.toggle("is-open",!open);
+    });
+    navigation.addEventListener("click",(event)=>{
+      if(event.target.closest("a")) {
+        navigation.classList.remove("is-open");
+        menuToggle.setAttribute("aria-expanded","false");
+        menuToggle.setAttribute("aria-label","Open navigation menu");
+      }
+    });
+    board=loadBoard();
+    persistBoard();
+    render();
+  </script>
+</body>
+</html>
